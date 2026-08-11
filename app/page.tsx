@@ -542,38 +542,38 @@ useEffect(() => {
 const storytellingFormats = [
   {
     title: 'TikTok',
-    duration: '15–60 SEC',
-    video: '/videos formats/tiktok.mp4',
+    duration: '15–30 sec',
+    video: '/timeline/tiktok-fixed.mp4',
   },
   {
     title: 'Reel',
-    duration: '15–90 SEC',
-    video: '/videos formats/reel.mp4',
+    duration: '15–60 sec',
+    video: '/timeline/reel.mp4',
   },
   {
     title: 'Campaign',
-    duration: '',
-    video: '/videos formats/campaign.mp4',
+    duration: '30–90 sec',
+    video: '/timeline/campaign.mp4',
   },
   {
     title: 'Branded Content',
-    duration: '',
-    video: '/videos formats/branded-content.mp4',
+    duration: '1–3 min',
+    video: '/timeline/branded-content.mp4',
   },
   {
-    title: 'TV ADS',
-    duration: '',
-    video: '/videos formats/commercial.mp4',
+    title: 'TV Ads',
+    duration: '15–60 sec',
+    video: '/timeline/tv-ads.mp4',
   },
   {
     title: 'Brand Film',
-    duration: '',
-    video: '/videos formats/brand-film.mp4',
+    duration: '1–5 min',
+    video: '/timeline/brand-film.mp4',
   },
   {
     title: 'Documentary',
-    duration: '',
-    video: '/videos formats/documentary-trailer.mp4',
+    duration: 'Long Form',
+    video: '/timeline/documentary.mp4',
   },
 ];
 function ShareTypewriter() {
@@ -1066,7 +1066,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
       <motion.a
         whileHover={{ y: -2 }}
-        href="/Book"
+        href="/Book-"
         className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
       >
         OUR WORK

@@ -32,7 +32,6 @@ function TikTokIcon() {
     </svg>
   );
 }
-
 function ServiceCard({
   service,
   i,
@@ -41,10 +40,8 @@ function ServiceCard({
 }: {
   service: {
     title: string;
-    description: string;
     href: string;
     image?: string;
-    isAddCard?: boolean;
   };
   i: number;
   total: number;
@@ -65,59 +62,6 @@ function ServiceCard({
     [1, 1.14]
   );
 
-  if (service.isAddCard) {
-    return (
-      <motion.div
-        style={{
-          y: 0,
-          scale: 1,
-          zIndex: total - i,
-        }}
-        className="absolute inset-0 overflow-hidden rounded-[30px] border border-dashed border-[#FFE3AC]/20 bg-[#050505]"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,227,172,0.12),transparent_35%)]" />
-
-        <div className="relative flex h-full flex-col items-center justify-center">
-          <div className="mb-10 flex h-[160px] w-[170px] items-center justify-center rounded-[36px] border border-[#FFE3AC]/25 bg-white/[0.03] shadow-[0_0_80px_rgba(255,227,172,0.12)]">
-            <div className="relative flex items-center justify-center">
-              <div className="h-[90px] w-[5px] rounded-full bg-[#FFE3AC]" />
-              <div className="absolute h-[5px] w-[90px] rounded-full bg-[#FFE3AC]" />
-            </div>
-          </div>
-
-          <div className="mb-5 flex items-center gap-8">
-            <div className="h-[1px] w-[120px] bg-[#FFE3AC]/30" />
-
-            <p
-              className={`text-[18px] uppercase tracking-[0.35em] text-[#FFE3AC] ${anton.className}`}
-            >
-              YOUR NEXT IDEA
-            </p>
-
-            <div className="h-[1px] w-[120px] bg-[#FFE3AC]/30" />
-          </div>
-
-          <h2
-            className={`text-center text-[110px] uppercase leading-[0.9] tracking-[-0.04em] text-white ${anton.className}`}
-          >
-            LET&apos;S BUILD IT TOGETHER
-          </h2>
-
-          <p className="mt-5 text-[22px] text-white/50">
-            Whatever the story needs, we&apos;re ready to make it happen.
-          </p>
-
-          <a
-            href="/contact"
-            className={`mt-10 rounded-[18px] bg-[#FFE3AC] px-12 py-5 text-[24px] uppercase text-black transition duration-300 hover:scale-105 ${anton.className}`}
-          >
-            Start A Project
-          </a>
-        </div>
-      </motion.div>
-    );
-  }
-
   return (
     <motion.div
       style={{
@@ -135,56 +79,31 @@ function ServiceCard({
           className="absolute inset-0 h-full w-full object-cover"
         />
       )}
-
-      <div className="absolute inset-0 bg-black/35" />
-
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,227,172,0.16),transparent_32%),linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.02))]" />
-
-      <div className="relative z-10 flex h-full items-end justify-between p-10">
-        <div>
-          <p className="text-[15px] uppercase tracking-[0.22em] text-[#FFE3AC]">
-            {String(i + 1).padStart(2, '0')} /
-          </p>
-
-          <h3
-            className={`mt-4 text-[82px] uppercase leading-none ${anton.className}`}
-          >
-            {service.title}
-          </h3>
-
-          <p className="mt-4 max-w-[760px] text-[20px] text-white/60">
-            {service.description}
-          </p>
-        </div>
-
-        <a
-          href={service.href}
-          className={`rounded-[14px] bg-white px-8 py-4 text-[20px] uppercase text-black transition hover:scale-105 ${anton.className}`}
-        >
-          Explore
-        </a>
-      </div>
     </motion.div>
   );
 }
 function MobileServiceCard({
   service,
-  i,
 }: {
   service: {
     title: string;
-    description: string;
+    description?: string;
     href: string;
     image?: string;
     isAddCard?: boolean;
   };
-  i: number;
 }) {
   if (service.isAddCard) {
     return (
       <motion.div
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        initial={{
+          opacity: 0,
+          y: 35,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
         transition={{
           duration: 0.7,
           ease: 'easeOut',
@@ -231,7 +150,8 @@ function MobileServiceCard({
   }
 
   return (
-    <motion.article
+    <motion.a
+      href={service.href}
       initial={{
         opacity: 0,
         y: 35,
@@ -248,7 +168,7 @@ function MobileServiceCard({
         once: true,
         amount: 0.12,
       }}
-      className="relative min-h-[500px] w-full overflow-hidden rounded-[24px] border border-white/10 bg-[#111] shadow-[0_24px_65px_rgba(0,0,0,0.45)]"
+      className="relative block w-full overflow-hidden rounded-[24px]"
     >
       {service.image && (
         <img
@@ -256,39 +176,13 @@ function MobileServiceCard({
           alt={service.title}
           draggable={false}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="block h-auto w-full"
         />
       )}
-
-      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-black/5" />
-
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,227,172,0.14),transparent_36%)]" />
-
-      <div className="relative z-10 flex min-h-[500px] flex-col justify-end p-6">
-        <p className="text-[12px] uppercase tracking-[0.22em] text-[#FFE3AC]">
-          {String(i + 1).padStart(2, '0')} /
-        </p>
-
-        <h3
-          className={`mt-3 text-[46px] uppercase leading-[0.92] tracking-[-0.03em] text-white ${anton.className}`}
-        >
-          {service.title}
-        </h3>
-
-        <p className="mt-4 max-w-[320px] text-[16px] leading-relaxed text-white/70">
-          {service.description}
-        </p>
-
-        <a
-          href={service.href}
-          className={`mt-7 flex w-fit rounded-[12px] bg-white px-6 py-3 text-[17px] uppercase text-black ${anton.className}`}
-        >
-          Explore
-        </a>
-      </div>
-    </motion.article>
+    </motion.a>
   );
 }
+
 function ServiceStack() {
   const sectionRef = useRef<HTMLElement | null>(null);
 
@@ -297,84 +191,53 @@ function ServiceStack() {
     offset: ['start start', 'end end'],
   });
 
-  const services = [
-    {
-      title: 'Commercials',
-      description:
-        'High-impact video campaigns built for food brands.',
-      href: '/contact',
-      image: '/work/project-01.jpg',
-    },
-    {
-      title: 'Branded Content',
-      description:
-        'Story-driven content designed to connect brands with audiences.',
-      href: '/contact',
-      image: '/work/project-02.jpg',
-    },
-    {
-      title: 'Social Media',
-      description:
-        'Platform-native content built for reach, retention and culture.',
-      href: '/contact',
-      image: '/work/project-03.jpg',
-    },
-    {
-      title: 'Documentaries',
-      description:
-        'Long-form stories with a cinematic food perspective.',
-      href: '/contact',
-      image: '/work/project-04.jpg',
-    },
-    {
-      title: 'Photography',
-      description:
-        'Premium food imagery created for campaigns, brands and products.',
-      href: '/contact',
-      image: '/work/project-01.jpg',
-    },
-    {
-      title: 'Creative Development',
-      description:
-        'Concepts, scripts and campaign development from idea to execution.',
-      href: '/contact',
-      image: '/work/project-02.jpg',
-    },
-    {
-      title: 'Food Styling',
-      description:
-        'Visual styling that makes every dish camera-ready.',
-      href: '/contact',
-      image: '/work/project-03.jpg',
-    },
-    {
-      title: 'Art Direction',
-      description:
-        'Strong visual direction built around the story, product and brand.',
-      href: '/contact',
-      image: '/work/project-04.jpg',
-    },
-    {
-      title: '1M+ Prop Warehouse',
-      description:
-        'A massive library of props and set elements ready for production.',
-      href: '/contact',
-      image: '/work/project-01.jpg',
-    },
-    {
-      title: 'Post Production',
-      description:
-        'Editing, color, sound and finishing for every format.',
-      href: '/contact',
-      image: '/work/project-02.jpg',
-    },
-    {
-      title: '',
-      description: '',
-      href: '/contact',
-      isAddCard: true,
-    },
-  ];
+ const services = [
+  {
+    title: 'Food Styling',
+    href: '/contact',
+    image: '/services/1.png',
+  },
+  {
+    title: 'Photography',
+    href: '/contact',
+    image: '/services/2.png',
+  },
+  {
+    title: 'Video Production',
+    href: '/contact',
+    image: '/services/3.png',
+  },
+  {
+    title: 'Creative Development',
+    href: '/contact',
+    image: '/services/4.png',
+  },
+  {
+    title: 'Social Media',
+    href: '/contact',
+    image: '/services/5.png',
+  },
+  {
+    title: 'Art Direction',
+    href: '/contact',
+    image: '/services/6.png',
+  },
+  {
+    title: '1M+ Prop Warehouse',
+    href: '/contact',
+    image: '/services/7.png',
+  },
+  {
+    title: 'Post Production',
+    href: '/contact',
+    image: '/services/8.png',
+  },
+  {
+    title: 'Documentaries',
+    href: '/contact',
+    image: '/services/9.png',
+  },
+];
 
   return (
     <>
@@ -382,17 +245,16 @@ function ServiceStack() {
           MOBILE ONLY
       ===================================================== */}
 
-      <section className="bg-[#050505] px-5 pb-24 pt-12 md:hidden">
-        <div className="mx-auto flex w-full max-w-[430px] flex-col gap-5">
-          {services.map((service, i) => (
-            <MobileServiceCard
-              key={`${service.title || 'add-card'}-mobile-${i}`}
-              service={service}
-              i={i}
-            />
-          ))}
-        </div>
-      </section>
+     <section className="bg-[#050505] px-5 pb-24 pt-12 md:hidden">
+  <div className="mx-auto flex w-full max-w-[430px] flex-col gap-5">
+    {services.map((service, i) => (
+      <MobileServiceCard
+        key={`${service.title || 'add-card'}-mobile-${i}`}
+        service={service}
+      />
+    ))}
+  </div>
+</section>
 
       {/* =====================================================
           DESKTOP ORIGINAL STACK
@@ -400,23 +262,23 @@ function ServiceStack() {
       ===================================================== */}
 
       <section
-        ref={sectionRef}
-        className="relative hidden h-[520vh] bg-[#050505] px-[6vw] md:block"
-      >
-        <div className="sticky top-0 flex h-screen items-center justify-center overflow-visible">
-          <div className="relative mx-auto h-[540px] w-full max-w-[1512px]">
-            {services.map((service, i) => (
-              <ServiceCard
-                key={`${service.title || 'add-card'}-${i}`}
-                service={service}
-                i={i}
-                total={services.length}
-                scrollYProgress={scrollYProgress}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+  ref={sectionRef}
+  className="relative hidden h-[520vh] bg-[#050505] px-[6vw] md:block"
+>
+  <div className="sticky top-0 flex h-screen items-center justify-center overflow-visible">
+    <div className="relative mx-auto h-[540px] w-full max-w-[1512px]">
+      {services.map((service, i) => (
+        <ServiceCard
+          key={`${service.title}-${i}`}
+          service={service}
+          i={i}
+          total={services.length}
+          scrollYProgress={scrollYProgress}
+        />
+      ))}
+    </div>
+  </div>
+</section>
     </>
   );
 }
