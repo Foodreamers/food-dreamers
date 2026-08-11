@@ -33,16 +33,15 @@ function TikTokIcon() {
   );
 }
 
-function ProjectCard({
-  project,
+function ServiceCard({
+  service,
   i,
   total,
   scrollYProgress,
 }: {
-  project: {
+  service: {
     title: string;
-    service: string;
-    year: string;
+    description: string;
     href: string;
     image?: string;
     isAddCard?: boolean;
@@ -53,13 +52,27 @@ function ProjectCard({
 }) {
   const start = i / total;
   const end = (i + 1) / total;
-  const y = useTransform(scrollYProgress, [start, end], ['0px', '900px']);
-  const scale = useTransform(scrollYProgress, [start, end], [1, 1.14]);
 
-  if (project.isAddCard) {
+  const y = useTransform(
+    scrollYProgress,
+    [start, end],
+    ['0px', '900px']
+  );
+
+  const scale = useTransform(
+    scrollYProgress,
+    [start, end],
+    [1, 1.14]
+  );
+
+  if (service.isAddCard) {
     return (
       <motion.div
-        style={{ y: 0, scale: 1, zIndex: total - i }}
+        style={{
+          y: 0,
+          scale: 1,
+          zIndex: total - i,
+        }}
         className="absolute inset-0 overflow-hidden rounded-[30px] border border-dashed border-[#FFE3AC]/20 bg-[#050505]"
       >
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,227,172,0.12),transparent_35%)]" />
@@ -74,25 +87,31 @@ function ProjectCard({
 
           <div className="mb-5 flex items-center gap-8">
             <div className="h-[1px] w-[120px] bg-[#FFE3AC]/30" />
-            <p className={`text-[18px] uppercase tracking-[0.35em] text-[#FFE3AC] ${anton.className}`}>
-              YOUR PROJECT
+
+            <p
+              className={`text-[18px] uppercase tracking-[0.35em] text-[#FFE3AC] ${anton.className}`}
+            >
+              YOUR NEXT IDEA
             </p>
+
             <div className="h-[1px] w-[120px] bg-[#FFE3AC]/30" />
           </div>
 
-          <h2 className={`text-center text-[110px] uppercase leading-[0.9] tracking-[-0.04em] text-white ${anton.className}`}>
-            COULD BE THE NEXT HERE
+          <h2
+            className={`text-center text-[110px] uppercase leading-[0.9] tracking-[-0.04em] text-white ${anton.className}`}
+          >
+            LET&apos;S BUILD IT TOGETHER
           </h2>
 
           <p className="mt-5 text-[22px] text-white/50">
-            Let’s create something amazing together.
+            Whatever the story needs, we&apos;re ready to make it happen.
           </p>
 
           <a
-            href="/#contact"
+            href="/contact"
             className={`mt-10 rounded-[18px] bg-[#FFE3AC] px-12 py-5 text-[24px] uppercase text-black transition duration-300 hover:scale-105 ${anton.className}`}
           >
-            Add My Project
+            Start A Project
           </a>
         </div>
       </motion.div>
@@ -101,13 +120,17 @@ function ProjectCard({
 
   return (
     <motion.div
-      style={{ y, scale, zIndex: total - i }}
+      style={{
+        y,
+        scale,
+        zIndex: total - i,
+      }}
       className="absolute inset-0 overflow-hidden rounded-[30px] border border-white/10 bg-[#111] shadow-[0_30px_90px_rgba(0,0,0,0.65)]"
     >
-      {project.image && (
+      {service.image && (
         <img
-          src={project.image}
-          alt={project.title}
+          src={service.image}
+          alt={service.title}
           draggable={false}
           className="absolute inset-0 h-full w-full object-cover"
         />
@@ -120,30 +143,153 @@ function ProjectCard({
       <div className="relative z-10 flex h-full items-end justify-between p-10">
         <div>
           <p className="text-[15px] uppercase tracking-[0.22em] text-[#FFE3AC]">
-            {String(i + 1).padStart(2, '0')} / 
+            {String(i + 1).padStart(2, '0')} /
           </p>
 
-          <h3 className={`mt-4 text-[82px] uppercase leading-none ${anton.className}`}>
-            {project.title}
+          <h3
+            className={`mt-4 text-[82px] uppercase leading-none ${anton.className}`}
+          >
+            {service.title}
           </h3>
 
-          <p className="mt-4 text-[20px] text-white/60">
-            {project.service} · {project.year}
+          <p className="mt-4 max-w-[760px] text-[20px] text-white/60">
+            {service.description}
           </p>
         </div>
 
         <a
-          href={project.href}
+          href={service.href}
           className={`rounded-[14px] bg-white px-8 py-4 text-[20px] uppercase text-black transition hover:scale-105 ${anton.className}`}
         >
-          View Project
+          Explore
         </a>
       </div>
     </motion.div>
   );
 }
+function MobileServiceCard({
+  service,
+  i,
+}: {
+  service: {
+    title: string;
+    description: string;
+    href: string;
+    image?: string;
+    isAddCard?: boolean;
+  };
+  i: number;
+}) {
+  if (service.isAddCard) {
+    return (
+      <motion.div
+        initial={{ opacity: 0, y: 35 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.7,
+          ease: 'easeOut',
+        }}
+        viewport={{
+          once: true,
+          amount: 0.15,
+        }}
+        className="relative flex min-h-[430px] w-full flex-col items-center justify-center overflow-hidden rounded-[24px] border border-dashed border-[#FFE3AC]/25 bg-[#050505] px-6 py-12 text-center"
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(255,227,172,0.12),transparent_42%)]" />
 
-function ProjectStack() {
+        <div className="relative z-10 flex h-[90px] w-[90px] items-center justify-center rounded-[24px] border border-[#FFE3AC]/25 bg-white/[0.03]">
+          <div className="relative flex items-center justify-center">
+            <div className="h-[46px] w-[3px] rounded-full bg-[#FFE3AC]" />
+            <div className="absolute h-[3px] w-[46px] rounded-full bg-[#FFE3AC]" />
+          </div>
+        </div>
+
+        <p
+          className={`relative z-10 mt-8 text-[12px] uppercase tracking-[0.25em] text-[#FFE3AC] ${anton.className}`}
+        >
+          YOUR NEXT IDEA
+        </p>
+
+        <h2
+          className={`relative z-10 mt-5 text-[46px] uppercase leading-[0.92] tracking-[-0.04em] text-white ${anton.className}`}
+        >
+          LET&apos;S BUILD IT TOGETHER
+        </h2>
+
+        <p className="relative z-10 mt-5 max-w-[300px] text-[16px] leading-relaxed text-white/50">
+          Whatever the story needs, we&apos;re ready to make it happen.
+        </p>
+
+        <a
+          href="/contact"
+          className={`relative z-10 mt-8 rounded-[14px] bg-[#FFE3AC] px-7 py-4 text-[18px] uppercase text-black ${anton.className}`}
+        >
+          Start A Project
+        </a>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.article
+      initial={{
+        opacity: 0,
+        y: 35,
+      }}
+      whileInView={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.7,
+        ease: 'easeOut',
+      }}
+      viewport={{
+        once: true,
+        amount: 0.12,
+      }}
+      className="relative min-h-[500px] w-full overflow-hidden rounded-[24px] border border-white/10 bg-[#111] shadow-[0_24px_65px_rgba(0,0,0,0.45)]"
+    >
+      {service.image && (
+        <img
+          src={service.image}
+          alt={service.title}
+          draggable={false}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/25 to-black/5" />
+
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_20%,rgba(255,227,172,0.14),transparent_36%)]" />
+
+      <div className="relative z-10 flex min-h-[500px] flex-col justify-end p-6">
+        <p className="text-[12px] uppercase tracking-[0.22em] text-[#FFE3AC]">
+          {String(i + 1).padStart(2, '0')} /
+        </p>
+
+        <h3
+          className={`mt-3 text-[46px] uppercase leading-[0.92] tracking-[-0.03em] text-white ${anton.className}`}
+        >
+          {service.title}
+        </h3>
+
+        <p className="mt-4 max-w-[320px] text-[16px] leading-relaxed text-white/70">
+          {service.description}
+        </p>
+
+        <a
+          href={service.href}
+          className={`mt-7 flex w-fit rounded-[12px] bg-white px-6 py-3 text-[17px] uppercase text-black ${anton.className}`}
+        >
+          Explore
+        </a>
+      </div>
+    </motion.article>
+  );
+}
+function ServiceStack() {
   const sectionRef = useRef<HTMLElement | null>(null);
 
   const { scrollYProgress } = useScroll({
@@ -151,72 +297,148 @@ function ProjectStack() {
     offset: ['start start', 'end end'],
   });
 
-  const projects = [
+  const services = [
     {
-      title: 'Project 01',
-      service: 'Commercial Production',
-      year: '2026',
-      href: '/work/project-01',
+      title: 'Commercials',
+      description:
+        'High-impact video campaigns built for food brands.',
+      href: '/contact',
       image: '/work/project-01.jpg',
     },
     {
-      title: 'Project 02',
-      service: 'Social Campaign',
-      year: '2026',
-      href: '/work/project-02',
+      title: 'Branded Content',
+      description:
+        'Story-driven content designed to connect brands with audiences.',
+      href: '/contact',
       image: '/work/project-02.jpg',
     },
     {
-      title: 'Project 03',
-      service: 'Brand Film',
-      year: '2025',
-      href: '/work/project-03',
+      title: 'Social Media',
+      description:
+        'Platform-native content built for reach, retention and culture.',
+      href: '/contact',
       image: '/work/project-03.jpg',
     },
     {
-      title: 'Project 04',
-      service: 'Food Storytelling',
-      year: '2025',
-      href: '/work/project-04',
+      title: 'Documentaries',
+      description:
+        'Long-form stories with a cinematic food perspective.',
+      href: '/contact',
       image: '/work/project-04.jpg',
     },
     {
+      title: 'Photography',
+      description:
+        'Premium food imagery created for campaigns, brands and products.',
+      href: '/contact',
+      image: '/work/project-01.jpg',
+    },
+    {
+      title: 'Creative Development',
+      description:
+        'Concepts, scripts and campaign development from idea to execution.',
+      href: '/contact',
+      image: '/work/project-02.jpg',
+    },
+    {
+      title: 'Food Styling',
+      description:
+        'Visual styling that makes every dish camera-ready.',
+      href: '/contact',
+      image: '/work/project-03.jpg',
+    },
+    {
+      title: 'Art Direction',
+      description:
+        'Strong visual direction built around the story, product and brand.',
+      href: '/contact',
+      image: '/work/project-04.jpg',
+    },
+    {
+      title: '1M+ Prop Warehouse',
+      description:
+        'A massive library of props and set elements ready for production.',
+      href: '/contact',
+      image: '/work/project-01.jpg',
+    },
+    {
+      title: 'Post Production',
+      description:
+        'Editing, color, sound and finishing for every format.',
+      href: '/contact',
+      image: '/work/project-02.jpg',
+    },
+    {
       title: '',
-      service: '',
-      year: '',
-      href: '/#contact',
+      description: '',
+      href: '/contact',
       isAddCard: true,
     },
   ];
 
   return (
-    <section ref={sectionRef} className="relative h-[520vh] bg-[#050505] px-[6vw]">
-      <div className="sticky top-0 flex h-screen items-center justify-center overflow-visible">
-        <div className="relative mx-auto h-[540px] w-full max-w-[1512px]">
-          {projects.map((project, i) => (
-            <ProjectCard
-              key={`${project.title || 'add-card'}-${i}`}
-              project={project}
+    <>
+      {/* =====================================================
+          MOBILE ONLY
+      ===================================================== */}
+
+      <section className="bg-[#050505] px-5 pb-24 pt-12 md:hidden">
+        <div className="mx-auto flex w-full max-w-[430px] flex-col gap-5">
+          {services.map((service, i) => (
+            <MobileServiceCard
+              key={`${service.title || 'add-card'}-mobile-${i}`}
+              service={service}
               i={i}
-              total={projects.length}
-              scrollYProgress={scrollYProgress}
             />
           ))}
         </div>
-      </div>
-    </section>
+      </section>
+
+      {/* =====================================================
+          DESKTOP ORIGINAL STACK
+          NO CAMBIAR
+      ===================================================== */}
+
+      <section
+        ref={sectionRef}
+        className="relative hidden h-[520vh] bg-[#050505] px-[6vw] md:block"
+      >
+        <div className="sticky top-0 flex h-screen items-center justify-center overflow-visible">
+          <div className="relative mx-auto h-[540px] w-full max-w-[1512px]">
+            {services.map((service, i) => (
+              <ServiceCard
+                key={`${service.title || 'add-card'}-${i}`}
+                service={service}
+                i={i}
+                total={services.length}
+                scrollYProgress={scrollYProgress}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 
-export default function WorkPage() {
+export default function ServicesPage() {
   return (
     <main className="min-h-screen bg-[#050505] text-white">
+      {/* NAVBAR */}
       <header className="fixed left-0 top-0 z-[999] w-full bg-white/5 backdrop-blur-3xl">
-        <div className="flex h-[88px] w-full items-center justify-between border-b border-white/10 px-10">
+        <div className="flex h-20 w-full items-center justify-between border-b border-white/10 px-4 sm:px-6 md:h-[88px] md:px-10">
           <motion.a
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
+            initial={{
+              opacity: 0,
+              x: -20,
+            }}
+            animate={{
+              opacity: 1,
+              x: 0,
+            }}
+            transition={{
+              duration: 0.8,
+            }}
             href="/"
             className="relative z-[120] flex cursor-pointer items-center"
           >
@@ -224,53 +446,97 @@ export default function WorkPage() {
               src="/logos/logo-yellow.svg"
               alt="Food Dreamers"
               draggable={false}
-              className="h-[122px] w-auto select-none"
+              className="h-[72px] w-auto select-none md:h-[122px]"
             />
           </motion.a>
 
-          <nav className={`hidden items-center gap-8 md:flex ${anton.className}`}>
-            <motion.a whileHover={{ y: -2 }} href="/" className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]">
+          <nav
+            className={`hidden items-center gap-8 md:flex ${anton.className}`}
+          >
+            <motion.a
+              whileHover={{ y: -2 }}
+              href="/"
+              className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+            >
               HOME
             </motion.a>
 
-            <motion.a whileHover={{ y: -2 }} href="/#ecosystem" className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]">
+            <motion.a
+              whileHover={{ y: -2 }}
+              href="/work"
+              className="text-lg tracking-wide text-[#FFE3AC]"
+            >
               SERVICES
             </motion.a>
 
-            <motion.a whileHover={{ y: -2 }} href="/#ai-lab" className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]">
-              AI LAB
-            </motion.a>
-
-            <motion.a whileHover={{ y: -2 }} href="/work" className="text-lg tracking-wide text-[#FFE3AC]">
+            <motion.a
+              whileHover={{ y: -2 }}
+              href="/Book"
+              className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+            >
               OUR WORK
             </motion.a>
 
-            <motion.a whileHover={{ y: -2 }} href="/#about" className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]">
+            <motion.a
+              whileHover={{ y: -2 }}
+              href="/about"
+              className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+            >
               ABOUT US
             </motion.a>
 
-            <motion.a whileHover={{ y: -2 }} href="/#contact" className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]">
+            <motion.a
+              whileHover={{ y: -2 }}
+              href="/contact"
+              className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+            >
               CONTACT
             </motion.a>
           </nav>
 
-          <div className="ml-8 flex items-center gap-5 text-white">
-            <motion.a href="#" whileHover={{ scale: 1.15, y: -2 }} className="transition-colors hover:text-[#FFE3AC]">
+          <div className="ml-8 hidden items-center gap-5 text-white md:flex">
+            <motion.a
+              href="#"
+              whileHover={{
+                scale: 1.15,
+                y: -2,
+              }}
+              className="transition-colors hover:text-[#FFE3AC]"
+            >
               <InstagramIcon />
             </motion.a>
 
-            <motion.a href="#" whileHover={{ scale: 1.15, y: -2 }} className="transition-colors hover:text-[#FFE3AC]">
+            <motion.a
+              href="#"
+              whileHover={{
+                scale: 1.15,
+                y: -2,
+              }}
+              className="transition-colors hover:text-[#FFE3AC]"
+            >
               <FacebookIcon />
             </motion.a>
 
-            <motion.a href="#" whileHover={{ scale: 1.15, y: -2 }} className="transition-colors hover:text-[#FFE3AC]">
+            <motion.a
+              href="#"
+              whileHover={{
+                scale: 1.15,
+                y: -2,
+              }}
+              className="transition-colors hover:text-[#FFE3AC]"
+            >
               <TikTokIcon />
             </motion.a>
           </div>
         </div>
       </header>
 
-      <section className="relative flex min-h-screen items-center overflow-hidden px-[6vw]">
+      {/* HERO */}
+      <section className="relative flex min-h-screen items-center overflow-hidden px-5 pt-20 sm:px-8 md:px-[6vw] md:pt-0">
+        {/* IMPORTANT:
+            SAME CURRENT VIDEO.
+            DO NOT CHANGE YET.
+        */}
         <video
           src="/work-reel.mp4"
           autoPlay
@@ -286,43 +552,73 @@ export default function WorkPage() {
 
         <div className="relative z-10 mx-auto w-full max-w-[1512px]">
           <motion.h1
-            initial={{ opacity: 0, y: 55 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.15, ease: 'easeOut' }}
-            className={`mt-6 text-[180px] uppercase leading-[0.9] tracking-[-0.06em] ${anton.className}`}
+            initial={{
+              opacity: 0,
+              y: 55,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 1,
+              delay: 0.15,
+              ease: 'easeOut',
+            }}
+           className={`mt-6 text-[74px] uppercase leading-[0.88] tracking-[-0.05em] sm:text-[96px] md:text-[180px] md:leading-[0.9] md:tracking-[-0.06em] ${anton.className}`}
           >
             OUR
             <br />
-            WORK
+            SERVICES
           </motion.h1>
 
           <motion.p
-            initial={{ opacity: 0, y: 26 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.35 }}
-            className="mt-8 max-w-[560px] text-[22px] leading-relaxed text-white/70"
+            initial={{
+              opacity: 0,
+              y: 26,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.35,
+            }}
+            className="mt-7 max-w-[340px] text-[17px] leading-relaxed text-white/70 sm:max-w-[460px] sm:text-[19px] md:mt-8 md:max-w-[600px] md:text-[22px]"
           >
-            Food stories, campaigns, social systems and cinematic visuals crafted for brands that want to be remembered.
+            One creative ecosystem built to take food stories from idea to
+            execution, across every format and every screen.
           </motion.p>
 
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.55 }}
+            initial={{
+              opacity: 0,
+              y: 24,
+            }}
+            animate={{
+              opacity: 1,
+              y: 0,
+            }}
+            transition={{
+              duration: 0.9,
+              delay: 0.55,
+            }}
             className="mt-12"
           >
             <a
-              href="#projects"
-              className={`inline-flex rounded-[16px] bg-white px-9 py-4 text-[22px] uppercase text-black transition hover:scale-105 ${anton.className}`}
+              href="#services"
+              className={`inline-flex rounded-[14px] bg-white px-7 py-4 text-[18px] uppercase text-black transition md:rounded-[16px] md:px-9 md:text-[22px] md:hover:scale-105 ${anton.className}`}
             >
-              View Projects
+              Explore Services
             </a>
           </motion.div>
         </div>
       </section>
 
-      <div id="projects">
-        <ProjectStack />
+      {/* SERVICES STACK */}
+      <div id="services">
+        <ServiceStack />
       </div>
     </main>
   );

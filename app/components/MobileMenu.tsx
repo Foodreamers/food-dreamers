@@ -151,23 +151,16 @@ export default function MobileMenu({
           </a>
 
           <a
-            href="#ecosystem"
+            href="work"
             onClick={onClose}
             className="border-b border-white/20 py-3 text-[42px] uppercase leading-none"
           >
             Services
           </a>
 
-          <a
-            href="#ai-lab"
-            onClick={onClose}
-            className="border-b border-white/20 py-3 text-[42px] uppercase leading-none"
-          >
-            AI Lab
-          </a>
 
           <a
-            href="/work"
+            href="/Book"
             onClick={onClose}
             className="border-b border-white/20 py-3 text-[42px] uppercase leading-none"
           >

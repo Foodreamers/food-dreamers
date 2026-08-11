@@ -95,18 +95,19 @@ function ManifestoSection() {
   });
 
   const phrases = [
-    <>WE DON&apos;T FOLLOW TRENDS.</>,
-    <>WE BUILD SYSTEMS.</>,
+    <>All In One</>,
+    <> Remote Production Studio</>,
     <>
-      WE COMBINE
+      SPECIALIZED IN DIGITAL
       <br />
-      CREATIVITY + AI.
+      AND COMMERCIAL PROJECTS.
     </>,
-    <>WE CREATE ATTENTION.</>,
+    <>FOR THE BIGGEST FOOD BRANDS
+    <br />
+     IN THE WORLD.
+     </>,
     <>
-      WE BUILD BRANDS
-      <br />
-      PEOPLE REMEMBER.
+      HUNGRY FOR MORE?
     </>,
   ];
 
@@ -137,18 +138,17 @@ function ManifestoSection() {
 
 function MobileManifestoSection() {
   const phrases = [
-    <>WE DON&apos;T FOLLOW TRENDS.</>,
-    <>WE BUILD SYSTEMS.</>,
+    <>All In One.</>,
+    <>Remote Production Studio</>,
     <>
-      WE COMBINE
+      SPECIALIZED IN DIGITAL
       <br />
-      CREATIVITY + AI.
+      AND COMMERCIAL PRIJECTS
     </>,
-    <>WE CREATE ATTENTION.</>,
     <>
-      WE BUILD BRANDS
+      FOR THE BIGGEST FOOD BRANDS
       <br />
-      PEOPLE REMEMBER.
+      IN THE WORLD
     </>,
   ];
 
@@ -262,23 +262,17 @@ export default function AboutPage() {
 
               <motion.a
                 whileHover={{ y: -2 }}
-                href="/#ecosystem"
+                href="/work"
                 className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
               >
                 SERVICES
               </motion.a>
 
-              <motion.a
-                whileHover={{ y: -2 }}
-                href="/#ai-lab"
-                className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
-              >
-                AI LAB
-              </motion.a>
+          
 
               <motion.a
                 whileHover={{ y: -2 }}
-                href="/work"
+                href="/Book"
                 className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
               >
                 OUR WORK
@@ -354,7 +348,7 @@ export default function AboutPage() {
               }}
               className="mt-8 max-w-[620px] text-[24px] leading-relaxed text-white/70"
             >
-              Creative Studio + AI Lab for the next generation of food brands.
+              The Global Food Storytelling Brand.
             </motion.p>
           </div>
         </section>
@@ -380,11 +374,9 @@ export default function AboutPage() {
               }}
               className={`text-[120px] uppercase leading-[0.9] tracking-[-0.05em] ${anton.className}`}
             >
-              THE FUTURE OF
+              LET'S DREAM
               <br />
-              FOOD MARKETING
-              <br />
-              IS HUMAN + AI
+              TOGETHER!
             </motion.h2>
 
             <motion.p
@@ -400,7 +392,6 @@ export default function AboutPage() {
               }}
               className="mx-auto mt-8 max-w-[620px] text-[24px] text-white/60"
             >
-              Ready to build something remarkable?
             </motion.p>
 
             <motion.a
@@ -417,7 +408,7 @@ export default function AboutPage() {
               }}
               className={`mt-12 inline-flex rounded-[18px] bg-[#FFE3AC] px-12 py-5 text-[24px] uppercase text-black transition hover:scale-105 ${anton.className}`}
             >
-              Start A Project
+              CONTACT
             </motion.a>
           </div>
         </section>

@@ -12,7 +12,7 @@ const anton = Anton({
 });
 
 function TypeAnimation() {
-  const words = ['REAL', 'FASTER', 'BETTER', 'CREATIVE'];
+  const words = ['REAL', 'FASTER', 'BETTER', 'CREATIVE', 'ORGANIC', 'REMOTE', 'EFFICIENT', 'EASY'];
   const [text, setText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
@@ -539,6 +539,123 @@ useEffect(() => {
     </div>
   );
 }
+const storytellingFormats = [
+  {
+    title: 'TikTok',
+    duration: '15–60 SEC',
+    video: '/videos formats/tiktok.mp4',
+  },
+  {
+    title: 'Reel',
+    duration: '15–90 SEC',
+    video: '/videos formats/reel.mp4',
+  },
+  {
+    title: 'Campaign',
+    duration: '',
+    video: '/videos formats/campaign.mp4',
+  },
+  {
+    title: 'Branded Content',
+    duration: '',
+    video: '/videos formats/branded-content.mp4',
+  },
+  {
+    title: 'TV ADS',
+    duration: '',
+    video: '/videos formats/commercial.mp4',
+  },
+  {
+    title: 'Brand Film',
+    duration: '',
+    video: '/videos formats/brand-film.mp4',
+  },
+  {
+    title: 'Documentary',
+    duration: '',
+    video: '/videos formats/documentary-trailer.mp4',
+  },
+];
+function ShareTypewriter() {
+  const words = [
+    'SHARE',
+    'CONNECT',
+    'INSPIRE',
+    'ENTERTAIN',
+    'EDUCATE',
+    'MOVE',
+    'REMEMBER',
+  ];
+
+  const [wordIndex, setWordIndex] = useState(0);
+  const [displayText, setDisplayText] = useState('');
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  useEffect(() => {
+    const currentWord = words[wordIndex];
+
+    let delay = isDeleting ? 55 : 85;
+
+    // Cuando termina de escribir, pausa
+    if (!isDeleting && displayText === currentWord) {
+      delay = 1300;
+    }
+
+    // Cuando termina de borrar, pequeña pausa
+    if (isDeleting && displayText === '') {
+      delay = 250;
+    }
+
+    const timeout = window.setTimeout(() => {
+      // TERMINÓ DE ESCRIBIR
+      if (!isDeleting && displayText === currentWord) {
+        setIsDeleting(true);
+        return;
+      }
+
+      // TERMINÓ DE BORRAR
+      if (isDeleting && displayText === '') {
+        setIsDeleting(false);
+        setWordIndex((current) => (current + 1) % words.length);
+        return;
+      }
+
+      // ESCRIBIENDO
+      if (!isDeleting) {
+        setDisplayText(
+          currentWord.slice(0, displayText.length + 1)
+        );
+        return;
+      }
+
+      // BORRANDO
+      setDisplayText(
+        currentWord.slice(0, displayText.length - 1)
+      );
+    }, delay);
+
+    return () => window.clearTimeout(timeout);
+  }, [displayText, isDeleting, wordIndex]);
+
+  return (
+    <span className="inline-flex items-center whitespace-nowrap">
+      {displayText}
+
+      {/* CURSOR */}
+      <motion.span
+        animate={{
+          opacity: [1, 1, 0, 0],
+        }}
+        transition={{
+          duration: 0.8,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
+        className="ml-[5px] inline-block h-[0.82em] w-[4px] bg-[#E6A523]"
+      />
+    </span>
+  );
+}
 export default function Home() {
   const [isMuted, setIsMuted] = useState(true);
   const [currentLogo, setCurrentLogo] = useState('/logos/logo-yellow.svg');
@@ -546,6 +663,9 @@ export default function Home() {
   const [sequenceActive, setSequenceActive] = useState(false);
  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  const [isMobile, setIsMobile] = useState(false);
+ const [activeFormat, setActiveFormat] = useState<number | null>(null);
+ 
+
 
   const aiLabRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
@@ -557,9 +677,10 @@ export default function Home() {
   const autoplayFrame = useRef<number | null>(null);
   const ecosystemRef = useRef<HTMLElement | null>(null);
   const hasPlayedEcosystemIntro = useRef(false);
+const sequenceProgress = useMotionValue(0);
 
   const cardsX = useMotionValue(0);
-  const frameCount = 101;
+  const frameCount = 120;
 
   const aiLabInView = useInView(aiLabRef, {
     once: true,
@@ -568,7 +689,7 @@ export default function Home() {
 
   const ecosystemInView = useInView(ecosystemRef, {
     once: true,
-    amount: 0.35,
+    amount: 0.12,
   });
   useEffect(() => {
   const mediaQuery = window.matchMedia('(max-width: 767px)');
@@ -624,78 +745,166 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    const canvas = sequenceCanvasRef.current;
-    if (!canvas) return;
+  const canvas = sequenceCanvasRef.current;
+  if (!canvas) return;
 
-    const context = canvas.getContext('2d');
-    if (!context) return;
+  const context = canvas.getContext('2d');
+  if (!context) return;
 
-    const images: HTMLImageElement[] = [];
+  const images: HTMLImageElement[] = [];
+  let currentIndex = 0;
 
-    const currentFrame = (index: number) =>
-      `/frames/sequence/frame-${String(index).padStart(4, '0')}.jpg`;
+  const getFrameSrc = (index: number) =>
+    `/frames/sequence2/frame-${String(index + 1).padStart(4, '0')}.jpg`;
 
-    for (let i = 1; i <= frameCount; i++) {
-      const img = new Image();
-      img.src = currentFrame(i);
-      images.push(img);
-    }
+  const drawFrame = (index: number) => {
+    const img = images[index];
 
-    const renderFrame = (index: number) => {
-      const img = images[index];
-      if (!img || !img.complete) return;
+    if (!img || !img.complete || !img.naturalWidth) return;
 
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-      const scale =
-        Math.max(
-          canvas.width / img.width,
-          canvas.height / img.height
-        ) * 1;
+    const scale = Math.max(
+      canvas.width / img.naturalWidth,
+      canvas.height / img.naturalHeight
+    );
 
-      const x = canvas.width / 2 - (img.width / 2) * scale;
-      const y = canvas.height / 2 - (img.height / 2) * scale;
+    const width = img.naturalWidth * scale;
+    const height = img.naturalHeight * scale;
 
-      context.drawImage(img, x, y, img.width * scale, img.height * scale);
+    const x = (canvas.width - width) / 2;
+    const y = (canvas.height - height) / 2;
+
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    context.drawImage(
+      img,
+      x,
+      y,
+      width,
+      height
+    );
+  };
+
+  // PRELOAD
+  for (let i = 0; i < frameCount; i++) {
+    const img = new Image();
+
+    img.onload = () => {
+      if (i === currentIndex) {
+        drawFrame(i);
+      }
     };
 
-    images[0].onload = () => renderFrame(0);
+    img.src = getFrameSrc(i);
+    images.push(img);
+  }
 
-    const handleScroll = () => {
-      const section = document.getElementById('sequence');
-      if (!section) return;
+  const handleScroll = () => {
+  const section = document.getElementById('sequence');
+  const viewport = document.getElementById('sequence-viewport');
+  const content = document.getElementById('sequence-content');
 
-      const rect = section.getBoundingClientRect();
+ if (!section || !viewport || !content) return;
 
-      setSequenceActive(rect.top <= 0 && rect.bottom >= window.innerHeight);
+  const rect = section.getBoundingClientRect();
 
-      const scrollProgress = Math.min(
-        Math.max(-rect.top / (section.offsetHeight - window.innerHeight), 0),
-        1
-      );
+  const sectionHeight = section.offsetHeight;
+  const viewportHeight = window.innerHeight;
 
-      const easedProgress = Math.pow(scrollProgress, 1.02);
-      const rawIndex = Math.floor(easedProgress * (frameCount - 1));
+  const availableScroll =
+    sectionHeight - viewportHeight;
 
-      const frameIndex = Math.max(
+  if (availableScroll <= 0) return;
+
+  // ==========================================
+  // FRAME PROGRESS
+  // ==========================================
+
+  const progress = Math.min(
+  Math.max(-rect.top / availableScroll, 0),
+  1
+);
+
+
+const easedProgress = Math.pow(progress, 1.02);
+
+currentIndex = Math.floor(
+  easedProgress * (frameCount - 1)
+);
+
+currentIndex = Math.max(
+  0,
+  Math.min(frameCount - 1, currentIndex)
+);
+
+drawFrame(currentIndex);
+
+// MOVE CONTENT UP
+const contentY = progress * -420;
+
+content.style.transform =
+  `translate3d(0, ${contentY}px, 0)`;
+
+// FADE CONTENT AT END
+const contentOpacity =
+  progress < 0.72
+    ? 1
+    : Math.max(
         0,
-        Math.min(frameCount - 1, rawIndex)
+        1 - (progress - 0.72) / 0.28
       );
 
-      renderFrame(frameIndex);
-    };
+content.style.opacity =
+  String(contentOpacity);
+  // ==========================================
+  // PIN THE VIEWPORT
+  // ==========================================
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
+  if (rect.top > 0) {
+    // BEFORE SEQUENCE
+    viewport.style.position = 'absolute';
+    viewport.style.top = '0px';
+    viewport.style.bottom = 'auto';
+  } 
+  
+  else if (rect.bottom > viewportHeight) {
+    // INSIDE SEQUENCE
+    viewport.style.position = 'fixed';
+    viewport.style.top = '0px';
+    viewport.style.bottom = 'auto';
+  } 
+  
+  else {
+    // END OF SEQUENCE
+    viewport.style.position = 'absolute';
+    viewport.style.top = 'auto';
+    viewport.style.bottom = '0px';
+  }
+};
 
-    handleScroll();
+const handleResize = () => {
+  drawFrame(currentIndex);
+};
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-    };
-  }, []);
+window.addEventListener('scroll', handleScroll, {
+  passive: true,
+});
+
+window.addEventListener('resize', handleResize);
+
+if (images[0]) {
+  images[0].onload = () => drawFrame(0);
+}
+
+handleScroll();
+
+return () => {
+  window.removeEventListener('scroll', handleScroll);
+  window.removeEventListener('resize', handleResize);
+};
+}, []);
 
   useEffect(() => {
     const tick = () => {
@@ -760,14 +969,8 @@ export default function Home() {
     const rotate = useTransform(cardsX, (latest: number) => baseAngle + latest);
 
   return (
-  <motion.div
-    initial={{ opacity: 0 }}
-    animate={{ opacity: 1 }}
-    transition={{
-      duration: 0.8,
-      delay: i * 0.05,
-    }}
-    className="absolute h-[380px] w-[260px]"
+ <motion.div
+  className="absolute h-[380px] w-[260px]"
     style={{
       transformOrigin: '50% 2500px',
       y: 130,
@@ -855,7 +1058,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
       <motion.a
         whileHover={{ y: -2 }}
-        href="#ecosystem"
+        href="work"
         className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
       >
         SERVICES
@@ -863,15 +1066,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
       <motion.a
         whileHover={{ y: -2 }}
-        href="#ai-lab"
-        className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
-      >
-        AI LAB
-      </motion.a>
-
-      <motion.a
-        whileHover={{ y: -2 }}
-        href="/work"
+        href="/Book"
         className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
       >
         OUR WORK
@@ -1069,6 +1264,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 />
  </div>
       </section>
+      
 <section
   id="services"
   className="relative overflow-hidden bg-[#E6A523] px-5 pb-20 pt-28 sm:px-8 lg:min-h-[500px] lg:px-[7vw] lg:pb-[70px] lg:pt-[145px]"
@@ -1230,7 +1426,351 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     </div>
   </div>
 </section>
+{/* =========================================================
+    TO SHARE — STORYTELLING FORMATS
+========================================================= */}
+<section
+  id="storytelling-formats"
+  className="relative overflow-hidden bg-[#F05A24] text-white"
+>
+  {/* BACKGROUND DEPTH */}
+  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,rgba(163,255,90,0.20),transparent_38%)]" />
 
+  <div className="pointer-events-none absolute left-[-15%] top-[20%] h-[500px] w-[500px] rounded-full bg-[#A3FF5A]/10 blur-[140px]" />
+
+  <div className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-[500px] w-[500px] rounded-full bg-black/20 blur-[120px]" />
+
+  {/* =====================================================
+      DESKTOP
+  ===================================================== */}
+  <div className="relative z-10 hidden min-h-screen flex-col justify-center px-[6vw] py-[120px] lg:flex">
+
+    {/* TITLE */}
+    <div className="mx-auto w-full max-w-[1512px] text-center">
+      
+
+      <div className="flex min-h-[150px] items-center justify-center gap-6 lg:translate-x-[70px]">
+        <span
+          className="text-[100px] uppercase leading-none tracking-[-0.04em] text-white"
+          style={{ fontFamily: 'Anton, sans-serif' }}
+        >
+          THE MEANS TO
+        </span>
+
+       <div className="relative flex h-[150px] min-w-[720px] items-center justify-start overflow-hidden">
+  <span
+    className="text-[130px] uppercase leading-none tracking-[-0.04em] text-[#17752C]"
+    style={{ fontFamily: 'Anton, sans-serif' }}
+  >
+    <ShareTypewriter />
+  </span>
+</div>
+      </div>
+
+      <motion.p
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{
+          duration: 0.8,
+          delay: 0.2,
+        }}
+        viewport={{ once: true }}
+        className="mx-auto mt-5 max-w-[760px] text-[22px] leading-relaxed text-white/65"
+      >
+        From a 15-second scroll stopper to a full documentary.
+      </motion.p>
+    </div>
+
+    {/* =====================================================
+    TIMELINE — DESKTOP
+===================================================== */}
+<motion.div
+  initial={{ opacity: 0, y: 50 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{
+    duration: 1,
+    delay: 0.25,
+    ease: 'easeOut',
+  }}
+  viewport={{
+    once: true,
+    amount: 0.3,
+  }}
+  className="relative mx-auto mt-24 w-full max-w-[1380px]"
+>
+  {/* SHORT / LONG FORM */}
+  <div
+    className="mb-8 flex items-center justify-between text-[14px] uppercase tracking-[0.24em] text-white/45"
+    style={{ fontFamily: 'Anton, sans-serif' }}
+  >
+    <span>Short Form</span>
+
+    <div className="mx-8 h-[1px] flex-1 bg-gradient-to-r from-white/10 via-[#A3FF5A]/50 to-white/10" />
+
+    <span>Long Form</span>
+  </div>
+
+  {/* VIDEO TIMELINE */}
+  <div className="relative">
+    {/* LINE BEHIND CARDS */}
+    <div className="absolute left-[7%] right-[7%] top-[112px] z-0 h-[2px] bg-white/15" />
+
+    <div className="absolute left-[7%] right-[7%] top-[112px] z-0 h-[1px] bg-gradient-to-r from-[#A3FF5A]/20 via-[#A3FF5A] to-white/30 shadow-[0_0_18px_rgba(163,255,90,0.35)]" />
+
+    <div className="relative z-10 grid grid-cols-7 gap-3">
+      {storytellingFormats.map((item, index) => {
+        const isActive = activeFormat === index;
+
+        return (
+          <div
+            key={item.title}
+            className="relative flex flex-col items-center"
+            onMouseEnter={() => setActiveFormat(index)}
+            onMouseLeave={() => setActiveFormat(null)}
+          >
+            {/* VIDEO PREVIEW */}
+            <motion.button
+              type="button"
+              onClick={() =>
+                setActiveSocialVideo(item.video)
+              }
+              animate={{
+                scale: isActive ? 1.12 : 1,
+                y: isActive ? -10 : 0,
+              }}
+              transition={{
+                duration: 0.35,
+                ease: 'easeOut',
+              }}
+              className="group relative h-[190px] w-[150px] overflow-hidden rounded-[18px] border border-white/15 bg-black shadow-[0_18px_45px_rgba(0,0,0,0.30)]"
+              aria-label={`Play ${item.title}`}
+            >
+              {/* LOOPING PREVIEW */}
+              <video
+                src={item.video}
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+
+              {/* DARK DEPTH */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-black/10" />
+
+              {/* LIVE INDICATOR */}
+              <div className="absolute left-3 top-3 flex items-center gap-2 rounded-full border border-white/15 bg-black/35 px-3 py-1.5 backdrop-blur-md">
+                <motion.span
+                  animate={{
+                    opacity: [0.4, 1, 0.4],
+                    scale: [0.85, 1, 0.85],
+                  }}
+                  transition={{
+                    duration: 1.6,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                  className="h-[6px] w-[6px] rounded-full bg-[#A3FF5A] shadow-[0_0_10px_rgba(163,255,90,0.8)]"
+                />
+
+                <span
+                  className="text-[9px] uppercase tracking-[0.18em] text-white/75"
+                  style={{
+                    fontFamily: 'Anton, sans-serif',
+                  }}
+                >
+                  Preview
+                </span>
+              </div>
+
+              {/* PLAY ON HOVER */}
+              <motion.div
+                animate={{
+                  opacity: isActive ? 1 : 0,
+                  scale: isActive ? 1 : 0.75,
+                }}
+                transition={{
+                  duration: 0.25,
+                }}
+                className="absolute inset-0 flex items-center justify-center bg-black/20"
+              >
+                <div className="flex h-[54px] w-[54px] items-center justify-center rounded-full border border-white/35 bg-white/15 text-[18px] text-white shadow-[0_8px_30px_rgba(0,0,0,0.3)] backdrop-blur-xl">
+                  ▶
+                </div>
+              </motion.div>
+
+              {/* FORMAT INSIDE VIDEO */}
+              <div className="absolute bottom-3 left-3 right-3 text-left">
+                <p
+                  className="text-[16px] uppercase leading-none text-white"
+                  style={{
+                    fontFamily: 'Anton, sans-serif',
+                  }}
+                >
+                  
+                </p>
+              </div>
+            </motion.button>
+
+            {/* TIMELINE CONNECTOR */}
+            <div className="relative mt-3 flex h-[27px] items-center justify-center">
+              <div className="absolute top-0 h-[14px] w-[1px] bg-white/25" />
+
+              <motion.div
+                animate={{
+                  scale: isActive ? 1.45 : 1,
+                  backgroundColor: isActive
+                    ? '#A3FF5A'
+                    : '#FFFFFF',
+                  boxShadow: isActive
+                    ? '0 0 28px rgba(163,255,90,0.9)'
+                    : '0 0 0 rgba(163,255,90,0)',
+                }}
+                transition={{
+                  duration: 0.3,
+                }}
+                className="absolute bottom-0 h-[13px] w-[13px] rounded-full border-[3px] border-[#0B5D1E]"
+              />
+            </div>
+
+            {/* LABEL */}
+            <motion.div
+              animate={{
+                opacity:
+                  activeFormat === null || isActive
+                    ? 1
+                    : 0.4,
+                y: isActive ? 3 : 0,
+              }}
+              transition={{
+                duration: 0.3,
+              }}
+              className="mt-3 text-center"
+            >
+              <p
+                className="text-[17px] uppercase leading-tight text-white"
+                style={{
+                  fontFamily: 'Anton, sans-serif',
+                }}
+              >
+                {item.title}
+              </p>
+
+              <p className="mt-2 text-[10px] uppercase tracking-[0.15em] text-white/40">
+                {item.duration}
+              </p>
+            </motion.div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+
+  
+</motion.div>
+  </div>
+
+  {/* =====================================================
+      MOBILE
+  ===================================================== */}
+  <div className="relative z-10 px-5 py-14 lg:hidden">
+
+    {/* MOBILE TITLE */}
+    <div className="text-center">
+
+      <div className="mt-4 flex min-h-[86px] items-center justify-center gap-2 overflow-hidden">
+        <span
+          className="text-[22px] uppercase leading-none text-white"
+          style={{ fontFamily: 'Anton, sans-serif' }}
+        >
+          THE MEANS TO
+        </span>
+
+       <div className="relative flex h-[76px] min-w-[245px] items-center">
+  <span
+    className="text-[52px] uppercase leading-none text-[#17752C]"
+    style={{ fontFamily: 'Anton, sans-serif' }}
+  >
+    <ShareTypewriter />
+  </span>
+</div>
+      </div>
+
+      <p className="mx-auto mt-5 max-w-[330px] text-[16px] leading-relaxed text-white/60">
+        From a 15-second scroll stopper to a full documentary.
+      </p>
+    </div>
+
+    {/* MOBILE RANGE */}
+    <div
+      className="mt-14 flex items-center justify-between text-[11px] uppercase tracking-[0.2em] text-white/40"
+      style={{ fontFamily: 'Anton, sans-serif' }}
+    >
+      <span>Short Form</span>
+
+      <span>Swipe →</span>
+
+      <span>Long Form</span>
+    </div>
+
+    {/* MOBILE CAROUSEL */}
+    <div className="-mx-5 mt-6 overflow-x-auto px-5 pb-6 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      <div className="flex w-max gap-4">
+        {storytellingFormats.map((item, index) => (
+          <motion.button
+            key={item.title}
+            type="button"
+            whileTap={{
+              scale: 0.98,
+            }}
+            onClick={() =>
+              setActiveSocialVideo(item.video)
+            }
+            className="relative h-[360px] w-[245px] shrink-0 overflow-hidden rounded-[22px] border border-white/15 bg-black text-left"
+          >
+            <video
+              src={item.video}
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              className="h-full w-full object-cover"
+            />
+
+            <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/10 to-transparent" />
+
+            {/* NUMBER */}
+            <div className="absolute left-5 top-5 flex h-9 w-9 items-center justify-center rounded-full border border-white/20 bg-black/20 text-[12px] text-white backdrop-blur-md">
+              {String(index + 1).padStart(2, '0')}
+            </div>
+
+            {/* PLAY */}
+            <div className="absolute left-1/2 top-1/2 flex h-[56px] w-[56px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-white/15 text-[18px] backdrop-blur-xl">
+              ▶
+            </div>
+
+            {/* TEXT */}
+            <div className="absolute bottom-5 left-5 right-5">
+              <p
+                className="text-[28px] uppercase leading-none text-white"
+                style={{
+                  fontFamily: 'Anton, sans-serif',
+                }}
+              >
+                {item.title}
+              </p>
+
+              <p className="mt-2 text-[11px] uppercase tracking-[0.16em] text-white/50">
+                {item.duration}
+              </p>
+            </div>
+          </motion.button>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
 <section
   ref={ecosystemRef}
   id="ecosystem"
@@ -1248,7 +1788,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         duration: 1.2,
         ease: 'easeOut',
       }}
-      viewport={{ once: true, amount: 0.35 }}
+      viewport={{ once: true, amount: 0.15 }}
       className="relative z-20 text-center text-[46px] font-normal uppercase leading-[0.95] tracking-[-0.02em] text-white sm:text-[58px] md:text-[68px] lg:absolute lg:top-[18%] lg:text-[90px]"
       style={{ fontFamily: 'Anton, sans-serif' }}
     >
@@ -1396,7 +1936,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
     {/* CTA */}
     <motion.a
-      href="/contact"
+      href="/work"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{
@@ -1421,152 +1961,204 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 </section>
 <section
   id="sequence"
-  className="relative min-h-screen overflow-hidden bg-black md:h-[190vh]"
+  className="relative min-h-screen bg-black md:h-[240vh]"
 >
-  {/* MOBILE STATIC IMAGE */}
-  <img
-    src="/frames/sequence/frame-0101.jpg"
-    alt=""
-    aria-hidden="true"
-    draggable={false}
-    className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center md:hidden"
-  />
+  {/* =====================================================
+      MOBILE
+      SE QUEDA ESTÁTICO
+  ===================================================== */}
 
-  {/* DESKTOP FINAL BACKGROUND */}
-  <div
-    className="pointer-events-none absolute inset-0 hidden md:block"
-    style={{
-      backgroundImage: "url('/frames/sequence/frame-0101.jpg')",
-      backgroundSize: '100.04% auto',
-      backgroundPosition: 'center bottom',
-      backgroundRepeat: 'no-repeat',
-      backgroundColor: 'black',
-    }}
-  />
+  <div className="relative min-h-screen overflow-hidden md:hidden">
+    {/* MOBILE STATIC IMAGE */}
+    <img
+      src="/frames/sequence2/frame-0001.jpg"
+      alt=""
+      aria-hidden="true"
+      draggable={false}
+      className="pointer-events-none absolute inset-0 h-full w-full object-cover object-center"
+    />
 
-  {/* DESKTOP FRAME SEQUENCE */}
+    {/* MOBILE DARK OVERLAY */}
+    <div className="pointer-events-none absolute inset-0 z-[55] bg-black/60" />
+
+    <div className="relative z-[65] flex min-h-screen flex-col justify-center px-5 pb-20 pt-28">
+      {/* MOBILE LEFT TEXT */}
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 35,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 1.2,
+          ease: 'easeOut',
+        }}
+        viewport={{
+          once: true,
+          amount: 0.3,
+        }}
+        className="relative z-[70] max-w-[420px]"
+      >
+        <h2
+          className="text-[54px] uppercase leading-[0.92] tracking-[-0.03em] text-white sm:text-[66px]"
+          style={{ fontFamily: 'Anton, sans-serif' }}
+        >
+          OUR
+          <br />
+          CREATIVE HUB
+        </h2>
+
+        <p className="mt-6 max-w-[340px] text-[17px] leading-relaxed text-white/75 sm:text-[18px]">
+          Integrated prop house, prelight kitchen sets.
+        </p>
+      </motion.div>
+
+      {/* MOBILE RIGHT TEXT */}
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 35,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 1.2,
+          delay: 0.15,
+          ease: 'easeOut',
+        }}
+        viewport={{
+          once: true,
+          amount: 0.3,
+        }}
+        className="relative z-[70] mt-12 max-w-[360px] text-left"
+      >
+        <h3
+          className="text-[32px] uppercase leading-[1] tracking-[-0.02em] text-[#FFE3AC] sm:text-[36px]"
+          style={{ fontFamily: 'Anton, sans-serif' }}
+        >
+          15+ MODULAR KITCHENS
+        </h3>
+
+        <p className="mt-5 text-[17px] leading-relaxed text-white/70">
+          All-in-One Remote Production Studio.
+        </p>
+      </motion.div>
+
+      {/* MOBILE CTA */}
+      <motion.button
+        type="button"
+        onClick={() =>
+          setActiveSocialVideo(
+            '/videos/creative-hub.mp4'
+          )
+        }
+        initial={{
+          opacity: 0,
+          y: 50,
+        }}
+        whileInView={{
+          opacity: 1,
+          y: 0,
+        }}
+        transition={{
+          duration: 1,
+          delay: 0.35,
+          ease: 'easeOut',
+        }}
+        viewport={{
+          once: true,
+          amount: 0.3,
+        }}
+        whileTap={{
+          scale: 0.96,
+        }}
+        className="relative z-[80] mx-auto mt-14 flex w-fit items-center justify-center rounded-[18px] bg-white px-8 py-4 text-[24px] uppercase text-black shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
+        style={{ fontFamily: 'Anton, sans-serif' }}
+      >
+        Welcome to our Space
+      </motion.button>
+    </div>
+  </div>
+
+  {/* =====================================================
+    DESKTOP SEQUENCE VIEWPORT
+===================================================== */}
+<div
+  id="sequence-viewport"
+  className="pointer-events-none absolute left-0 top-0 hidden h-screen w-full overflow-hidden md:block"
+>
+  {/* CANVAS */}
   <canvas
     ref={sequenceCanvasRef}
-    className={
-      sequenceActive
-        ? 'fixed left-0 top-0 z-[50] hidden h-screen w-screen md:block'
-        : 'absolute left-0 top-0 z-[50] hidden h-screen w-screen md:block'
-    }
+    className="absolute inset-0 z-[50] h-full w-full"
   />
 
-  {/* MOBILE DARK OVERLAY */}
-  <div className="pointer-events-none absolute inset-0 z-[55] bg-black/60 md:hidden" />
+  {/* DEPTH */}
+  <div className="pointer-events-none absolute inset-0 z-[55] bg-black/10" />
 
-  {/* DESKTOP SIDE GRADIENTS */}
-  <div className="pointer-events-none absolute left-0 top-0 z-[60] hidden h-full w-[32%] bg-gradient-to-r from-black/90 via-black/45 to-transparent md:block" />
+  {/* LEFT GRADIENT */}
+  <div className="pointer-events-none absolute left-0 top-0 z-[60] h-full w-[34%] bg-gradient-to-r from-black/85 via-black/40 to-transparent" />
 
-  <div className="pointer-events-none absolute right-0 top-0 z-[60] hidden h-full w-[32%] bg-gradient-to-l from-black/90 via-black/45 to-transparent md:block" />
+  {/* RIGHT GRADIENT */}
+  <div className="pointer-events-none absolute right-0 top-0 z-[60] h-full w-[34%] bg-gradient-to-l from-black/85 via-black/40 to-transparent" />
 
-  <div className="relative z-[65] mx-auto flex min-h-screen w-full max-w-[1510px] flex-col justify-center px-5 pb-20 pt-28 sm:px-8 md:block md:h-full md:min-h-0 md:px-0 md:pb-0 md:pt-0">
+  {/* =====================================================
+      MOVING CONTENT
+  ===================================================== */}
+  <div
+    id="sequence-content"
+    className="absolute inset-0 z-[70]"
+  >
     {/* LEFT TEXT */}
-    <motion.div
-      initial={{
-        opacity: 0,
-        x: isMobile ? 0 : -80,
-        y: isMobile ? 35 : 0,
-      }}
-      whileInView={{
-        opacity: 1,
-        x: 0,
-        y: 0,
-      }}
-      transition={{
-        duration: 1.2,
-        ease: 'easeOut',
-      }}
-      viewport={{
-        once: true,
-        amount: 0.3,
-      }}
-      className="relative z-[70] max-w-[420px] md:absolute md:left-[6vw] md:top-1/2 md:-translate-y-1/2"
-    >
+    <div className="absolute left-[6vw] top-[82%] max-w-[420px] -translate-y-1/2">
       <h2
-        className="text-[54px] uppercase leading-[0.92] tracking-[-0.03em] text-white sm:text-[66px] md:text-[82px]"
+        className="text-[82px] uppercase leading-[0.9] tracking-[-0.04em] text-white"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
-        WE BUILD
+        OUR
         <br />
-        FOOD STORIES
+        CREATIVE HUB
       </h2>
 
-      <p className="mt-6 max-w-[340px] text-[17px] leading-relaxed text-white/75 sm:text-[18px]">
-        Cinematic visuals crafted to make food unforgettable.
+      <p className="mt-6 max-w-[340px] text-[18px] leading-relaxed text-white/75">
+        Integrated prop house, prelight kitchen sets.
       </p>
-    </motion.div>
+    </div>
 
     {/* RIGHT TEXT */}
-    <motion.div
-      initial={{
-        opacity: 0,
-        x: isMobile ? 0 : 80,
-        y: isMobile ? 35 : 0,
-      }}
-      whileInView={{
-        opacity: 1,
-        x: 0,
-        y: 0,
-      }}
-      transition={{
-        duration: 1.2,
-        delay: 0.15,
-        ease: 'easeOut',
-      }}
-      viewport={{
-        once: true,
-        amount: 0.3,
-      }}
-      className="relative z-[70] mt-12 max-w-[360px] text-left md:absolute md:right-[6vw] md:top-1/2 md:mt-0 md:-translate-y-1/2 md:text-right"
-    >
+    <div className="absolute right-[6vw] top-[82%] max-w-[380px] -translate-y-1/2 text-right">
       <h3
-        className="text-[32px] uppercase leading-[1] tracking-[-0.02em] text-[#FFE3AC] sm:text-[36px] md:text-[42px]"
+        className="text-[56px] uppercase leading-[0.95] tracking-[-0.03em] text-[#FFE3AC]"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
-        FRAME BY FRAME
+        15+ MODULAR
+        <br />
+        KITCHENS
       </h3>
 
-      <p className="mt-5 text-[17px] leading-relaxed text-white/70">
-        Designed to feel immersive, dynamic, and alive through motion.
+      <p className="mt-5 text-[18px] leading-relaxed text-white/70">
+        All-in-One Remote Production Studio.
       </p>
-    </motion.div>
+    </div>
 
     {/* CTA */}
-    <motion.button
+    <button
       type="button"
-      initial={{
-        opacity: 0,
-        y: 50,
-      }}
-      whileInView={{
-        opacity: 1,
-        y: 0,
-      }}
-      transition={{
-        duration: 1,
-        delay: 0.35,
-        ease: 'easeOut',
-      }}
-      viewport={{
-        once: true,
-        amount: 0.3,
-      }}
-      whileHover={{
-        scale: 1.05,
-        y: -4,
-      }}
-      whileTap={{
-        scale: 0.96,
-      }}
-      className="relative z-[80] mx-auto mt-14 flex w-fit items-center justify-center rounded-[18px] bg-white px-8 py-4 text-[24px] uppercase text-black shadow-[0_12px_40px_rgba(0,0,0,0.35)] md:absolute md:bottom-[20%] md:left-1/2 md:mt-0 md:-translate-x-1/2 md:px-10 md:text-[28px]"
+      onClick={() =>
+        setActiveSocialVideo('/videos/creative-hub.mp4')
+      }
+      className="pointer-events-auto absolute bottom-[12%] left-1/2 -translate-x-1/2 rounded-[18px] bg-white px-10 py-4 text-[28px] uppercase text-black shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:scale-105"
       style={{ fontFamily: 'Anton, sans-serif' }}
     >
-      Watch The Story
-    </motion.button>
+      Welcome to our Space
+    </button>
   </div>
+</div>
 </section>
 <section
   id="social-media"
@@ -1601,19 +2193,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         viewport={{ once: true }}
         className="mt-7 max-w-[520px] text-[18px] font-bold uppercase leading-snug text-white sm:text-[21px] md:mt-8 md:text-[24px]"
       >
-        MULTI-PLATFORM CONTENT + SCROLL-STOPPING VIRALITY
+        MULTI-PLATFORM CONTENT DESING SCROLL-STOPPING VIRALITY
       </motion.p>
 
-      <motion.p
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: 0.35 }}
-        viewport={{ once: true }}
-        className="mt-6 max-w-[580px] text-[17px] leading-relaxed text-white/75 sm:text-[18px] md:mt-8 md:text-[20px]"
-      >
-        We create platform-native food content designed for reach, retention,
-        community, and conversion across the channels where culture moves fastest.
-      </motion.p>
     </div>
 
     {/* MOBILE SOCIAL ROWS */}
@@ -1784,7 +2366,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
       className="relative z-20 mx-auto mt-14 flex w-full max-w-[340px] items-center justify-center rounded-[14px] border border-[#3F8DFF] bg-[#3F8DFF]/10 px-6 py-4 text-center text-[20px] uppercase text-white shadow-[0_0_35px_rgba(63,141,255,0.22)] md:hidden"
       style={{ fontFamily: 'Anton, sans-serif' }}
     >
-      LET&apos;S CREATE VIRAL FOOD CONTENT
+    Let´s Go Viral!
     </motion.a>
   </div>
 
@@ -1841,24 +2423,75 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
       </text>
     </svg>
 
-    {/* CENTER CORE */}
-    <div className="group absolute left-1/2 top-1/2 z-[20] flex h-[96px] w-[96px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-[radial-gradient(circle,#ffffff,#dfe8ff)] shadow-[0_0_70px_rgba(79,163,255,0.35)] transition-all duration-300 hover:scale-105 hover:shadow-[0_0_28px_rgba(255,255,255,0.95),0_0_90px_rgba(79,163,255,0.55)]">
-      <div className="flex flex-col items-center justify-center leading-none">
-        <span
-          className="text-[17px] uppercase tracking-[0.08em] text-[#031B50] transition-all duration-300 group-hover:text-[#0A2C78]"
-          style={{ fontFamily: 'Anton, sans-serif' }}
-        >
-          YOUR
-        </span>
+   {/* CENTER CORE */}
+<motion.div
+  animate={{
+    scale: [1, 1.015, 1.03, 1.015, 1],
+    boxShadow: [
+      "0 0 18px rgba(63,141,255,0.12)",
+      "0 0 28px rgba(63,141,255,0.22)",
+      "0 0 52px rgba(63,141,255,0.42)",
+      "0 0 28px rgba(63,141,255,0.22)",
+      "0 0 18px rgba(63,141,255,0.12)",
+    ],
+  }}
+  transition={{
+    duration: 3.5,
+    repeat: Infinity,
+    ease: "easeInOut",
+  }}
+  className="absolute left-1/2 top-1/2 z-[30] flex h-[120px] w-[120px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-white via-[#F5F9FF] to-[#DCE9FF]"
+>
+  {/* Glow */}
+  <motion.div
+    animate={{
+      opacity: [0.15, 0.3, 0.55, 0.3, 0.15],
+      scale: [1, 1.08, 1.18, 1.08, 1],
+    }}
+    transition={{
+      duration: 3.5,
+      repeat: Infinity,
+      ease: "easeInOut",
+    }}
+    className="absolute inset-0 rounded-full bg-[#4FA3FF] blur-2xl"
+  />
 
-        <span
-          className="mt-1 text-[18px] uppercase tracking-[0.08em] text-[#031B50] transition-all duration-300 group-hover:text-[#0A2C78]"
-          style={{ fontFamily: 'Anton, sans-serif' }}
-        >
-          BRAND
-        </span>
-      </div>
-    </div>
+  {/* White Core */}
+  <div className="absolute inset-[8px] rounded-full bg-gradient-to-br from-white via-[#F8FBFF] to-[#E8F1FF]" />
+
+  {/* Text */}
+  <div className="relative z-10 flex flex-col items-center leading-none">
+    <motion.span
+      animate={{
+        opacity: [0.75, 0.9, 1, 0.9, 0.75],
+      }}
+      transition={{
+        duration: 5.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="text-[17px] uppercase tracking-[0.08em] text-[#031B50]"
+      style={{ fontFamily: "Anton, sans-serif" }}
+    >
+      YOUR
+    </motion.span>
+
+    <motion.span
+      animate={{
+        opacity: [0.75, 0.9, 1, 0.9, 0.75],
+      }}
+      transition={{
+        duration: 5.5,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+      className="mt-1 text-[18px] uppercase tracking-[0.08em] text-[#031B50]"
+      style={{ fontFamily: "Anton, sans-serif" }}
+    >
+      BRAND
+    </motion.span>
+  </div>
+</motion.div>
 
     {/* ORBIT 1 */}
     <motion.div
@@ -2017,7 +2650,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     className="relative z-10 mt-12 hidden w-fit rounded-[14px] border border-[#3F8DFF] bg-[#3F8DFF]/10 px-9 py-4 text-[22px] uppercase text-white shadow-[0_0_35px_rgba(63,141,255,0.22)] md:block md:ml-[6vw]"
     style={{ fontFamily: 'Anton, sans-serif' }}
   >
-    LET&apos;S CREATE VIRAL FOOD CONTENT
+    Let´s Go Viral!
   </motion.a>
 </section>
 <section
@@ -2029,27 +2662,38 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_35%,rgba(168,85,247,0.18),transparent_34%),radial-gradient(circle_at_80%_20%,rgba(124,58,237,0.10),transparent_28%),radial-gradient(circle_at_20%_80%,rgba(168,85,247,0.08),transparent_30%)]" />
 
   <div className="relative mx-auto flex w-full max-w-[1512px] flex-col gap-14 lg:min-h-[85vh] lg:flex-row lg:items-center lg:justify-between lg:gap-8">
-    {/* LEFT */}
+
+    {/* =====================================================
+        LEFT — AI TASTE LAB
+        MOBILE: 1
+        DESKTOP: 1
+    ===================================================== */}
     <motion.div
       initial={{ opacity: 0, y: 35 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: 'easeOut' }}
       viewport={{ once: true, amount: 0.25 }}
-      className="relative z-20 w-full text-center lg:max-w-[320px] lg:text-left"
+      className="relative z-20 order-1 w-full text-center lg:order-1 lg:max-w-[320px] lg:text-left"
     >
       <h2
         className="text-[82px] uppercase leading-[0.86] tracking-[-0.05em] text-white sm:text-[96px] lg:mt-6 lg:text-[120px]"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
-        <span className="text-[#C084FC]">AI</span>
+        <span className="text-[#C084FC]">
+          AI
+        </span>
 
         <br />
 
-        <span className="text-white">TASTE</span>
+        <span className="text-white">
+          TASTE
+        </span>
 
         <br />
 
-        <span className="text-white">LAB</span>
+        <span className="text-white">
+          LAB
+        </span>
       </h2>
 
       <p className="mx-auto mt-6 max-w-[320px] text-[17px] leading-relaxed text-white/60 sm:text-[18px] lg:mx-0 lg:mt-8">
@@ -2058,6 +2702,11 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
       <button
         type="button"
+        onClick={() =>
+          setActiveSocialVideo(
+            '/videos web/principal/ai-reel.mp4'
+          )
+        }
         className="mt-8 rounded-[16px] border border-[#C084FC]/30 bg-[#12071F] px-7 py-4 text-[18px] uppercase text-[#E9D5FF] transition hover:border-[#C084FC] hover:bg-[#1B0B2B] sm:text-[20px] lg:mt-10 lg:px-8"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
@@ -2065,67 +2714,80 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
       </button>
     </motion.div>
 
-    {/* CENTER VISUAL */}
-<div className="relative z-10 flex w-full flex-col items-center justify-center lg:flex-1">
-  <motion.div
-    initial={{
-      opacity: 0,
-      scale: isMobile ? 0.92 : 1.99,
-      y: 40,
-    }}
-    animate={
-      aiLabInView
-        ? {
-            opacity: 1,
-            scale: 1,
-            y: 0,
-          }
-        : {
-            opacity: 0,
-            scale: isMobile ? 0.92 : 2.92,
-            y: 40,
-          }
-    }
-    transition={{
-      duration: 1,
-      delay: 0.35,
-      ease: 'easeOut',
-    }}
-    className="flex w-full flex-col items-center"
-  >
-    <div className="mb-6 flex flex-col items-center sm:mb-8">
-      <span
-        className={`text-center text-[30px] uppercase tracking-[0.12em] text-[#C084FC] sm:text-[38px] lg:text-[48px] lg:tracking-[0.15em] ${anton.className}`}
+    {/* =====================================================
+        BURGER COMPARATOR
+        MOBILE: 2
+        DESKTOP: 3 — RIGHT SIDE
+    ===================================================== */}
+    <div className="relative z-10 order-2 flex w-full flex-col items-center justify-center lg:order-3 lg:flex-1">
+      <motion.div
+        initial={{
+          opacity: 0,
+          scale: isMobile ? 0.9 : 1.99,
+          y: 40,
+        }}
+        animate={
+          aiLabInView
+            ? {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+              }
+            : {
+                opacity: 0,
+                scale: isMobile ? 0.9 : 2.92,
+                y: 40,
+              }
+        }
+        transition={{
+          duration: 1,
+          delay: 0.35,
+          ease: 'easeOut',
+        }}
+        className="flex w-full flex-col items-center"
       >
-        MIXED REALITY
-      </span>
+        <div className="mb-6 flex flex-col items-center sm:mb-8">
+          <span
+            className={`text-center text-[30px] uppercase tracking-[0.12em] text-[#C084FC] sm:text-[38px] lg:text-[48px] lg:tracking-[0.15em] ${anton.className}`}
+          >
+            MIXED REALITY
+          </span>
 
-      <div className="mt-4 h-[1px] w-[140px] bg-gradient-to-r from-transparent via-[#C084FC]/70 to-transparent sm:w-[180px]" />
+          <div className="mt-4 h-[1px] w-[140px] bg-gradient-to-r from-transparent via-[#C084FC]/70 to-transparent sm:w-[180px]" />
+        </div>
+
+        {/* RESPONSIVE COMPARATOR */}
+        <div className="mt-3 w-full max-w-[360px] sm:mt-0 sm:max-w-[460px] lg:max-w-[560px]">
+          <BurgerBeforeAfter />
+        </div>
+      </motion.div>
     </div>
 
-    {/* RESPONSIVE COMPARATOR */}
-    <div className="mt-3 w-full max-w-[360px] sm:mt-0 sm:max-w-[460px] lg:max-w-[560px]">
-  <BurgerBeforeAfter />
-</div>
-  </motion.div>
-</div>
-    {/* RIGHT SIDE */}
-    <div className="relative z-20 grid w-full gap-4 sm:grid-cols-3 lg:flex lg:w-[340px] lg:flex-col lg:gap-5">
+    {/* =====================================================
+        BOXES
+        MOBILE: 3
+        DESKTOP: 2 — CENTER / LEFT OF BURGER
+    ===================================================== */}
+    <div className="relative z-20 order-3 grid w-full gap-4 sm:grid-cols-3 lg:order-2 lg:flex lg:w-[340px] lg:flex-col lg:gap-5">
       {[
-        ['WE MAKE IT', '', 0.4],
-        ['', 'Whatever', 0.95],
-        ['', 'It Takes', 1.5],
+        ['We Do', '', 0.4],
+        ['', 'Whatever It Takes', 0.95],
+        ['', 'To Make It', 1.5],
+        ['', 'Happen', 2.05],
       ].map(([title, text, delay], i) => (
         <motion.div
           key={`${title}-${text}-${i}`}
           initial={{
-            borderColor: 'rgba(255,255,255,0.10)',
-            boxShadow: '0 0 0 rgba(192,132,252,0)',
+            borderColor:
+              'rgba(255,255,255,0.10)',
+            boxShadow:
+              '0 0 0 rgba(192,132,252,0)',
           }}
           animate={
             aiLabInView
               ? {
-                  borderColor: 'rgba(192,132,252,0.75)',
+                  borderColor:
+                    'rgba(192,132,252,0.75)',
                   boxShadow:
                     '0 0 34px rgba(192,132,252,0.28)',
                 }
@@ -2136,8 +2798,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
             delay: delay as number,
             ease: 'easeOut',
           }}
-          className="relative min-h-[115px] rounded-[18px] border bg-white/[0.03] p-5 backdrop-blur-xl sm:min-h-[145px] lg:min-h-0"
+          className="relative min-h-[115px] rounded-[18px] border bg-white/[0.03] p-5 backdrop-blur-xl sm:min-h-[145px] lg:min-h-[110px]"
         >
+          {/* PULSE BORDER */}
           <motion.div
             className="pointer-events-none absolute -inset-[2px] rounded-[20px] border border-[#C084FC]/70"
             animate={
@@ -2165,7 +2828,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
           <div className="relative z-10 flex h-full flex-col items-center justify-center">
             {title && (
               <p
-                className={`text-center text-[24px] uppercase tracking-[0.14em] text-[#C084FC] sm:text-[26px] lg:text-[34px] lg:tracking-[0.18em] ${anton.className}`}
+                className={`text-center text-[24px] uppercase tracking-[0.14em] text-[#C084FC] sm:text-[26px] lg:text-[30px] lg:tracking-[0.16em] ${anton.className}`}
               >
                 {title}
               </p>
@@ -2173,7 +2836,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
             {text && (
               <p
-                className={`text-center text-[30px] leading-tight text-white/80 sm:text-[32px] lg:mt-1 lg:text-[38px] lg:leading-relaxed ${anton.className}`}
+                className={`text-center text-[30px] leading-tight text-white/80 sm:text-[32px] lg:text-[30px] lg:leading-tight ${anton.className}`}
               >
                 {text}
               </p>

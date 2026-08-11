@@ -192,21 +192,14 @@ export default function ContactPage() {
               </a>
 
               <a
-                href="/#ecosystem"
+                href="/work"
                 className="hover:text-[#FFE3AC]"
               >
                 SERVICES
               </a>
 
               <a
-                href="/#ai-lab"
-                className="hover:text-[#FFE3AC]"
-              >
-                AI LAB
-              </a>
-
-              <a
-                href="/work"
+                href="/Book"
                 className="hover:text-[#FFE3AC]"
               >
                 OUR WORK
@@ -216,7 +209,7 @@ export default function ContactPage() {
                 href="/about"
                 className="hover:text-[#FFE3AC]"
               >
-                ABOUT
+                ABOUT US
               </a>
 
               <a
