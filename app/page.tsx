@@ -1066,7 +1066,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
       <motion.a
         whileHover={{ y: -2 }}
-        href="/Book-"
+        href="/Book"
         className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
       >
         OUR WORK

@@ -42,259 +42,326 @@ type WorkItem = {
 ========================================================= */
 
 const workItems: WorkItem[] = [
-  {
-    type: 'image',
-    src: '/work/project-01.jpg',
-    title: 'Project 01',
-    category: 'Photography',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-02.jpg',
-    title: 'Project 02',
-    category: 'Campaign',
-    aspect: 'square',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-03.jpg',
-    title: 'Project 03',
-    category: 'Food Styling',
-    aspect: 'tall',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-04.jpg',
-    title: 'Project 04',
-    category: 'Commercial',
-    aspect: 'horizontal',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-01.jpg',
-    title: 'Project 05',
-    category: 'Photography',
-    aspect: 'tall',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-02.jpg',
-    title: 'Project 06',
-    category: 'Social Media',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-03.jpg',
-    title: 'Project 07',
-    category: 'Branded Content',
-    aspect: 'square',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-04.jpg',
-    title: 'Project 08',
-    category: 'Art Direction',
-    aspect: 'horizontal',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-01.jpg',
-    title: 'Project 09',
-    category: 'Photography',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-02.jpg',
-    title: 'Project 10',
-    category: 'Campaign',
-    aspect: 'tall',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-03.jpg',
-    title: 'Project 11',
-    category: 'Food Styling',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-04.jpg',
-    title: 'Project 12',
-    category: 'Commercial',
-    aspect: 'square',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-01.jpg',
-    title: 'Project 13',
-    category: 'Creative Development',
-    aspect: 'horizontal',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-02.jpg',
-    title: 'Project 14',
-    category: 'Social Media',
-    aspect: 'tall',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-03.jpg',
-    title: 'Project 15',
-    category: 'Brand Film',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-04.jpg',
-    title: 'Project 16',
-    category: 'Photography',
-    aspect: 'horizontal',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-01.jpg',
-    title: 'Project 17',
-    category: 'Food Styling',
-    aspect: 'square',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-02.jpg',
-    title: 'Project 18',
-    category: 'Campaign',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-03.jpg',
-    title: 'Project 19',
-    category: 'Social Media',
-    aspect: 'tall',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-04.jpg',
-    title: 'Project 20',
-    category: 'Art Direction',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-01.jpg',
-    title: 'Project 21',
-    category: 'Photography',
-    aspect: 'horizontal',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-02.jpg',
-    title: 'Project 22',
-    category: 'Branded Content',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-03.jpg',
-    title: 'Project 23',
-    category: 'Commercial',
-    aspect: 'square',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-04.jpg',
-    title: 'Project 24',
-    category: 'Photography',
-    aspect: 'tall',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-01.jpg',
-    title: 'Project 25',
-    category: 'Food Styling',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-02.jpg',
-    title: 'Project 26',
-    category: 'Documentary',
-    aspect: 'horizontal',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-03.jpg',
-    title: 'Project 27',
-    category: 'Social Media',
-    aspect: 'vertical',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-04.jpg',
-    title: 'Project 28',
-    category: 'Brand Film',
-    aspect: 'square',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-01.jpg',
-    title: 'Project 29',
-    category: 'Campaign',
-    aspect: 'tall',
-  },
-
-  {
-    type: 'image',
-    src: '/work/project-02.jpg',
-    title: 'Project 30',
-    category: 'Photography',
-    aspect: 'vertical',
-  },
-
-  /*
-  EJEMPLO DE VIDEO REAL:
-
+  // =====================================================
+  // 01 — HORIZONTAL / COMMERCIAL
+  // =====================================================
   {
     type: 'video',
-    src: '/videos book/campbells.mp4',
-    title: 'Campbell’s',
+    src: '/videos web/horizontal/bernina.mp4',
+    title: 'Bernina',
     category: 'Commercial',
     aspect: 'horizontal',
   },
-  */
-];
 
+  // 02 — VERTICAL / SOCIAL
+  {
+    type: 'video',
+    src: '/videos web/vertical/margarita de piña.mp4',
+    title: 'Margarita de Piña',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // 03 — HORIZONTAL
+  {
+    type: 'video',
+    src: '/videos web/horizontal/duncan_hines.mp4',
+    title: 'Duncan Hines',
+    category: 'Commercial',
+    aspect: 'horizontal',
+  },
+
+  // 04 — VERTICAL
+  {
+    type: 'video',
+    src: '/videos web/vertical/toque gourmet.mp4',
+    title: 'Toque Gourmet',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // 05 — HORIZONTAL / AI
+  {
+    type: 'video',
+    src: '/videos web/horizontal/mahatma_ia.mp4',
+    title: 'Mahatma',
+    category: 'AI + Food',
+    aspect: 'horizontal',
+  },
+
+  // 06 — VERTICAL
+  {
+    type: 'video',
+    src: '/videos web/vertical/pollo y arroz.mp4',
+    title: 'Pollo y Arroz',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // 07 — HORIZONTAL
+  {
+    type: 'video',
+    src: '/videos web/horizontal/frappe_mazapan.mp4',
+    title: 'Frappé Mazapán',
+    category: 'Food Film',
+    aspect: 'horizontal',
+  },
+
+  // 08 — VERTICAL
+  {
+    type: 'video',
+    src: '/videos web/vertical/tequila cask.mp4',
+    title: 'Tequila Cask',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // 09 — HORIZONTAL
+  {
+    type: 'video',
+    src: '/videos web/horizontal/walmart_carolina.mp4',
+    title: 'Walmart',
+    category: 'Commercial',
+    aspect: 'horizontal',
+  },
+
+  // 10 — VERTICAL
+  {
+    type: 'video',
+    src: '/videos web/vertical/tablas y tapas.mp4',
+    title: 'Tablas y Tapas',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // =====================================================
+  // SECOND BLOCK
+  // =====================================================
+
+  // 11
+  {
+    type: 'video',
+    src: '/videos web/horizontal/isadora.mp4',
+    title: 'Isadora',
+    category: 'Commercial',
+    aspect: 'horizontal',
+  },
+
+  // 12
+  {
+    type: 'video',
+    src: '/videos web/middle ring/nespresso.mp4',
+    title: 'Nespresso',
+    category: 'Branded Content',
+    aspect: 'vertical',
+  },
+
+  // 13
+  {
+    type: 'video',
+    src: '/videos web/horizontal/mckormick.mp4',
+    title: 'McCormick',
+    category: 'Commercial',
+    aspect: 'horizontal',
+  },
+
+  // 14
+  {
+    type: 'video',
+    src: '/videos web/middle ring/quaker.mp4',
+    title: 'Quaker',
+    category: 'Branded Content',
+    aspect: 'vertical',
+  },
+
+  // 15
+  {
+    type: 'video',
+    src: '/videos web/horizontal/turmix_ia.mp4',
+    title: 'Turmix',
+    category: 'AI + Food',
+    aspect: 'horizontal',
+  },
+
+  // 16
+  {
+    type: 'video',
+    src: '/videos web/vertical/momento improvisado.mp4',
+    title: 'Momento Improvisado',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // 17
+  {
+    type: 'video',
+    src: '/videos web/horizontal/vino.mp4',
+    title: 'Wine',
+    category: 'Food Film',
+    aspect: 'horizontal',
+  },
+
+  // 18
+  {
+    type: 'video',
+    src: '/videos web/middle ring/te_chai_asmr.mp4',
+    title: 'Chai ASMR',
+    category: 'ASMR',
+    aspect: 'vertical',
+  },
+
+  // 19
+  {
+    type: 'video',
+    src: '/videos web/horizontal/cereales.mp4',
+    title: 'Cereales',
+    category: 'Food Film',
+    aspect: 'horizontal',
+  },
+
+  // 20
+  {
+    type: 'video',
+    src: '/videos web/vertical/afilar con piedra.mp4',
+    title: 'Afilar con Piedra',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // =====================================================
+  // THIRD BLOCK
+  // =====================================================
+
+  // 21
+  {
+    type: 'video',
+    src: '/videos web/middle ring/campbells.mp4',
+    title: "Campbell's",
+    category: 'Branded Content',
+    aspect: 'vertical',
+  },
+
+  // 22
+  {
+    type: 'video',
+    src: '/videos web/horizontal/mahatma_ia2.mp4',
+    title: 'Mahatma AI',
+    category: 'AI + Food',
+    aspect: 'horizontal',
+  },
+
+  // 23
+  {
+    type: 'video',
+    src: '/videos web/middle ring/momentos_magicos.mp4',
+    title: 'Momentos Mágicos',
+    category: 'Branded Content',
+    aspect: 'vertical',
+  },
+
+  // 24
+  {
+    type: 'video',
+    src: '/timeline/tv-ads.mp4',
+    title: 'TV Ads',
+    category: 'Commercial',
+    aspect: 'horizontal',
+  },
+
+  // 25
+  {
+    type: 'video',
+    src: '/timeline/tiktok.mp4',
+    title: 'TikTok',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // 26
+  {
+    type: 'video',
+    src: '/timeline/branded-content.mp4',
+    title: 'Branded Content',
+    category: 'Branded Content',
+    aspect: 'horizontal',
+  },
+
+  // 27
+  {
+    type: 'video',
+    src: '/timeline/reel.mp4',
+    title: 'Reels',
+    category: 'Social Content',
+    aspect: 'vertical',
+  },
+
+  // 28
+  {
+    type: 'video',
+    src: '/timeline/campaign.mp4',
+    title: 'Campaign',
+    category: 'Campaign',
+    aspect: 'horizontal',
+  },
+
+  // 29
+  {
+    type: 'video',
+    src: '/timeline/brand-film.mp4',
+    title: 'Brand Film',
+    category: 'Brand Film',
+    aspect: 'horizontal',
+  },
+
+  // =====================================================
+  // FEATURE / REELS
+  // =====================================================
+
+  // 30
+  {
+    type: 'video',
+    src: '/videos web/principal/ai-reel.mp4',
+    title: 'AI Reel',
+    category: 'AI + Food',
+    aspect: 'horizontal',
+  },
+
+  // 31
+  {
+    type: 'video',
+    src: '/videos web/principal/reel_bebidas.mp4',
+    title: 'Beverage Reel',
+    category: 'Food Film',
+    aspect: 'horizontal',
+  },
+
+  // 32
+  {
+    type: 'video',
+    src: '/videos web/principal/reel_platos.mp4',
+    title: 'Food Reel',
+    category: 'Food Film',
+    aspect: 'horizontal',
+  },
+
+  // 33
+  {
+    type: 'video',
+    src: '/videos web/principal/best_moments.mp4',
+    title: 'Best Moments',
+    category: 'Production',
+    aspect: 'horizontal',
+  },
+
+  // 34
+  {
+    type: 'video',
+    src: '/videos web/principal/estudio_tour.mp4',
+    title: 'Studio Tour',
+    category: 'Behind The Scenes',
+    aspect: 'horizontal',
+  },
+];
 /* =========================================================
    ASPECT RATIOS
 ========================================================= */

@@ -42,6 +42,7 @@ function ServiceCard({
     title: string;
     href: string;
     image?: string;
+    isAddCard?: boolean;
   };
   i: number;
   total: number;
@@ -62,6 +63,71 @@ function ServiceCard({
     [1, 1.14]
   );
 
+  /* =====================================================
+      FINAL CTA CARD
+      ESTA CARD NO BAJA
+  ===================================================== */
+  if (service.isAddCard) {
+    return (
+      <motion.div
+        style={{
+          y: 0,
+          scale: 1,
+          zIndex: total - i,
+        }}
+        className="absolute inset-0 overflow-hidden rounded-[30px] border border-[#FFE3AC]/20 bg-[#050505] shadow-[0_30px_90px_rgba(0,0,0,0.65)]"
+      >
+        {/* BACKGROUND */}
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_42%,rgba(255,227,172,0.13),transparent_38%)]" />
+
+        {/* CONTENT */}
+        <div className="relative z-10 flex h-full flex-col items-center justify-center px-10 text-center">
+          {/* PLUS */}
+          <div className="mb-8 flex h-[130px] w-[140px] items-center justify-center rounded-[30px] border border-[#FFE3AC]/25 bg-white/[0.03] shadow-[0_0_80px_rgba(255,227,172,0.10)]">
+            <div className="relative flex items-center justify-center">
+              <div className="h-[70px] w-[4px] rounded-full bg-[#FFE3AC]" />
+
+              <div className="absolute h-[4px] w-[70px] rounded-full bg-[#FFE3AC]" />
+            </div>
+          </div>
+
+          {/* SMALL TITLE */}
+          <p
+            className={`text-[15px] uppercase tracking-[0.32em] text-[#FFE3AC] ${anton.className}`}
+          >
+            YOUR NEXT IDEA
+          </p>
+
+          {/* MAIN TITLE */}
+          <h2
+            className={`mt-5 text-[88px] uppercase leading-[0.9] tracking-[-0.04em] text-white ${anton.className}`}
+          >
+            LET&apos;S BUILD
+            <br />
+            MY PROJECT
+          </h2>
+
+          {/* COPY */}
+          <p className="mt-5 text-[20px] text-white/50">
+            Whatever the story needs, we&apos;re ready to make it happen.
+          </p>
+
+          {/* CONTACT BUTTON */}
+          <a
+            href="/contact"
+            className={`relative z-20 mt-8 rounded-[16px] bg-[#FFE3AC] px-10 py-4 text-[22px] uppercase text-black transition duration-300 hover:scale-105 ${anton.className}`}
+          >
+            Start A Project
+          </a>
+        </div>
+      </motion.div>
+    );
+  }
+
+  /* =====================================================
+      NORMAL SERVICE CARDS
+      NO CAMBIAMOS SU ANIMACIÓN
+  ===================================================== */
   return (
     <motion.div
       style={{
@@ -138,6 +204,12 @@ function MobileServiceCard({
         <p className="relative z-10 mt-5 max-w-[300px] text-[16px] leading-relaxed text-white/50">
           Whatever the story needs, we&apos;re ready to make it happen.
         </p>
+        <a
+  href="/contact"
+  className={`relative z-20 mt-8 rounded-[16px] bg-[#FFE3AC] px-10 py-4 text-[22px] uppercase text-black transition duration-300 hover:scale-105 ${anton.className}`}
+>
+  Start A Project
+</a>
 
         <a
           href="/contact"
@@ -237,6 +309,11 @@ function ServiceStack() {
     href: '/contact',
     image: '/services/9.png',
   },
+  {
+  title: "Let's Build My Project",
+  href: '/contact',
+  isAddCard: true,
+},
 ];
 
   return (
@@ -333,7 +410,7 @@ export default function ServicesPage() {
 
             <motion.a
               whileHover={{ y: -2 }}
-              href="/Book"
+              href="/Book-"
               className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
             >
               OUR WORK
