@@ -18,33 +18,80 @@ const anton = Anton({
    TYPES
 ========================================================= */
 
-type WorkItem = {
-  type: 'image' | 'video';
-  src: string;
-  title?: string;
-  category?: string;
-  aspect?:
-    | 'vertical'
-    | 'square'
-    | 'horizontal'
-    | 'tall';
-};
+type WorkAspect =
+  | 'vertical'
+  | 'square'
+  | 'horizontal'
+  | 'tall';
+
+type WorkItem =
+  | {
+      type: 'video';
+      src: string;
+      title?: string;
+      category?: string;
+      aspect?: WorkAspect;
+    }
+  | {
+      type: 'image';
+      src: string;
+      title?: string;
+      category?: string;
+      aspect?: WorkAspect;
+    }
+  | {
+      type: 'gallery';
+      images: string[];
+      title?: string;
+      category?: string;
+      aspect?: WorkAspect;
+    };
 
 /* =========================================================
    WORK CONTENT
-
-   PARA AGREGAR MATERIAL NUEVO:
-   - type: image | video
-   - src: ruta
-   - title
-   - category
-   - aspect
 ========================================================= */
 
 const workItems: WorkItem[] = [
-  // =====================================================
-  // 01 — HORIZONTAL / COMMERCIAL
-  // =====================================================
+  /* =====================================================
+      FEATURED — SIEMPRE ARRIBA
+  ===================================================== */
+
+  {
+    type: 'video',
+    src: '/videos web/principal/ai-reel.mp4',
+    title: 'AI Reel',
+    category: 'Featured Reel',
+    aspect: 'horizontal',
+  },
+
+  {
+    type: 'video',
+    src: '/videos web/principal/estudio_tour.mp4',
+    title: 'Studio Tour',
+    category: 'Featured Reel',
+    aspect: 'horizontal',
+  },
+
+  {
+    type: 'video',
+    src: '/videos web/principal/reel_platos.mp4',
+    title: 'Food Reel',
+    category: 'Featured Reel',
+    aspect: 'horizontal',
+  },
+
+  {
+    type: 'video',
+    src: '/videos web/principal/best_moments.mp4',
+    title: 'Best Moments',
+    category: 'Featured Reel',
+    aspect: 'horizontal',
+  },
+
+  /* =====================================================
+      DESDE AQUÍ — VIDEO + PHOTOGRAPHY MEZCLADOS
+  ===================================================== */
+
   {
     type: 'video',
     src: '/videos web/horizontal/bernina.mp4',
@@ -53,16 +100,27 @@ const workItems: WorkItem[] = [
     aspect: 'horizontal',
   },
 
-  // 02 — VERTICAL / SOCIAL
+  {
+    type: 'gallery',
+    title: 'Alpura',
+    category: 'Photography',
+    aspect: 'horizontal',
+    images: [
+      '/fotos web/alpura/Dip de Chile.jpg',
+      '/fotos web/alpura/Dip de Elote 16X9.jpg',
+      '/fotos web/alpura/Quesabirrias 1x1.jpg',
+      '/fotos web/alpura/Sliders 16X9.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/vertical/margarita de piña.mp4',
-    title: 'Margarita de Piña',
+    title: 'DEFOODPEOPLE',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // 03 — HORIZONTAL
   {
     type: 'video',
     src: '/videos web/horizontal/duncan_hines.mp4',
@@ -71,16 +129,26 @@ const workItems: WorkItem[] = [
     aspect: 'horizontal',
   },
 
-  // 04 — VERTICAL
+  {
+    type: 'gallery',
+    title: 'PM Cacahuate',
+    category: 'Photography',
+    aspect: 'vertical',
+    images: [
+      '/fotos web/cacahuate/Cacahuates_2.jpg',
+      '/fotos web/cacahuate/Cacahuates.jpg',
+      '/fotos web/cacahuate/encacahuatados_V.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/vertical/toque gourmet.mp4',
-    title: 'Toque Gourmet',
+    title: 'TANGAMANGA',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // 05 — HORIZONTAL / AI
   {
     type: 'video',
     src: '/videos web/horizontal/mahatma_ia.mp4',
@@ -89,56 +157,87 @@ const workItems: WorkItem[] = [
     aspect: 'horizontal',
   },
 
-  // 06 — VERTICAL
+  {
+    type: 'gallery',
+    title: 'Food Anxiety',
+    category: 'Photography',
+    aspect: 'vertical',
+    images: [
+      '/fotos web/food anxiety/Food anxiety0094 1 1.jpg',
+      '/fotos web/food anxiety/Food anxiety0148 1.jpg',
+      '/fotos web/food anxiety/Food anxiety0204 1 1.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/vertical/pollo y arroz.mp4',
-    title: 'Pollo y Arroz',
+    title: 'Campbell´s',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // 07 — HORIZONTAL
   {
     type: 'video',
     src: '/videos web/horizontal/frappe_mazapan.mp4',
-    title: 'Frappé Mazapán',
+    title: 'NESCAFÉ',
     category: 'Food Film',
     aspect: 'horizontal',
   },
 
-  // 08 — VERTICAL
+  {
+    type: 'gallery',
+    title: 'JARDINES',
+    category: 'Photography',
+    aspect: 'vertical',
+    images: [
+      '/fotos web/jardines/Otoño.jpg',
+      '/fotos web/jardines/Primavera.jpg',
+      '/fotos web/jardines/Verano.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/vertical/tequila cask.mp4',
-    title: 'Tequila Cask',
+    title: 'TOAK',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // 09 — HORIZONTAL
   {
     type: 'video',
     src: '/videos web/horizontal/walmart_carolina.mp4',
-    title: 'Walmart',
+    title: 'MAHATMA',
     category: 'Commercial',
     aspect: 'horizontal',
   },
 
-  // 10 — VERTICAL
+  {
+    type: 'gallery',
+    title: 'Ligerittas',
+    category: 'Photography',
+    aspect: 'tall',
+    images: [
+      '/fotos web/ligerittas/Empaque_2.jpg',
+      '/fotos web/ligerittas/Picnic.jpg',
+      '/fotos web/ligerittas/Reloj.jpg',
+      '/fotos web/ligerittas/texturas_2.jpg',
+      '/fotos web/ligerittas/texturas.jpg',
+      '/fotos web/ligerittas/Torre jenga .jpg',
+      '/fotos web/ligerittas/Torre maizligeritas.jpg',
+      '/fotos web/ligerittas/una ligeritta rota.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/vertical/tablas y tapas.mp4',
-    title: 'Tablas y Tapas',
+    title: 'TANGAMANGA',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // =====================================================
-  // SECOND BLOCK
-  // =====================================================
-
-  // 11
   {
     type: 'video',
     src: '/videos web/horizontal/isadora.mp4',
@@ -147,7 +246,18 @@ const workItems: WorkItem[] = [
     aspect: 'horizontal',
   },
 
-  // 12
+  {
+    type: 'gallery',
+    title: 'Mahatma',
+    category: 'Photography',
+    aspect: 'horizontal',
+    images: [
+      '/fotos web/mahatma/Chicken biryani_5.jpg',
+      '/fotos web/mahatma/red beans & rice_7.jpg',
+      '/fotos web/mahatma/red beans & rice_8.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/middle ring/nespresso.mp4',
@@ -156,7 +266,6 @@ const workItems: WorkItem[] = [
     aspect: 'vertical',
   },
 
-  // 13
   {
     type: 'video',
     src: '/videos web/horizontal/mckormick.mp4',
@@ -165,7 +274,17 @@ const workItems: WorkItem[] = [
     aspect: 'horizontal',
   },
 
-  // 14
+  {
+    type: 'gallery',
+    title: 'Verde Valle',
+    category: 'Photography',
+    aspect: 'horizontal',
+    images: [
+      '/fotos web/mesas verde valle/mesa_1.jpg',
+      '/fotos web/mesas verde valle/mesa_2.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/middle ring/quaker.mp4',
@@ -174,7 +293,6 @@ const workItems: WorkItem[] = [
     aspect: 'vertical',
   },
 
-  // 15
   {
     type: 'video',
     src: '/videos web/horizontal/turmix_ia.mp4',
@@ -183,16 +301,26 @@ const workItems: WorkItem[] = [
     aspect: 'horizontal',
   },
 
-  // 16
+  {
+    type: 'gallery',
+    title: 'Nestlé',
+    category: 'Photography',
+    aspect: 'horizontal',
+    images: [
+      '/fotos web/nestle/Nestle_1.jpg',
+      '/fotos web/nestle/Nestle_2.jpg',
+      '/fotos web/nestle/Nestle_3.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/vertical/momento improvisado.mp4',
-    title: 'Momento Improvisado',
+    title: 'TANGAMANGA',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // 17
   {
     type: 'video',
     src: '/videos web/horizontal/vino.mp4',
@@ -201,38 +329,57 @@ const workItems: WorkItem[] = [
     aspect: 'horizontal',
   },
 
-  // 18
+  {
+    type: 'gallery',
+    title: 'Peñafiel',
+    category: 'Photography',
+    aspect: 'vertical',
+    images: [
+      '/fotos web/peñafiel/Manzana asado.jpg',
+      '/fotos web/peñafiel/Multi mix.jpg',
+      '/fotos web/peñafiel/Sangria botana.jpg',
+      '/fotos web/peñafiel/Toronja bella.jpg',
+      '/fotos web/peñafiel/Toronja wraps.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/middle ring/te_chai_asmr.mp4',
-    title: 'Chai ASMR',
+    title: 'NATURES HEART',
     category: 'ASMR',
     aspect: 'vertical',
   },
 
-  // 19
   {
     type: 'video',
     src: '/videos web/horizontal/cereales.mp4',
-    title: 'Cereales',
+    title: 'Cereales-Nestlé',
     category: 'Food Film',
     aspect: 'horizontal',
   },
 
-  // 20
+  {
+    type: 'gallery',
+    title: 'Recetario Gamer',
+    category: 'Photography',
+    aspect: 'horizontal',
+    images: [
+      '/fotos web/recetario gamer/Carlota_1.jpg',
+      '/fotos web/recetario gamer/Cheesecake_1.jpg',
+      '/fotos web/recetario gamer/Lasaña en taza_1.jpg',
+      '/fotos web/recetario gamer/Tarta de uva_1.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/vertical/afilar con piedra.mp4',
-    title: 'Afilar con Piedra',
+    title: 'viral content',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // =====================================================
-  // THIRD BLOCK
-  // =====================================================
-
-  // 21
   {
     type: 'video',
     src: '/videos web/middle ring/campbells.mp4',
@@ -241,7 +388,19 @@ const workItems: WorkItem[] = [
     aspect: 'vertical',
   },
 
-  // 22
+  {
+    type: 'gallery',
+    title: 'Tangamanga',
+    category: 'Photography',
+    aspect: 'vertical',
+    images: [
+      '/fotos web/tangamanga/CENA ROMANTICA.jpg',
+      '/fotos web/tangamanga/CHORIZO EXTRA 1.jpg',
+      '/fotos web/tangamanga/Foto_horizontal_m.jpg',
+      '/fotos web/tangamanga/Foto_vertical_m.jpg',
+    ],
+  },
+
   {
     type: 'video',
     src: '/videos web/horizontal/mahatma_ia2.mp4',
@@ -250,83 +409,55 @@ const workItems: WorkItem[] = [
     aspect: 'horizontal',
   },
 
-  // 23
   {
     type: 'video',
     src: '/videos web/middle ring/momentos_magicos.mp4',
-    title: 'Momentos Mágicos',
+    title: 'Tangamanga',
     category: 'Branded Content',
     aspect: 'vertical',
   },
 
-  // 24
   {
-    type: 'video',
-    src: '/timeline/tv-ads.mp4',
-    title: 'TV Ads',
-    category: 'Commercial',
-    aspect: 'horizontal',
+    type: 'gallery',
+    title: 'Verde Valle',
+    category: 'Photography',
+    aspect: 'vertical',
+    images: [
+      '/fotos web/verdevalle/Bowl de Frijoles.jpg',
+      '/fotos web/verdevalle/Chiles anchos.jpg',
+      '/fotos web/verdevalle/Ensalada de arroz.jpg',
+      '/fotos web/verdevalle/Medio aguacate.jpg',
+      '/fotos web/verdevalle/Pollo asiático.jpg',
+      '/fotos web/verdevalle/Salpicón de barbacoa.jpg',
+      '/fotos web/verdevalle/Sushi en molde.jpg',
+    ],
   },
 
-  // 25
   {
     type: 'video',
     src: '/timeline/tiktok.mp4',
-    title: 'TikTok',
+    title: 'verde valle',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // 26
   {
     type: 'video',
     src: '/timeline/branded-content.mp4',
-    title: 'Branded Content',
+    title: 'peñafiel',
     category: 'Branded Content',
     aspect: 'horizontal',
   },
 
-  // 27
   {
     type: 'video',
     src: '/timeline/reel.mp4',
-    title: 'Reels',
+    title: 'herbal essences',
     category: 'Social Content',
     aspect: 'vertical',
   },
 
-  // 28
-  {
-    type: 'video',
-    src: '/timeline/campaign.mp4',
-    title: 'Campaign',
-    category: 'Campaign',
-    aspect: 'horizontal',
-  },
 
-  // 29
-  {
-    type: 'video',
-    src: '/timeline/brand-film.mp4',
-    title: 'Brand Film',
-    category: 'Brand Film',
-    aspect: 'horizontal',
-  },
-
-  // =====================================================
-  // FEATURE / REELS
-  // =====================================================
-
-  // 30
-  {
-    type: 'video',
-    src: '/videos web/principal/ai-reel.mp4',
-    title: 'AI Reel',
-    category: 'AI + Food',
-    aspect: 'horizontal',
-  },
-
-  // 31
   {
     type: 'video',
     src: '/videos web/principal/reel_bebidas.mp4',
@@ -334,40 +465,15 @@ const workItems: WorkItem[] = [
     category: 'Food Film',
     aspect: 'horizontal',
   },
-
-  // 32
-  {
-    type: 'video',
-    src: '/videos web/principal/reel_platos.mp4',
-    title: 'Food Reel',
-    category: 'Food Film',
-    aspect: 'horizontal',
-  },
-
-  // 33
-  {
-    type: 'video',
-    src: '/videos web/principal/best_moments.mp4',
-    title: 'Best Moments',
-    category: 'Production',
-    aspect: 'horizontal',
-  },
-
-  // 34
-  {
-    type: 'video',
-    src: '/videos web/principal/estudio_tour.mp4',
-    title: 'Studio Tour',
-    category: 'Behind The Scenes',
-    aspect: 'horizontal',
-  },
 ];
+const featuredItems = workItems.slice(0, 4);
+const portfolioItems = workItems.slice(4);
 /* =========================================================
    ASPECT RATIOS
 ========================================================= */
 
 function getAspectClass(
-  aspect?: WorkItem['aspect']
+  aspect?: WorkAspect
 ) {
   switch (aspect) {
     case 'horizontal':
@@ -430,8 +536,6 @@ function TikTokIcon() {
 
 /* =========================================================
    SMART VIDEO
-
-   SOLO REPRODUCE CUANDO ESTÁ CERCA DEL VIEWPORT
 ========================================================= */
 
 function SmartWorkVideo({
@@ -498,6 +602,194 @@ function SmartWorkVideo({
 }
 
 /* =========================================================
+   PHOTO GALLERY CARD
+========================================================= */
+
+function PhotoGalleryCard({
+  item,
+}: {
+  item: Extract<
+    WorkItem,
+    { type: 'gallery' }
+  >;
+}) {
+  const [activeIndex, setActiveIndex] =
+    useState(0);
+
+  const touchStartX =
+    useRef<number | null>(null);
+
+  const hasImages =
+    item.images.length > 0;
+
+  const previousImage = () => {
+    if (!hasImages) return;
+
+    setActiveIndex((current) =>
+      current === 0
+        ? item.images.length - 1
+        : current - 1
+    );
+  };
+
+  const nextImage = () => {
+    if (!hasImages) return;
+
+    setActiveIndex((current) =>
+      current === item.images.length - 1
+        ? 0
+        : current + 1
+    );
+  };
+
+  const handleTouchStart = (
+    e: React.TouchEvent<HTMLDivElement>
+  ) => {
+    touchStartX.current =
+      e.touches[0].clientX;
+  };
+
+  const handleTouchEnd = (
+    e: React.TouchEvent<HTMLDivElement>
+  ) => {
+    if (
+      touchStartX.current === null
+    ) {
+      return;
+    }
+
+    const difference =
+      e.changedTouches[0].clientX -
+      touchStartX.current;
+
+    if (difference > 45) {
+      previousImage();
+    }
+
+    if (difference < -45) {
+      nextImage();
+    }
+
+    touchStartX.current = null;
+  };
+
+  return (
+    <div
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+      className={`group/gallery relative overflow-hidden rounded-[18px] border border-white/10 bg-[#111] shadow-[0_20px_55px_rgba(0,0,0,0.32)] sm:rounded-[22px] ${getAspectClass(
+        item.aspect
+      )}`}
+    >
+      {hasImages ? (
+        <>
+          <img
+            key={
+              item.images[activeIndex]
+            }
+            src={
+              item.images[activeIndex]
+            }
+            alt={
+              item.title ||
+              'Food Dreamers photography'
+            }
+            draggable={false}
+            loading="lazy"
+            decoding="async"
+            className="h-full w-full object-cover transition-all duration-500"
+          />
+
+          {/* DEPTH */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-35 transition-opacity duration-300 lg:group-hover/gallery:opacity-70" />
+
+          {/* PREVIOUS */}
+          {item.images.length > 1 && (
+            <button
+              type="button"
+              onClick={previousImage}
+              aria-label="Previous photo"
+              className="absolute left-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/25 text-[20px] text-white backdrop-blur-xl transition hover:bg-black/45 lg:opacity-0 lg:group-hover/gallery:opacity-100"
+            >
+              ‹
+            </button>
+          )}
+
+          {/* NEXT */}
+          {item.images.length > 1 && (
+            <button
+              type="button"
+              onClick={nextImage}
+              aria-label="Next photo"
+              className="absolute right-3 top-1/2 z-20 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/25 text-[20px] text-white backdrop-blur-xl transition hover:bg-black/45 lg:opacity-0 lg:group-hover/gallery:opacity-100"
+            >
+              ›
+            </button>
+          )}
+
+          {/* COUNTER */}
+          <div
+            className={`absolute right-4 top-4 z-20 rounded-full border border-white/15 bg-black/30 px-3 py-1.5 text-[10px] tracking-[0.15em] text-white/80 backdrop-blur-md ${anton.className}`}
+          >
+            {String(
+              activeIndex + 1
+            ).padStart(2, '0')}
+            {' / '}
+            {String(
+              item.images.length
+            ).padStart(2, '0')}
+          </div>
+        </>
+      ) : (
+        /* EMPTY PHOTO PROJECT PLACEHOLDER */
+        <div className="absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle_at_50%_40%,rgba(255,227,172,0.09),transparent_45%)] px-6 text-center">
+          <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FFE3AC]/25 text-[26px] text-[#FFE3AC]">
+            +
+          </div>
+
+          <p
+            className={`mt-5 text-[11px] uppercase tracking-[0.2em] text-[#FFE3AC]/70 ${anton.className}`}
+          >
+            Photography
+          </p>
+
+          <h3
+            className={`mt-3 text-[28px] uppercase leading-none text-white/70 ${anton.className}`}
+          >
+            {item.title}
+          </h3>
+
+          <p className="mt-3 text-[12px] uppercase tracking-[0.16em] text-white/25">
+            Photos coming soon
+          </p>
+        </div>
+      )}
+
+      {/* TITLE */}
+      {hasImages &&
+        (item.title ||
+          item.category) && (
+          <div className="pointer-events-none absolute bottom-4 left-4 right-4 z-20 text-white sm:bottom-5 sm:left-5 sm:right-5 lg:translate-y-4 lg:opacity-0 lg:transition-all lg:duration-300 lg:group-hover/gallery:translate-y-0 lg:group-hover/gallery:opacity-100">
+            {item.category && (
+              <p className="text-[10px] uppercase tracking-[0.18em] text-[#FFE3AC] sm:text-[11px]">
+                {item.category}
+              </p>
+            )}
+
+            {item.title && (
+              <h2
+                className={`mt-2 text-[24px] uppercase leading-none sm:text-[27px] ${anton.className}`}
+              >
+                {item.title}
+              </h2>
+            )}
+          </div>
+        )}
+    </div>
+  );
+}
+
+/* =========================================================
    WORK CARD
 ========================================================= */
 
@@ -539,10 +831,7 @@ function WorkCard({
       }}
       className="group mb-4 break-inside-avoid sm:mb-5"
     >
-      {/* ===================================================
-          VIDEO CARD
-      =================================================== */}
-
+      {/* VIDEO */}
       {item.type === 'video' && (
         <button
           type="button"
@@ -558,15 +847,12 @@ function WorkCard({
             src={item.src}
           />
 
-          {/* DEPTH */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/5 to-transparent opacity-45 transition-opacity duration-300 lg:group-hover:opacity-80" />
 
-          {/* PLAY */}
           <div className="absolute left-1/2 top-1/2 flex h-[54px] w-[54px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/30 bg-black/20 text-[16px] text-white backdrop-blur-xl transition-all duration-300 sm:h-[62px] sm:w-[62px] sm:text-[18px] lg:scale-90 lg:opacity-0 lg:group-hover:scale-100 lg:group-hover:opacity-100">
             ▶
           </div>
 
-          {/* VIDEO INDICATOR */}
           <div className="absolute left-4 top-4 flex items-center gap-2 rounded-full border border-white/15 bg-black/30 px-3 py-1.5 backdrop-blur-md">
             <span className="h-[6px] w-[6px] rounded-full bg-[#FFE3AC]" />
 
@@ -577,32 +863,28 @@ function WorkCard({
             </span>
           </div>
 
-          {/* TEXT */}
           {(item.title ||
             item.category) && (
-            <div className="absolute bottom-4 left-4 right-4 text-white sm:bottom-5 sm:left-5 sm:right-5 lg:translate-y-4 lg:opacity-0 lg:transition-all lg:duration-300 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
-              {item.category && (
-                <p className="text-[10px] uppercase tracking-[0.18em] text-[#FFE3AC] sm:text-[11px]">
-                  {item.category}
-                </p>
-              )}
+              <div className="absolute bottom-4 left-4 right-4 text-white sm:bottom-5 sm:left-5 sm:right-5 lg:translate-y-4 lg:opacity-0 lg:transition-all lg:duration-300 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
+                {item.category && (
+                  <p className="text-[10px] uppercase tracking-[0.18em] text-[#FFE3AC] sm:text-[11px]">
+                    {item.category}
+                  </p>
+                )}
 
-              {item.title && (
-                <h2
-                  className={`mt-2 text-[24px] uppercase leading-none sm:text-[27px] ${anton.className}`}
-                >
-                  {item.title}
-                </h2>
-              )}
-            </div>
-          )}
+                {item.title && (
+                  <h2
+                    className={`mt-2 text-[24px] uppercase leading-none sm:text-[27px] ${anton.className}`}
+                  >
+                    {item.title}
+                  </h2>
+                )}
+              </div>
+            )}
         </button>
       )}
 
-      {/* ===================================================
-          IMAGE CARD
-      =================================================== */}
-
+      {/* IMAGE */}
       {item.type === 'image' && (
         <div
           className={`relative overflow-hidden rounded-[18px] border border-white/10 bg-[#111] shadow-[0_20px_55px_rgba(0,0,0,0.32)] sm:rounded-[22px] ${aspectClass}`}
@@ -620,26 +902,14 @@ function WorkCard({
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-20 transition-opacity duration-300 lg:group-hover:opacity-75" />
-
-          {(item.title ||
-            item.category) && (
-            <div className="absolute bottom-4 left-4 right-4 text-white sm:bottom-5 sm:left-5 sm:right-5 lg:translate-y-4 lg:opacity-0 lg:transition-all lg:duration-300 lg:group-hover:translate-y-0 lg:group-hover:opacity-100">
-              {item.category && (
-                <p className="text-[10px] uppercase tracking-[0.18em] text-[#FFE3AC] sm:text-[11px]">
-                  {item.category}
-                </p>
-              )}
-
-              {item.title && (
-                <h2
-                  className={`mt-2 text-[24px] uppercase leading-none sm:text-[27px] ${anton.className}`}
-                >
-                  {item.title}
-                </h2>
-              )}
-            </div>
-          )}
         </div>
+      )}
+
+      {/* PHOTO GALLERY */}
+      {item.type === 'gallery' && (
+        <PhotoGalleryCard
+          item={item}
+        />
       )}
     </motion.article>
   );
@@ -659,14 +929,9 @@ export default function BookPage() {
 
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#050505] text-white">
-      {/* =====================================================
-          NAVBAR
-      ===================================================== */}
-
+      {/* NAVBAR */}
       <header className="fixed left-0 top-0 z-[999] w-full border-b border-white/10 bg-black/20 backdrop-blur-3xl">
         <div className="flex h-20 w-full items-center justify-between px-4 sm:px-6 lg:h-[88px] lg:px-10">
-          {/* LOGO */}
-
           <motion.a
             initial={{
               opacity: 0,
@@ -690,15 +955,11 @@ export default function BookPage() {
             />
           </motion.a>
 
-          {/* DESKTOP NAV */}
-
           <nav
             className={`hidden items-center gap-6 md:flex xl:gap-8 ${anton.className}`}
           >
             <motion.a
-              whileHover={{
-                y: -2,
-              }}
+              whileHover={{ y: -2 }}
               href="/"
               className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
             >
@@ -706,9 +967,7 @@ export default function BookPage() {
             </motion.a>
 
             <motion.a
-              whileHover={{
-                y: -2,
-              }}
+              whileHover={{ y: -2 }}
               href="/work"
               className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
             >
@@ -716,9 +975,7 @@ export default function BookPage() {
             </motion.a>
 
             <motion.a
-              whileHover={{
-                y: -2,
-              }}
+              whileHover={{ y: -2 }}
               href="/Book"
               className="text-base tracking-wide text-[#FFE3AC] xl:text-lg"
             >
@@ -726,9 +983,7 @@ export default function BookPage() {
             </motion.a>
 
             <motion.a
-              whileHover={{
-                y: -2,
-              }}
+              whileHover={{ y: -2 }}
               href="/about"
               className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
             >
@@ -736,17 +991,13 @@ export default function BookPage() {
             </motion.a>
 
             <motion.a
-              whileHover={{
-                y: -2,
-              }}
+              whileHover={{ y: -2 }}
               href="/contact"
               className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
             >
               CONTACT
             </motion.a>
           </nav>
-
-          {/* SOCIAL */}
 
           <div className="hidden items-center gap-5 text-white md:flex">
             <motion.a
@@ -785,10 +1036,7 @@ export default function BookPage() {
         </div>
       </header>
 
-      {/* =====================================================
-          HERO
-      ===================================================== */}
-
+      {/* HERO */}
       <section className="relative flex min-h-[68vh] items-end overflow-hidden px-5 pb-16 pt-[140px] sm:px-8 lg:min-h-[76vh] lg:px-[6vw] lg:pb-24">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(255,227,172,0.12),transparent_32%)]" />
 
@@ -880,33 +1128,52 @@ export default function BookPage() {
         </div>
       </section>
 
-      {/* =====================================================
-          PINTEREST BOOK
-      ===================================================== */}
+     {/* =====================================================
+    OUR WORK
+===================================================== */}
+<section className="px-5 pb-28 sm:px-8 lg:px-[6vw]">
+  <div className="mx-auto w-full max-w-[1512px]">
 
-      <section className="px-5 pb-28 sm:px-8 lg:px-[6vw]">
-        <div className="mx-auto w-full max-w-[1512px]">
-          <div className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3 xl:columns-4">
-            {workItems.map(
-              (item, index) => (
-                <WorkCard
-                  key={`${item.src}-${index}`}
-                  item={item}
-                  index={index}
-                  onOpenVideo={
-                    setActiveVideo
-                  }
-                />
-              )
-            )}
-          </div>
-        </div>
-      </section>
+    {/* =====================================================
+        FEATURED REELS — HORIZONTAL ROW
+    ===================================================== */}
+    <div className="mb-5 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4">
+      {featuredItems.map((item, index) => (
+        <WorkCard
+          key={`featured-${
+            item.type === 'gallery'
+              ? item.title
+              : item.src
+          }-${index}`}
+          item={item}
+          index={index}
+          onOpenVideo={setActiveVideo}
+        />
+      ))}
+    </div>
 
-      {/* =====================================================
-          CTA
-      ===================================================== */}
+    {/* =====================================================
+        REST OF PORTFOLIO — MASONRY
+    ===================================================== */}
+    <div className="columns-1 gap-4 sm:columns-2 sm:gap-5 lg:columns-3 xl:columns-4">
+      {portfolioItems.map((item, index) => (
+        <WorkCard
+          key={`portfolio-${
+            item.type === 'gallery'
+              ? item.title
+              : item.src
+          }-${index}`}
+          item={item}
+          index={index + 4}
+          onOpenVideo={setActiveVideo}
+        />
+      ))}
+    </div>
 
+  </div>
+</section>
+
+      {/* CTA */}
       <section className="relative overflow-hidden border-t border-white/10 px-5 py-24 text-center sm:px-8 lg:px-[6vw] lg:py-32">
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_60%,rgba(255,227,172,0.09),transparent_32%)]" />
 
@@ -951,10 +1218,7 @@ export default function BookPage() {
         </motion.div>
       </section>
 
-      {/* =====================================================
-          VIDEO MODAL
-      ===================================================== */}
-
+      {/* VIDEO MODAL */}
       {activeVideo && (
         <div className="fixed inset-0 z-[1200] flex items-center justify-center bg-black/90 px-5 backdrop-blur-md">
           <button
