@@ -95,22 +95,17 @@ function ServiceCard({
           <p
             className={`text-[15px] uppercase tracking-[0.32em] text-[#FFE3AC] ${anton.className}`}
           >
-            YOUR NEXT IDEA
+            READY?
           </p>
 
           {/* MAIN TITLE */}
           <h2
             className={`mt-5 text-[88px] uppercase leading-[0.9] tracking-[-0.04em] text-white ${anton.className}`}
           >
-            LET&apos;S BUILD
+            LET’S COOK UP
             <br />
-            MY PROJECT
+            MY NEXT PROJECT
           </h2>
-
-          {/* COPY */}
-          <p className="mt-5 text-[20px] text-white/50">
-            Whatever the story needs, we&apos;re ready to make it happen.
-          </p>
 
           {/* CONTACT BUTTON */}
           <a
@@ -192,7 +187,7 @@ function MobileServiceCard({
         <p
           className={`relative z-10 mt-8 text-[12px] uppercase tracking-[0.25em] text-[#FFE3AC] ${anton.className}`}
         >
-          YOUR NEXT IDEA
+          READY?
         </p>
 
         <h2
@@ -267,53 +262,53 @@ function ServiceStack() {
   {
     title: 'Food Styling',
     href: '/contact',
-    image: '/services/1.png',
-  },
-  {
-    title: 'Photography',
-    href: '/contact',
-    image: '/services/2.png',
+    image: '/services/3.png',
   },
   {
     title: 'Video Production',
     href: '/contact',
-    image: '/services/3.png',
+    image: '/services/5.png',
   },
   {
-    title: 'Creative Development',
+    title: 'Photography',
     href: '/contact',
     image: '/services/4.png',
   },
   {
-    title: 'Social Media',
+    title: 'Prop House',
     href: '/contact',
-    image: '/services/5.png',
+    image: '/services/8.png',
   },
   {
-    title: 'Art Direction',
+    title: 'Social Media',
     href: '/contact',
     image: '/services/6.png',
   },
   {
-    title: '1M+ Prop Warehouse',
+    title: 'Documentaries',
     href: '/contact',
     image: '/services/7.png',
   },
   {
     title: 'Post Production',
     href: '/contact',
-    image: '/services/8.png',
-  },
-  {
-    title: 'Documentaries',
-    href: '/contact',
     image: '/services/9.png',
   },
   {
-  title: "Let's Build My Project",
-  href: '/contact',
-  isAddCard: true,
-},
+    title: 'Art Direction',
+    href: '/contact',
+    image: '/services/2.png',
+  },
+  {
+    title: 'Creative Development',
+    href: '/contact',
+    image: '/services/1.png',
+  },
+  {
+    title: "Let's Build My Project",
+    href: '/contact',
+    isAddCard: true,
+  },
 ];
 
   return (
@@ -477,7 +472,7 @@ export default function ServicesPage() {
             DO NOT CHANGE YET.
         */}
         <video
-          src="/work-reel.mp4"
+          src="/videos web/principal/best_moments.mp4"
           autoPlay
           muted
           loop
@@ -506,8 +501,8 @@ export default function ServicesPage() {
             }}
            className={`mt-6 text-[74px] uppercase leading-[0.88] tracking-[-0.05em] sm:text-[96px] md:text-[180px] md:leading-[0.9] md:tracking-[-0.06em] ${anton.className}`}
           >
-            OUR
-            <br />
+        
+            
             SERVICES
           </motion.h1>
 
@@ -526,8 +521,7 @@ export default function ServicesPage() {
             }}
             className="mt-7 max-w-[340px] text-[17px] leading-relaxed text-white/70 sm:max-w-[460px] sm:text-[19px] md:mt-8 md:max-w-[600px] md:text-[22px]"
           >
-            One creative ecosystem built to take food stories from idea to
-            execution, across every format and every screen.
+            From first concept to the final cut.
           </motion.p>
 
           <motion.div

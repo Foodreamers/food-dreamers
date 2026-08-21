@@ -40,7 +40,6 @@ function TikTokIcon() {
 
 /* =========================================================
    DESKTOP MANIFESTO
-   ESTA PARTE CONSERVA EL EFECTO ORIGINAL
 ========================================================= */
 
 function ManifestoPhrase({
@@ -78,7 +77,11 @@ function ManifestoPhrase({
 
   return (
     <motion.h2
-      style={{ opacity, y, scale }}
+      style={{
+        opacity,
+        y,
+        scale,
+      }}
       className={`absolute text-center text-[120px] uppercase leading-[0.9] tracking-[-0.05em] text-white ${anton.className}`}
     >
       {text}
@@ -96,16 +99,23 @@ function ManifestoSection() {
 
   const phrases = [
     <>All In One</>,
-    <> Remote Production Studio</>,
+
+    <>
+      Remote Production Studio
+    </>,
+
     <>
       SPECIALIZED IN DIGITAL
       <br />
       AND COMMERCIAL PROJECTS.
     </>,
-    <>FOR THE BIGGEST FOOD BRANDS
-    <br />
-     IN THE WORLD.
-     </>,
+
+    <>
+      FOR THE BIGGEST FOOD BRANDS
+      <br />
+      IN THE WORLD.
+    </>,
+
     <>
       HUNGRY FOR MORE?
     </>,
@@ -114,8 +124,11 @@ function ManifestoSection() {
   return (
     <section
       ref={ref}
-      className="relative h-[500vh] bg-[#050505]"
+      className="relative h-[500vh] bg-transparent"
     >
+      {/* DARK LAYER OVER GLOBAL VIDEO */}
+      <div className="pointer-events-none absolute inset-0 bg-black/45" />
+
       <div className="sticky top-0 flex h-screen items-center justify-center overflow-hidden">
         {phrases.map((phrase, i) => (
           <ManifestoPhrase
@@ -133,18 +146,22 @@ function ManifestoSection() {
 
 /* =========================================================
    MOBILE MANIFESTO
-   SOLO EXISTE EN MÓVIL
 ========================================================= */
 
 function MobileManifestoSection() {
   const phrases = [
     <>All In One.</>,
-    <>Remote Production Studio</>,
+
+    <>
+      Remote Production Studio
+    </>,
+
     <>
       SPECIALIZED IN DIGITAL
       <br />
       AND COMMERCIAL PRIJECTS
     </>,
+
     <>
       FOR THE BIGGEST FOOD BRANDS
       <br />
@@ -202,6 +219,10 @@ function MobileManifestoSection() {
   );
 }
 
+/* =========================================================
+   ABOUT PAGE
+========================================================= */
+
 export default function AboutPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -219,10 +240,16 @@ export default function AboutPage() {
 
     updateDevice();
 
-    mediaQuery.addEventListener('change', updateDevice);
+    mediaQuery.addEventListener(
+      'change',
+      updateDevice
+    );
 
     return () => {
-      mediaQuery.removeEventListener('change', updateDevice);
+      mediaQuery.removeEventListener(
+        'change',
+        updateDevice
+      );
     };
   }, []);
 
@@ -231,198 +258,300 @@ export default function AboutPage() {
 
       {/* =====================================================
           DESKTOP VERSION
-          NO MODIFICAR
+          VIDEO BACKGROUND THROUGHOUT
       ===================================================== */}
 
-      <div className="hidden md:block">
-        <header className="fixed left-0 top-0 z-[999] w-full bg-white/5 backdrop-blur-3xl">
-          <div className="flex h-[88px] w-full items-center justify-between border-b border-white/10 px-10">
-            <motion.a
-              href="/"
-              className="relative z-[120] flex cursor-pointer items-center"
-            >
-              <img
-                src="/logos/logo-yellow.svg"
-                alt="Food Dreamers"
-                draggable={false}
-                className="h-[122px] w-auto select-none"
-              />
-            </motion.a>
+      <div className="relative hidden md:block">
 
-            <nav
-              className={`hidden items-center gap-8 md:flex ${anton.className}`}
-            >
+        {/* GLOBAL DESKTOP VIDEO */}
+        <div className="fixed inset-0 z-0">
+          <video
+            src="/videos web/principal/estudio_tour.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            controlsList="nodownload noremoteplayback"
+            disablePictureInPicture
+            className="h-full w-full object-cover"
+          />
+
+          {/* GLOBAL DARK OVERLAY */}
+          <div className="absolute inset-0 bg-black/60" />
+
+          {/* GLOBAL DEPTH */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/10 to-black/65" />
+        </div>
+
+        {/* DESKTOP CONTENT */}
+        <div className="relative z-10">
+
+          {/* NAVBAR */}
+          <header className="fixed left-0 top-0 z-[999] w-full bg-black/20 backdrop-blur-3xl">
+            <div className="flex h-[88px] w-full items-center justify-between border-b border-white/10 px-10">
+
               <motion.a
-                whileHover={{ y: -2 }}
                 href="/"
-                className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+                className="relative z-[120] flex cursor-pointer items-center"
               >
-                HOME
+                <img
+                  src="/logos/logo-yellow.svg"
+                  alt="Food Dreamers"
+                  draggable={false}
+                  className="h-[122px] w-auto select-none"
+                />
               </motion.a>
 
-              <motion.a
-                whileHover={{ y: -2 }}
-                href="/work"
-                className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+              <nav
+                className={`hidden items-center gap-8 md:flex ${anton.className}`}
               >
-                SERVICES
-              </motion.a>
+                <motion.a
+                  whileHover={{
+                    y: -2,
+                  }}
+                  href="/"
+                  className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+                >
+                  HOME
+                </motion.a>
 
-          
+                <motion.a
+                  whileHover={{
+                    y: -2,
+                  }}
+                  href="/work"
+                  className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+                >
+                  SERVICES
+                </motion.a>
 
-              <motion.a
-                whileHover={{ y: -2 }}
-                href="/Book"
-                className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+                <motion.a
+                  whileHover={{
+                    y: -2,
+                  }}
+                  href="/Book"
+                  className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+                >
+                  OUR WORK
+                </motion.a>
+
+                <motion.a
+                  whileHover={{
+                    y: -2,
+                  }}
+                  href="/about"
+                  className="text-lg tracking-wide text-[#FFE3AC]"
+                >
+                  ABOUT US
+                </motion.a>
+
+                <motion.a
+                  whileHover={{
+                    y: -2,
+                  }}
+                  href="/contact"
+                  className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+                >
+                  CONTACT
+                </motion.a>
+              </nav>
+
+              <div className="ml-8 flex items-center gap-5 text-white">
+
+                <motion.a
+                  href="#"
+                  whileHover={{
+                    scale: 1.15,
+                    y: -2,
+                  }}
+                >
+                  <InstagramIcon />
+                </motion.a>
+
+                <motion.a
+                  href="#"
+                  whileHover={{
+                    scale: 1.15,
+                    y: -2,
+                  }}
+                >
+                  <FacebookIcon />
+                </motion.a>
+
+                <motion.a
+                  href="#"
+                  whileHover={{
+                    scale: 1.15,
+                    y: -2,
+                  }}
+                >
+                  <TikTokIcon />
+                </motion.a>
+
+              </div>
+            </div>
+          </header>
+
+          {/* =====================================================
+              DESKTOP HERO
+          ===================================================== */}
+
+          <section className="relative flex min-h-screen items-center overflow-hidden px-[6vw]">
+
+            {/* LOCAL DEPTH */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-black/35" />
+
+            <div className="relative z-10 mx-auto flex w-full max-w-[1512px] flex-col items-center text-center">
+
+              <motion.h1
+                initial={{
+                  opacity: 0,
+                  y: 70,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 1,
+                  ease: 'easeOut',
+                }}
+                className={`text-[170px] uppercase leading-[0.88] tracking-[-0.06em] ${anton.className}`}
               >
-                OUR WORK
-              </motion.a>
+                WE ARE
+                <br />
+                FOOD
+                <br />
+                DREAMERS
+              </motion.h1>
 
-              <motion.a
-                whileHover={{ y: -2 }}
-                href="/about"
-                className="text-lg tracking-wide text-[#FFE3AC]"
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: 26,
+                }}
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.25,
+                }}
+                className="mt-8 max-w-[620px] text-[24px] leading-relaxed text-white/75"
               >
-                ABOUT US
-              </motion.a>
+                The Global Food Storytelling Brand.
+              </motion.p>
+
+            </div>
+          </section>
+
+          {/* =====================================================
+              DESKTOP MANIFESTO
+          ===================================================== */}
+
+          <ManifestoSection />
+
+          {/* =====================================================
+              DESKTOP VISION
+          ===================================================== */}
+
+          <section className="relative flex min-h-screen items-center justify-center overflow-hidden px-[6vw] text-center">
+
+            {/* LOCAL DEPTH */}
+            <div className="pointer-events-none absolute inset-0 bg-black/30" />
+
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,227,172,0.14),transparent_38%)]" />
+
+            <div className="relative z-10 mx-auto max-w-[1200px]">
+
+              <motion.h2
+                initial={{
+                  opacity: 0,
+                  y: 60,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 1,
+                  ease: 'easeOut',
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.45,
+                }}
+                className={`text-[120px] uppercase leading-[0.9] tracking-[-0.05em] ${anton.className}`}
+              >
+                LET&apos;S DREAM
+                <br />
+                TOGETHER!
+              </motion.h2>
+
+              <motion.p
+                initial={{
+                  opacity: 0,
+                  y: 26,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.2,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.45,
+                }}
+                className="mx-auto mt-8 max-w-[620px] text-[24px] text-white/60"
+              >
+              </motion.p>
 
               <motion.a
-                whileHover={{ y: -2 }}
                 href="/contact"
-                className="text-lg tracking-wide transition-colors hover:text-[#FFE3AC]"
+                initial={{
+                  opacity: 0,
+                  y: 24,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                transition={{
+                  duration: 0.9,
+                  delay: 0.35,
+                }}
+                viewport={{
+                  once: true,
+                  amount: 0.45,
+                }}
+                className={`mt-12 inline-flex rounded-[18px] bg-[#FFE3AC] px-12 py-5 text-[24px] uppercase text-black transition hover:scale-105 ${anton.className}`}
               >
                 CONTACT
               </motion.a>
-            </nav>
 
-            <div className="ml-8 flex items-center gap-5 text-white">
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.15, y: -2 }}
-              >
-                <InstagramIcon />
-              </motion.a>
-
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.15, y: -2 }}
-              >
-                <FacebookIcon />
-              </motion.a>
-
-              <motion.a
-                href="#"
-                whileHover={{ scale: 1.15, y: -2 }}
-              >
-                <TikTokIcon />
-              </motion.a>
             </div>
-          </div>
-        </header>
+          </section>
 
-        {/* DESKTOP HERO */}
-        <section className="relative flex min-h-screen items-center overflow-hidden bg-black px-[6vw]">
-          <div className="relative z-10 mx-auto flex w-full max-w-[1512px] flex-col items-center text-center">
-            <motion.h1
-              initial={{ opacity: 0, y: 70 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 1,
-                ease: 'easeOut',
-              }}
-              className={`text-[170px] uppercase leading-[0.88] tracking-[-0.06em] ${anton.className}`}
-            >
-              WE ARE
-              <br />
-              FOOD
-              <br />
-              DREAMERS
-            </motion.h1>
-
-            <motion.p
-              initial={{ opacity: 0, y: 26 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.9,
-                delay: 0.25,
-              }}
-              className="mt-8 max-w-[620px] text-[24px] leading-relaxed text-white/70"
-            >
-              The Global Food Storytelling Brand.
-            </motion.p>
-          </div>
-        </section>
-
-        {/* DESKTOP MANIFESTO */}
-        <ManifestoSection />
-
-        {/* DESKTOP VISION */}
-        <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#090909] px-[6vw] text-center">
-          <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,227,172,0.14),transparent_38%)]" />
-
-          <div className="relative z-10 mx-auto max-w-[1200px]">
-            <motion.h2
-              initial={{ opacity: 0, y: 60 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 1,
-                ease: 'easeOut',
-              }}
-              viewport={{
-                once: true,
-                amount: 0.45,
-              }}
-              className={`text-[120px] uppercase leading-[0.9] tracking-[-0.05em] ${anton.className}`}
-            >
-              LET'S DREAM
-              <br />
-              TOGETHER!
-            </motion.h2>
-
-            <motion.p
-              initial={{ opacity: 0, y: 26 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.9,
-                delay: 0.2,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.45,
-              }}
-              className="mx-auto mt-8 max-w-[620px] text-[24px] text-white/60"
-            >
-            </motion.p>
-
-            <motion.a
-              href="/contact"
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{
-                duration: 0.9,
-                delay: 0.35,
-              }}
-              viewport={{
-                once: true,
-                amount: 0.45,
-              }}
-              className={`mt-12 inline-flex rounded-[18px] bg-[#FFE3AC] px-12 py-5 text-[24px] uppercase text-black transition hover:scale-105 ${anton.className}`}
-            >
-              CONTACT
-            </motion.a>
-          </div>
-        </section>
+        </div>
       </div>
 
       {/* =====================================================
           MOBILE VERSION
-          SOLO < 768px
+          SIN VIDEO
+          SE CONSERVA COMO ESTABA
       ===================================================== */}
 
       <div className="md:hidden">
+
         {/* MOBILE NAVBAR */}
         <header className="fixed left-0 top-0 z-[999] w-full border-b border-white/10 bg-black/20 backdrop-blur-3xl">
           <div className="flex h-20 items-center justify-between px-4">
+
             <a
               href="/"
               className="flex items-center"
@@ -438,29 +567,43 @@ export default function AboutPage() {
             {isMobile && (
               <button
                 type="button"
-                onClick={() => setMobileMenuOpen(true)}
-                aria-expanded={mobileMenuOpen}
+                onClick={() =>
+                  setMobileMenuOpen(true)
+                }
+                aria-expanded={
+                  mobileMenuOpen
+                }
                 aria-controls="mobile-navigation"
                 aria-label="Open navigation menu"
                 className="flex items-center justify-center rounded-full border border-white/20 px-4 py-2 text-sm uppercase text-white"
                 style={{
-                  fontFamily: 'Anton, sans-serif',
+                  fontFamily:
+                    'Anton, sans-serif',
                 }}
               >
                 MENU
               </button>
             )}
+
           </div>
         </header>
 
         <MobileMenu
           open={mobileMenuOpen}
-          onClose={() => setMobileMenuOpen(false)}
+          onClose={() =>
+            setMobileMenuOpen(false)
+          }
         />
 
-        {/* MOBILE HERO */}
+        {/* =====================================================
+            MOBILE HERO
+            NO VIDEO
+        ===================================================== */}
+
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-black px-5 pb-16 pt-24 text-center">
+
           <div className="relative z-10 mx-auto w-full">
+
             <motion.h1
               initial={{
                 opacity: 0,
@@ -500,17 +643,24 @@ export default function AboutPage() {
             >
               Creative Studio + AI Lab for the next generation of food brands.
             </motion.p>
+
           </div>
         </section>
 
         {/* MOBILE MANIFESTO */}
         <MobileManifestoSection />
 
-        {/* MOBILE VISION */}
+        {/* =====================================================
+            MOBILE VISION
+            NO VIDEO
+        ===================================================== */}
+
         <section className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#090909] px-5 py-24 text-center">
+
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,227,172,0.14),transparent_38%)]" />
 
           <div className="relative z-10 mx-auto">
+
             <motion.h2
               initial={{
                 opacity: 0,
@@ -584,9 +734,12 @@ export default function AboutPage() {
             >
               Start A Project
             </motion.a>
+
           </div>
         </section>
+
       </div>
+
     </main>
   );
 }

@@ -605,6 +605,11 @@ function SmartWorkVideo({
    PHOTO GALLERY CARD
 ========================================================= */
 
+/* =========================================================
+   PHOTO GALLERY CARD
+   AUTO-PLAY EVERY 2 SECONDS
+========================================================= */
+
 function PhotoGalleryCard({
   item,
 }: {
@@ -622,6 +627,33 @@ function PhotoGalleryCard({
   const hasImages =
     item.images.length > 0;
 
+  /* =====================================================
+      AUTOMATIC CAROUSEL
+      CHANGES EVERY 2 SECONDS
+      INFINITE LOOP
+  ===================================================== */
+
+  useEffect(() => {
+    if (item.images.length <= 1) {
+      return;
+    }
+
+    const interval = setInterval(() => {
+      setActiveIndex((current) =>
+        (current + 1) %
+        item.images.length
+      );
+    }, 2000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, [item.images.length]);
+
+  /* =====================================================
+      MANUAL CONTROLS
+  ===================================================== */
+
   const previousImage = () => {
     if (!hasImages) return;
 
@@ -636,11 +668,16 @@ function PhotoGalleryCard({
     if (!hasImages) return;
 
     setActiveIndex((current) =>
-      current === item.images.length - 1
+      current ===
+      item.images.length - 1
         ? 0
         : current + 1
     );
   };
+
+  /* =====================================================
+      MOBILE SWIPE
+  ===================================================== */
 
   const handleTouchStart = (
     e: React.TouchEvent<HTMLDivElement>
@@ -683,7 +720,8 @@ function PhotoGalleryCard({
     >
       {hasImages ? (
         <>
-          <img
+          {/* IMAGE */}
+          <motion.img
             key={
               item.images[activeIndex]
             }
@@ -697,7 +735,19 @@ function PhotoGalleryCard({
             draggable={false}
             loading="lazy"
             decoding="async"
-            className="h-full w-full object-cover transition-all duration-500"
+            initial={{
+              opacity: 0,
+              scale: 1.015,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+            }}
+            transition={{
+              duration: 0.45,
+              ease: 'easeOut',
+            }}
+            className="h-full w-full object-cover"
           />
 
           {/* DEPTH */}
@@ -741,7 +791,7 @@ function PhotoGalleryCard({
           </div>
         </>
       ) : (
-        /* EMPTY PHOTO PROJECT PLACEHOLDER */
+        /* EMPTY PLACEHOLDER */
         <div className="absolute inset-0 flex flex-col items-center justify-center bg-[radial-gradient(circle_at_50%_40%,rgba(255,227,172,0.09),transparent_45%)] px-6 text-center">
           <div className="flex h-14 w-14 items-center justify-center rounded-full border border-[#FFE3AC]/25 text-[26px] text-[#FFE3AC]">
             +
@@ -788,7 +838,6 @@ function PhotoGalleryCard({
     </div>
   );
 }
-
 /* =========================================================
    WORK CARD
 ========================================================= */
@@ -1036,97 +1085,119 @@ export default function BookPage() {
         </div>
       </header>
 
-      {/* HERO */}
-      <section className="relative flex min-h-[68vh] items-end overflow-hidden px-5 pb-16 pt-[140px] sm:px-8 lg:min-h-[76vh] lg:px-[6vw] lg:pb-24">
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(255,227,172,0.12),transparent_32%)]" />
+      {/* =====================================================
+    HERO
+===================================================== */}
+<section className="relative flex min-h-[68vh] items-end overflow-hidden px-5 pb-16 pt-[140px] sm:px-8 lg:min-h-[76vh] lg:px-[6vw] lg:pb-24">
 
-        <div className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-[600px] w-[600px] rounded-full bg-[#FFE3AC]/5 blur-[140px]" />
+  {/* BACKGROUND VIDEO */}
+  <video
+    src="/videos web/principal/reel_platos.mp4"
+    autoPlay
+    muted
+    loop
+    playsInline
+    preload="metadata"
+    controlsList="nodownload noremoteplayback"
+    disablePictureInPicture
+    className="absolute inset-0 h-full w-full object-cover"
+  />
 
-        <div className="relative z-10 mx-auto w-full max-w-[1512px]">
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-            }}
-            className={`text-[12px] uppercase tracking-[0.28em] text-[#FFE3AC]/60 sm:text-[14px] ${anton.className}`}
-          >
-            Selected Work
-          </motion.p>
+  {/* DARK DEPTH */}
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/20" />
 
-          <motion.h1
-            initial={{
-              opacity: 0,
-              y: 50,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 1,
-              delay: 0.1,
-              ease: 'easeOut',
-            }}
-            className={`mt-5 text-[72px] uppercase leading-[0.88] tracking-[-0.06em] sm:text-[100px] lg:text-[150px] ${anton.className}`}
-          >
-            OUR
-            <br />
-            WORK
-          </motion.h1>
+  {/* BOTTOM DEPTH */}
+  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#050505]/85 via-transparent to-black/20" />
 
-          <motion.p
-            initial={{
-              opacity: 0,
-              y: 22,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.3,
-            }}
-            className="mt-7 max-w-[620px] text-[17px] leading-relaxed text-white/60 sm:text-[19px] lg:mt-8 lg:text-[21px]"
-          >
-            A visual book of food
-            stories, films, campaigns,
-            photography and everything
-            we create along the way.
-          </motion.p>
+  {/* WARM LIGHT */}
+  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_25%_20%,rgba(255,227,172,0.12),transparent_32%)]" />
 
-          <motion.div
-            initial={{
-              opacity: 0,
-              y: 18,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            transition={{
-              duration: 0.8,
-              delay: 0.45,
-            }}
-            className="mt-9 flex items-center gap-4"
-          >
-            <div className="h-[1px] w-12 bg-[#FFE3AC]/30" />
+  <div className="pointer-events-none absolute bottom-[-20%] right-[-10%] h-[600px] w-[600px] rounded-full bg-[#FFE3AC]/5 blur-[140px]" />
 
-            <p
-              className={`text-[11px] uppercase tracking-[0.22em] text-white/35 ${anton.className}`}
-            >
-              Scroll to explore
-            </p>
-          </motion.div>
-        </div>
-      </section>
+  {/* CONTENT */}
+  <div className="relative z-10 mx-auto w-full max-w-[1512px]">
+    <motion.p
+      initial={{
+        opacity: 0,
+        y: 20,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.8,
+      }}
+      className={`text-[12px] uppercase tracking-[0.28em] text-[#FFE3AC]/70 sm:text-[14px] ${anton.className}`}
+    >
+      Selected Work
+    </motion.p>
+
+    <motion.h1
+      initial={{
+        opacity: 0,
+        y: 50,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 1,
+        delay: 0.1,
+        ease: 'easeOut',
+      }}
+      className={`mt-5 text-[72px] uppercase leading-[0.88] tracking-[-0.06em] sm:text-[100px] lg:text-[150px] ${anton.className}`}
+    >
+      OUR
+      <br />
+      WORK
+    </motion.h1>
+
+    <motion.p
+      initial={{
+        opacity: 0,
+        y: 22,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.8,
+        delay: 0.3,
+      }}
+      className="mt-7 max-w-[620px] text-[17px] leading-relaxed text-white/70 sm:text-[19px] lg:mt-8 lg:text-[21px]"
+    >
+      A visual book of food stories, films, campaigns,
+      photography and everything we create along the way.
+    </motion.p>
+
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 18,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
+      transition={{
+        duration: 0.8,
+        delay: 0.45,
+      }}
+      className="mt-9 flex items-center gap-4"
+    >
+      <div className="h-[1px] w-12 bg-[#FFE3AC]/40" />
+
+      <p
+        className={`text-[11px] uppercase tracking-[0.22em] text-white/45 ${anton.className}`}
+      >
+        Scroll to explore
+      </p>
+    </motion.div>
+  </div>
+</section>
 
      {/* =====================================================
     OUR WORK

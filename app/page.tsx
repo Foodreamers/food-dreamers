@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Anton } from 'next/font/google';
-import { animate, motion, useInView, useMotionValue, useTransform } from 'framer-motion';
+import { animate, motion, useInView, useMotionValue, useScroll, useTransform } from 'framer-motion';
 import MobileMenu from './components/MobileMenu';
+
 
 
 const anton = Anton({
@@ -285,7 +286,7 @@ if (y >= bounds.height - iconSize - bottomLimit) {
         ref={iconRef}
         type="button"
         onClick={onClick}
-        className="pointer-events-auto absolute left-0 top-0 h-[120px] w-[120px] cursor-pointer"
+        className="pointer-events-auto absolute left-0 top-0 h-[140px] w-[140px] cursor-pointer"
       >
         <img
           src="/pot.svg"
@@ -551,24 +552,24 @@ const storytellingFormats = [
     video: '/timeline/reel.mp4',
   },
   {
-    title: 'Campaign',
+    title: 'SHOPPER',
     duration: '30–90 sec',
     video: '/timeline/campaign.mp4',
   },
   {
-    title: 'Branded Content',
+    title: 'Campaign',
     duration: '1–3 min',
     video: '/timeline/branded-content.mp4',
   },
   {
     title: 'TV Ads',
     duration: '15–60 sec',
-    video: '/timeline/tv-ads.mp4',
+    video: '/videos web/horizontal/HBO.mp4',
   },
   {
     title: 'Brand Film',
     duration: '1–5 min',
-    video: '/timeline/brand-film.mp4',
+    video: '/videos web/horizontal/Testimonial con subs.mp4',
   },
   {
     title: 'Documentary',
@@ -656,7 +657,228 @@ function ShareTypewriter() {
     </span>
   );
 }
+function OurWorkCard({
+  project,
+  i,
+  total,
+  scrollYProgress,
+}: {
+  project: {
+    title: string;
+    href: string;
+    image?: string;
+    isAddCard?: boolean;
+  };
+  i: number;
+  total: number;
+  scrollYProgress: any;
+}) {
+  const start = i / total;
+  const end = (i + 1) / total;
+
+  const y = useTransform(
+    scrollYProgress,
+    [start, end],
+    ['0px', '900px']
+  );
+
+  const scale = useTransform(
+    scrollYProgress,
+    [start, end],
+    [1, 1.14]
+  );
+
+  /* =====================================================
+      FINAL CARD — NO BAJA
+  ===================================================== */
+  if (project.isAddCard) {
+    return (
+      <motion.div
+        style={{
+          y: 0,
+          scale: 1,
+          zIndex: total - i,
+        }}
+        className="absolute inset-0 overflow-hidden rounded-[30px] border border-white/10 bg-[#050505] shadow-[0_30px_90px_rgba(0,0,0,0.65)]"
+      >
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.08),transparent_38%)]" />
+
+        <div className="relative z-10 flex h-full flex-col items-center justify-center px-10 text-center">
+          <p
+            className="text-[15px] uppercase tracking-[0.32em] text-white/40"
+            style={{ fontFamily: 'Anton, sans-serif' }}
+          >
+            SELECTED WORK
+          </p>
+
+          <h2
+            className="mt-5 text-[92px] uppercase leading-[0.9] tracking-[-0.04em] text-white"
+            style={{ fontFamily: 'Anton, sans-serif' }}
+          >
+            EXPLORE
+            <br />
+            OUR WORK
+          </h2>
+
+          <a
+            href="/Book"
+            className="relative z-20 mt-9 rounded-[16px] bg-white px-10 py-4 text-[22px] uppercase text-black transition duration-300 hover:scale-105"
+            style={{ fontFamily: 'Anton, sans-serif' }}
+          >
+            View Our Work
+          </a>
+        </div>
+      </motion.div>
+    );
+  }
+
+  /* =====================================================
+      NORMAL PROJECT CARD
+  ===================================================== */
+  return (
+    <motion.div
+      style={{
+        y,
+        scale,
+        zIndex: total - i,
+      }}
+      className="absolute inset-0 overflow-hidden rounded-[30px] border border-white/10 bg-[#111] shadow-[0_30px_90px_rgba(0,0,0,0.65)]"
+    >
+      <a
+        href={project.href}
+        className="absolute inset-0 block"
+      >
+        {project.image && (
+          <img
+            src={project.image}
+            alt={project.title}
+            draggable={false}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        )}
+      </a>
+    </motion.div>
+  );
+}
+
+
+function OurWorkStack() {
+  const sectionRef = useRef<HTMLElement | null>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ['start start', 'end end'],
+  });
+
+  const projects = [
+    {
+      title: 'Project 01',
+      href: '/Book',
+      image: '/work/project-01.jpg',
+    },
+    {
+      title: 'Project 02',
+      href: '/Book',
+      image: '/work/project-02.jpg',
+    },
+    {
+      title: 'Project 03',
+      href: '/Book',
+      image: '/work/project-03.jpg',
+    },
+    {
+      title: 'Project 04',
+      href: '/Book',
+      image: '/work/project-04.jpg',
+    },
+    {
+      title: '',
+      href: '/Book',
+      isAddCard: true,
+    },
+  ];
+
+  return (
+    <>
+      {/* =====================================================
+          MOBILE
+      ===================================================== */}
+      <section className="bg-[#050505] px-5 pb-24 pt-12 md:hidden">
+        <div className="mx-auto flex w-full max-w-[430px] flex-col gap-5">
+          {projects.map((project, i) => {
+            if (project.isAddCard) {
+              return (
+                <a
+                  key={`our-work-final-mobile-${i}`}
+                  href="/Book"
+                  className="relative flex min-h-[320px] w-full flex-col items-center justify-center overflow-hidden rounded-[24px] border border-white/10 bg-[#050505] px-6 text-center"
+                >
+                  <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_45%,rgba(255,255,255,0.08),transparent_42%)]" />
+
+                  <p
+                    className="relative z-10 text-[11px] uppercase tracking-[0.28em] text-white/40"
+                    style={{ fontFamily: 'Anton, sans-serif' }}
+                  >
+                    SELECTED WORK
+                  </p>
+
+                  <h2
+                    className="relative z-10 mt-4 text-[48px] uppercase leading-[0.92] text-white"
+                    style={{ fontFamily: 'Anton, sans-serif' }}
+                  >
+                    EXPLORE
+                    <br />
+                    OUR WORK
+                  </h2>
+                </a>
+              );
+            }
+
+            return (
+              <a
+                key={`${project.title}-mobile-${i}`}
+                href={project.href}
+                className="relative block w-full overflow-hidden rounded-[24px]"
+              >
+                <img
+                  src={project.image}
+                  alt={project.title}
+                  draggable={false}
+                  loading="lazy"
+                  className="block h-auto w-full"
+                />
+              </a>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* =====================================================
+          DESKTOP — MISMO STACK QUE FUNCIONABA
+      ===================================================== */}
+      <section
+        ref={sectionRef}
+        className="relative hidden h-[520vh] bg-[#050505] px-[6vw] md:block"
+      >
+        <div className="sticky top-0 flex h-screen items-center justify-center overflow-visible">
+          <div className="relative mx-auto h-[540px] w-full max-w-[1512px]">
+            {projects.map((project, i) => (
+              <OurWorkCard
+                key={`${project.title || 'add-card'}-${i}`}
+                project={project}
+                i={i}
+                total={projects.length}
+                scrollYProgress={scrollYProgress}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
+  );
+}
 export default function Home() {
+  
   const [isMuted, setIsMuted] = useState(true);
   const [currentLogo, setCurrentLogo] = useState('/logos/logo-yellow.svg');
   const [activeSocialVideo, setActiveSocialVideo] = useState<string | null>(null);
@@ -678,6 +900,7 @@ export default function Home() {
   const ecosystemRef = useRef<HTMLElement | null>(null);
   const hasPlayedEcosystemIntro = useRef(false);
 const sequenceProgress = useMotionValue(0);
+
 
   const cardsX = useMotionValue(0);
   const frameCount = 120;
@@ -805,6 +1028,7 @@ const sequenceProgress = useMotionValue(0);
   const section = document.getElementById('sequence');
   const viewport = document.getElementById('sequence-viewport');
   const content = document.getElementById('sequence-content');
+  
 
  if (!section || !viewport || !content) return;
 
@@ -1018,7 +1242,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 }
   return (
     <main id="home"
-     className="relative min-h-screen overflow-x-hidden bg-[#B00D0D] text-white">
+     className="relative min-h-screen overflow-x-clip bg-[#B00D0D] text-white">
      <header className="fixed left-0 top-0 z-[999] w-full border-b border-white/10 bg-black/10 backdrop-blur-3xl">
   <div className="flex h-20 w-full items-center justify-between px-4 sm:px-6 lg:h-[88px] lg:px-10">
     {/* LOGO */}
@@ -1771,6 +1995,12 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     </div>
   </div>
 </section>
+
+{/* =====================================================
+    OUR WORK STACK
+===================================================== */}
+<OurWorkStack />
+
 <section
   ref={ecosystemRef}
   id="ecosystem"
@@ -2006,13 +2236,13 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
           className="text-[54px] uppercase leading-[0.92] tracking-[-0.03em] text-white sm:text-[66px]"
           style={{ fontFamily: 'Anton, sans-serif' }}
         >
-          OUR
+          CREATIVE
           <br />
-          CREATIVE HUB
+          HUB
         </h2>
 
         <p className="mt-6 max-w-[340px] text-[17px] leading-relaxed text-white/75 sm:text-[18px]">
-          Integrated prop house, prelight kitchen sets.
+          Built for simoultaneous productions.
         </p>
       </motion.div>
 
@@ -2117,23 +2347,23 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     {/* LEFT TEXT */}
     <div className="absolute left-[6vw] top-[82%] max-w-[420px] -translate-y-1/2">
       <h2
-        className="text-[82px] uppercase leading-[0.9] tracking-[-0.04em] text-white"
+        className="text-[122px] uppercase leading-[0.9] tracking-[-0.04em] text-white"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
-        OUR
+         CREATIVE
         <br />
-        CREATIVE HUB
+        HUB
       </h2>
 
       <p className="mt-6 max-w-[340px] text-[18px] leading-relaxed text-white/75">
-        Integrated prop house, prelight kitchen sets.
+        Built for simoultaneous productions.
       </p>
     </div>
 
     {/* RIGHT TEXT */}
     <div className="absolute right-[6vw] top-[82%] max-w-[380px] -translate-y-1/2 text-right">
       <h3
-        className="text-[56px] uppercase leading-[0.95] tracking-[-0.03em] text-[#FFE3AC]"
+        className="text-[95px] uppercase leading-[0.95] tracking-[-0.03em] text-[#FFE3AC]"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
         15+ MODULAR
@@ -2182,8 +2412,10 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
         SOCIAL
-        <br />
-        MEDIA
+<br />
+MEDIA
+<br />
+CONTENT
       </motion.h2>
 
       <motion.p
@@ -2191,9 +2423,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.9, delay: 0.15 }}
         viewport={{ once: true }}
-        className="mt-7 max-w-[520px] text-[18px] font-bold uppercase leading-snug text-white sm:text-[21px] md:mt-8 md:text-[24px]"
+        className="mt-7 max-w-[5100px] text-[18px] font-bold uppercase leading-snug text-white sm:text-[21px] md:mt-8 md:text-[24px]"
       >
-        MULTI-PLATFORM CONTENT DESING SCROLL-STOPPING VIRALITY
+      DESIGNED FOR SCROLL-STOPPING VIRALITY
       </motion.p>
 
     </div>
@@ -2366,7 +2598,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
       className="relative z-20 mx-auto mt-14 flex w-full max-w-[340px] items-center justify-center rounded-[14px] border border-[#3F8DFF] bg-[#3F8DFF]/10 px-6 py-4 text-center text-[20px] uppercase text-white shadow-[0_0_35px_rgba(63,141,255,0.22)] md:hidden"
       style={{ fontFamily: 'Anton, sans-serif' }}
     >
-    Let´s Go Viral!
+    START MY PROJECT!
     </motion.a>
   </div>
 
@@ -2650,7 +2882,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     className="relative z-10 mt-12 hidden w-fit rounded-[14px] border border-[#3F8DFF] bg-[#3F8DFF]/10 px-9 py-4 text-[22px] uppercase text-white shadow-[0_0_35px_rgba(63,141,255,0.22)] md:block md:ml-[6vw]"
     style={{ fontFamily: 'Anton, sans-serif' }}
   >
-    Let´s Go Viral!
+    START MY PROJECT
   </motion.a>
 </section>
 <section
@@ -2665,18 +2897,16 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
     {/* =====================================================
         LEFT — AI TASTE LAB
-        MOBILE: 1
-        DESKTOP: 1
     ===================================================== */}
     <motion.div
       initial={{ opacity: 0, y: 35 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, ease: 'easeOut' }}
       viewport={{ once: true, amount: 0.25 }}
-      className="relative z-20 order-1 w-full text-center lg:order-1 lg:max-w-[320px] lg:text-left"
+      className="relative z-20 order-1 w-full text-center lg:order-1 lg:w-[28%] lg:text-left"
     >
       <h2
-        className="text-[82px] uppercase leading-[0.86] tracking-[-0.05em] text-white sm:text-[96px] lg:mt-6 lg:text-[120px]"
+        className="text-[82px] uppercase leading-[0.86] tracking-[-0.05em] text-white sm:text-[96px] lg:text-[120px]"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
         <span className="text-[#C084FC]">
@@ -2715,11 +2945,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     </motion.div>
 
     {/* =====================================================
-        BURGER COMPARATOR
-        MOBILE: 2
-        DESKTOP: 3 — RIGHT SIDE
+        CENTER — BURGER COMPARATOR
     ===================================================== */}
-    <div className="relative z-10 order-2 flex w-full flex-col items-center justify-center lg:order-3 lg:flex-1">
+    <div className="relative z-10 order-2 flex w-full flex-col items-center justify-center lg:order-2 lg:w-[44%]">
       <motion.div
         initial={{
           opacity: 0,
@@ -2756,7 +2984,6 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
           <div className="mt-4 h-[1px] w-[140px] bg-gradient-to-r from-transparent via-[#C084FC]/70 to-transparent sm:w-[180px]" />
         </div>
 
-        {/* RESPONSIVE COMPARATOR */}
         <div className="mt-3 w-full max-w-[360px] sm:mt-0 sm:max-w-[460px] lg:max-w-[560px]">
           <BurgerBeforeAfter />
         </div>
@@ -2764,87 +2991,47 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     </div>
 
     {/* =====================================================
-        BOXES
-        MOBILE: 3
-        DESKTOP: 2 — CENTER / LEFT OF BURGER
+        RIGHT — CLEAN COPY
+        NO BOXES
     ===================================================== */}
-    <div className="relative z-20 order-3 grid w-full gap-4 sm:grid-cols-3 lg:order-2 lg:flex lg:w-[340px] lg:flex-col lg:gap-5">
-      {[
-        ['We Do', '', 0.4],
-        ['', 'Whatever It Takes', 0.95],
-        ['', 'To Make It', 1.5],
-        ['', 'Happen', 2.05],
-      ].map(([title, text, delay], i) => (
-        <motion.div
-          key={`${title}-${text}-${i}`}
-          initial={{
-            borderColor:
-              'rgba(255,255,255,0.10)',
-            boxShadow:
-              '0 0 0 rgba(192,132,252,0)',
-          }}
-          animate={
-            aiLabInView
-              ? {
-                  borderColor:
-                    'rgba(192,132,252,0.75)',
-                  boxShadow:
-                    '0 0 34px rgba(192,132,252,0.28)',
-                }
-              : {}
-          }
-          transition={{
-            duration: 0.8,
-            delay: delay as number,
-            ease: 'easeOut',
-          }}
-          className="relative min-h-[115px] rounded-[18px] border bg-white/[0.03] p-5 backdrop-blur-xl sm:min-h-[145px] lg:min-h-[110px]"
-        >
-          {/* PULSE BORDER */}
-          <motion.div
-            className="pointer-events-none absolute -inset-[2px] rounded-[20px] border border-[#C084FC]/70"
-            animate={
-              aiLabInView
-                ? {
-                    opacity: [0, 0.65, 0],
-                    boxShadow: [
-                      '0 0 0 rgba(192,132,252,0)',
-                      '0 0 38px rgba(192,132,252,0.42)',
-                      '0 0 0 rgba(192,132,252,0)',
-                    ],
-                  }
-                : {
-                    opacity: 0,
-                  }
-            }
-            transition={{
-              duration: 2.2,
-              delay: 2.4 + i * 0.25,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-          />
+    <motion.div
+      initial={{ opacity: 0, x: 35 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{
+        duration: 1,
+        delay: 0.35,
+        ease: 'easeOut',
+      }}
+      viewport={{ once: true, amount: 0.2 }}
+      className="relative z-20 order-3 w-full text-center lg:order-3 lg:w-[28%] lg:text-left"
+    >
+      <div
+        className={`uppercase leading-[0.92] tracking-[-0.035em] ${anton.className}`}
+      >
+        <p className="text-[46px] text-[#C084FC] sm:text-[78px] lg:text-[68px]">
+          WE DO
+        </p>
 
-          <div className="relative z-10 flex h-full flex-col items-center justify-center">
-            {title && (
-              <p
-                className={`text-center text-[24px] uppercase tracking-[0.14em] text-[#C084FC] sm:text-[26px] lg:text-[30px] lg:tracking-[0.16em] ${anton.className}`}
-              >
-                {title}
-              </p>
-            )}
+        <p className="mt-2 text-[44px] text-white sm:text-[54px] lg:text-[62px]">
+          WHATEVER
+        </p>
 
-            {text && (
-              <p
-                className={`text-center text-[30px] leading-tight text-white/80 sm:text-[32px] lg:text-[30px] lg:leading-tight ${anton.className}`}
-              >
-                {text}
-              </p>
-            )}
-          </div>
-        </motion.div>
-      ))}
-    </div>
+        <p className="text-[44px] text-white sm:text-[54px] lg:text-[62px]">
+          IT TAKES
+        </p>
+
+        <p className="mt-3 text-[44px] text-white/75 sm:text-[54px] lg:text-[62px]">
+          TO MAKE IT
+        </p>
+
+        <p className="text-[46px] text-[#C084FC] sm:text-[58px] lg:text-[68px]">
+          HAPPEN
+        </p>
+      </div>
+
+      <div className="mx-auto mt-7 h-[1px] w-[160px] bg-gradient-to-r from-transparent via-[#C084FC]/55 to-transparent lg:mx-0" />
+    </motion.div>
+
   </div>
 </section>
 <footer className="relative overflow-hidden bg-[#140824] px-5 pb-8 pt-16 text-white sm:px-8 lg:px-[6vw] lg:pb-10 lg:pt-20">
