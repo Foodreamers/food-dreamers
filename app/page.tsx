@@ -2241,9 +2241,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
           HUB
         </h2>
 
-        <p className="mt-6 max-w-[340px] text-[17px] leading-relaxed text-white/75 sm:text-[18px]">
-          Built for simoultaneous productions.
-        </p>
+       <p className="mt-6 max-w-[340px] text-[17px] leading-relaxed text-white/75 sm:text-[18px]">
+  Built for simoultaneous productions.
+</p>
       </motion.div>
 
       {/* MOBILE RIGHT TEXT */}
@@ -2355,9 +2355,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         HUB
       </h2>
 
-      <p className="mt-6 max-w-[340px] text-[18px] leading-relaxed text-white/75">
-        Built for simoultaneous productions.
-      </p>
+      <p className="mt-8 max-w-[700px] text-[35px] font-bold uppercase leading-snug text-white">
+  All-in-One Remote Production Studio.
+</p>
     </div>
 
     {/* RIGHT TEXT */}
@@ -2371,9 +2371,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         KITCHENS
       </h3>
 
-      <p className="mt-5 text-[18px] leading-relaxed text-white/70">
-        All-in-One Remote Production Studio.
-      </p>
+    
     </div>
 
     {/* CTA */}
@@ -2385,7 +2383,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
       className="pointer-events-auto absolute bottom-[12%] left-1/2 -translate-x-1/2 rounded-[18px] bg-white px-10 py-4 text-[28px] uppercase text-black shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:scale-105"
       style={{ fontFamily: 'Anton, sans-serif' }}
     >
-      Welcome to our Space
+      Studio Tour
     </button>
   </div>
 </div>
@@ -2411,7 +2409,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         className="text-[72px] uppercase leading-[0.87] tracking-[0.01em] text-[#3F8DFF] sm:text-[92px] md:text-[150px] md:transition-all md:duration-300 md:hover:text-[#6FB6FF] md:hover:[text-shadow:0_0_18px_rgba(79,163,255,0.75),0_0_46px_rgba(79,163,255,0.35)]"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
-        SOCIAL
+        <span className="text-[#164A96]">
+  SOCIAL
+</span>
 <br />
 MEDIA
 <br />
@@ -2926,9 +2926,9 @@ CONTENT
         </span>
       </h2>
 
-      <p className="mx-auto mt-6 max-w-[320px] text-[17px] leading-relaxed text-white/60 sm:text-[18px] lg:mx-0 lg:mt-8">
-        AI expands culinary storytelling.
-      </p>
+      <p className="mx-auto mt-7 max-w-[700px] text-[20px] font-bold uppercase leading-snug text-white sm:text-[24px] lg:mx-0 lg:mt-8 lg:text-[22px]">
+  AI expands culinary storytelling
+</p>
 
       <button
         type="button"
@@ -3006,28 +3006,28 @@ CONTENT
       className="relative z-20 order-3 w-full text-center lg:order-3 lg:w-[28%] lg:text-left"
     >
       <div
-        className={`uppercase leading-[0.92] tracking-[-0.035em] ${anton.className}`}
-      >
-        <p className="text-[46px] text-[#C084FC] sm:text-[78px] lg:text-[68px]">
-          WE DO
-        </p>
+  className={`uppercase leading-[0.92] tracking-[-0.035em] lg:translate-x-[70px] ${anton.className}`}
+>
+  <p className="text-[50px] text-[#C084FC] sm:text-[82px] lg:text-[76px]">
+    WE DO
+  </p>
 
-        <p className="mt-2 text-[44px] text-white sm:text-[54px] lg:text-[62px]">
-          WHATEVER
-        </p>
+  <p className="mt-2 text-[48px] text-white sm:text-[60px] lg:text-[70px]">
+    WHATEVER
+  </p>
 
-        <p className="text-[44px] text-white sm:text-[54px] lg:text-[62px]">
-          IT TAKES
-        </p>
+  <p className="text-[48px] text-white sm:text-[60px] lg:text-[70px]">
+    IT TAKES
+  </p>
 
-        <p className="mt-3 text-[44px] text-white/75 sm:text-[54px] lg:text-[62px]">
-          TO MAKE IT
-        </p>
+  <p className="mt-3 text-[48px] text-white/75 sm:text-[60px] lg:text-[70px]">
+    TO MAKE IT
+  </p>
 
-        <p className="text-[46px] text-[#C084FC] sm:text-[58px] lg:text-[68px]">
-          HAPPEN
-        </p>
-      </div>
+  <p className="text-[50px] text-[#C084FC] sm:text-[64px] lg:text-[76px]">
+    HAPPEN
+  </p>
+</div>
 
       <div className="mx-auto mt-7 h-[1px] w-[160px] bg-gradient-to-r from-transparent via-[#C084FC]/55 to-transparent lg:mx-0" />
     </motion.div>
