@@ -551,37 +551,61 @@ function SmartWorkVideo({
 
     if (!video) return;
 
+    let isVisible = false;
+
+    const updatePlayback = () => {
+      if (
+        isVisible &&
+        document.visibilityState === 'visible'
+      ) {
+        video
+          .play()
+          .catch(() => {});
+      } else {
+        video.pause();
+      }
+    };
+
     const observer =
       new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0];
-
-          if (
+        ([entry]) => {
+          isVisible =
             entry.isIntersecting &&
-            entry.intersectionRatio > 0.15
-          ) {
-            video
-              .play()
-              .catch(() => {});
-          } else {
-            video.pause();
-          }
+            entry.intersectionRatio >= 0.5;
+
+          updatePlayback();
         },
         {
           root: null,
-          rootMargin: '150px 0px',
+          rootMargin: '0px',
           threshold: [
             0,
-            0.15,
             0.5,
+            0.75,
           ],
         }
       );
 
+    const handleVisibilityChange =
+      () => {
+        updatePlayback();
+      };
+
     observer.observe(video);
+
+    document.addEventListener(
+      'visibilitychange',
+      handleVisibilityChange
+    );
 
     return () => {
       observer.disconnect();
+
+      document.removeEventListener(
+        'visibilitychange',
+        handleVisibilityChange
+      );
+
       video.pause();
     };
   }, []);
@@ -593,14 +617,13 @@ function SmartWorkVideo({
       muted
       loop
       playsInline
-      preload="metadata"
+      preload="none"
       controlsList="nodownload noremoteplayback"
       disablePictureInPicture
       className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
     />
   );
 }
-
 /* =========================================================
    PHOTO GALLERY CARD
 ========================================================= */
@@ -609,7 +632,9 @@ function SmartWorkVideo({
    PHOTO GALLERY CARD
    AUTO-PLAY EVERY 2 SECONDS
 ========================================================= */
-
+function getOptimizedPhotoSrc(src: string) {
+  return src.replace(/\.(jpe?g)$/i, '.webp');
+}
 function PhotoGalleryCard({
   item,
 }: {
@@ -621,34 +646,100 @@ function PhotoGalleryCard({
   const [activeIndex, setActiveIndex] =
     useState(0);
 
+  const cardRef =
+    useRef<HTMLDivElement | null>(null);
+
   const touchStartX =
     useRef<number | null>(null);
+
+  const [isVisible, setIsVisible] =
+    useState(false);
 
   const hasImages =
     item.images.length > 0;
 
+    useEffect(() => {
+  item.images.forEach((src) => {
+  const img = new Image();
+
+  img.src = getOptimizedPhotoSrc(src);
+
+  if (img.decode) {
+    img.decode().catch(() => {});
+  }
+});
+}, [item.images]);
+
   /* =====================================================
-      AUTOMATIC CAROUSEL
-      CHANGES EVERY 2 SECONDS
-      INFINITE LOOP
+      VIEWPORT DETECTION
   ===================================================== */
 
   useEffect(() => {
-    if (item.images.length <= 1) {
+    const card = cardRef.current;
+
+    if (!card) return;
+
+    const observer =
+      new IntersectionObserver(
+        ([entry]) => {
+          setIsVisible(
+            entry.isIntersecting &&
+            entry.intersectionRatio >= 0.25
+          );
+        },
+        {
+          root: null,
+          rootMargin: '0px',
+          threshold: [
+            0,
+            0.25,
+            0.5,
+          ],
+        }
+      );
+
+    observer.observe(card);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  /* =====================================================
+      AUTOMATIC CAROUSEL
+      ONLY RUNS WHILE VISIBLE
+  ===================================================== */
+
+  useEffect(() => {
+    if (
+      !isVisible ||
+      item.images.length <= 1
+    ) {
       return;
     }
 
-    const interval = setInterval(() => {
-      setActiveIndex((current) =>
-        (current + 1) %
-        item.images.length
-      );
-    }, 2000);
+    const interval =
+      window.setInterval(() => {
+        if (
+          document.visibilityState !==
+          'visible'
+        ) {
+          return;
+        }
+
+        setActiveIndex((current) =>
+          (current + 1) %
+          item.images.length
+        );
+      }, 2000);
 
     return () => {
-      clearInterval(interval);
+      window.clearInterval(interval);
     };
-  }, [item.images.length]);
+  }, [
+    isVisible,
+    item.images.length,
+  ]);
 
   /* =====================================================
       MANUAL CONTROLS
@@ -712,6 +803,7 @@ function PhotoGalleryCard({
 
   return (
     <div
+      ref={cardRef}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
       className={`group/gallery relative overflow-hidden rounded-[18px] border border-white/10 bg-[#111] shadow-[0_20px_55px_rgba(0,0,0,0.32)] sm:rounded-[22px] ${getAspectClass(
@@ -721,34 +813,25 @@ function PhotoGalleryCard({
       {hasImages ? (
         <>
           {/* IMAGE */}
-          <motion.img
-            key={
-              item.images[activeIndex]
-            }
-            src={
-              item.images[activeIndex]
-            }
-            alt={
-              item.title ||
-              'Food Dreamers photography'
-            }
-            draggable={false}
-            loading="lazy"
-            decoding="async"
-            initial={{
-              opacity: 0,
-              scale: 1.015,
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-            }}
-            transition={{
-              duration: 0.45,
-              ease: 'easeOut',
-            }}
-            className="h-full w-full object-cover"
-          />
+         <div className="absolute inset-0">
+  {item.images.map((src, index) => (
+    <img
+      key={src}
+      src={getOptimizedPhotoSrc(src)}
+      alt={
+        item.title ||
+        'Food Dreamers photography'
+      }
+      draggable={false}
+      decoding="async"
+      className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-300 ${
+        index === activeIndex
+          ? 'opacity-100'
+          : 'opacity-0'
+      }`}
+    />
+  ))}
+</div>
 
           {/* DEPTH */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/75 via-transparent to-transparent opacity-35 transition-opacity duration-300 lg:group-hover/gallery:opacity-70" />

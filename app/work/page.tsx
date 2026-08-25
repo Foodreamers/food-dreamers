@@ -258,26 +258,31 @@ function ServiceStack() {
     offset: ['start start', 'end end'],
   });
 
- const services = [
+const services = [
+  {
+    title: 'Video Production',
+    href: '/contact',
+    image: '/services/1.png',
+  },
+  {
+    title: 'Photography',
+    href: '/contact',
+    image: '/services/2.png',
+  },
   {
     title: 'Food Styling',
     href: '/contact',
     image: '/services/3.png',
   },
   {
-    title: 'Video Production',
-    href: '/contact',
-    image: '/services/5.png',
-  },
-  {
-    title: 'Photography',
+    title: 'AI Integration',
     href: '/contact',
     image: '/services/4.png',
   },
   {
-    title: 'Prop House',
+    title: 'Art Direction',
     href: '/contact',
-    image: '/services/8.png',
+    image: '/services/5.png',
   },
   {
     title: 'Social Media',
@@ -285,24 +290,24 @@ function ServiceStack() {
     image: '/services/6.png',
   },
   {
-    title: 'Documentaries',
+    title: 'Prop House',
     href: '/contact',
     image: '/services/7.png',
   },
   {
-    title: 'Post Production',
+    title: 'Documentaries',
     href: '/contact',
-    image: '/services/9.png',
-  },
-  {
-    title: 'Art Direction',
-    href: '/contact',
-    image: '/services/2.png',
+    image: '/services/8.png',
   },
   {
     title: 'Creative Development',
     href: '/contact',
-    image: '/services/1.png',
+    image: '/services/9.png',
+  },
+  {
+    title: 'Post Production',
+    href: '/contact',
+    image: '/services/10.png',
   },
   {
     title: "Let's Build My Project",
