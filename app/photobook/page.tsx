@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   motion,
   MotionValue,
@@ -17,20 +17,20 @@ const anton = Anton({
 /* =========================================================
    FOOD DREAMERS — PHOTO BOOK
 
-   false = placeholders
-   true  = fotografías reales
+   Fotografías reales optimizadas
 ========================================================= */
 
-const USE_REAL_IMAGES = false;
+const USE_REAL_IMAGES = true;
 
 /* =========================================================
    TYPES
+
+   SOLO QUEDAN 2 EFECTOS
 ========================================================= */
 
 type EffectType =
   | 'vertical-rain'
-  | 'horizontal-carousel'
-  | 'horizontal-rain';
+  | 'horizontal-carousel';
 
 type PhotoBookSectionData = {
   id: string;
@@ -42,6 +42,10 @@ type PhotoBookSectionData = {
 
 /* =========================================================
    HELPERS
+
+   Fotografías optimizadas:
+
+   public/photo-book-final/
 ========================================================= */
 
 function makeImages(
@@ -51,7 +55,7 @@ function makeImages(
   return Array.from(
     { length: count },
     (_, index) =>
-      `/photo-book/${folder}/${String(
+      `/photo-book-final/${folder}/${String(
         index + 1
       ).padStart(2, '0')}.webp`
   );
@@ -62,7 +66,8 @@ function makeImages(
 
    1 → Vertical Rain
    2 → Horizontal Carousel
-   3 → Horizontal Rain
+
+   ALTERNAMOS LOS DOS EFECTOS
 ========================================================= */
 
 const sections: PhotoBookSectionData[] = [
@@ -72,7 +77,10 @@ const sections: PhotoBookSectionData[] = [
     effect: 'vertical-rain',
     background:
       '/photo-book/bebidas/back.webp',
-    images: makeImages('bebidas', 11),
+    images: makeImages(
+      'bebidas',
+      12
+    ),
   },
 
   {
@@ -81,48 +89,57 @@ const sections: PhotoBookSectionData[] = [
     effect: 'horizontal-carousel',
     background:
       '/photo-book/salado/back.webp',
-    images: makeImages('salado', 23),
+    images: makeImages(
+      'salado',
+      24
+    ),
   },
 
   {
     id: 'dulce',
     title: 'DULCE',
-    effect: 'horizontal-rain',
+    effect: 'vertical-rain',
     background:
       '/photo-book/dulce/back.webp',
-    images: makeImages('dulce', 14),
+    images: makeImages(
+      'dulce',
+      11
+    ),
   },
 
   {
     id: 'con-producto',
     title: 'CON PRODUCTO',
-    effect: 'vertical-rain',
+    effect: 'horizontal-carousel',
     background:
       '/photo-book/con-producto/back.webp',
     images: makeImages(
       'con-producto',
-      17
+      16
     ),
   },
 
   {
     id: 'kids',
     title: 'KIDS',
-    effect: 'horizontal-carousel',
+    effect: 'vertical-rain',
     background:
       '/photo-book/kids/back.webp',
-    images: makeImages('kids', 6),
+    images: makeImages(
+      'kids',
+      5
+    ),
   },
 
   {
     id: 'temporalidades',
     title: 'TEMPORALIDADES',
-    effect: 'horizontal-rain',
+    effect: 'horizontal-carousel',
     background:
       '/photo-book/temporalidades/back.webp',
     images: makeImages(
       'temporalidades',
-      18
+      7
     ),
   },
 
@@ -132,12 +149,17 @@ const sections: PhotoBookSectionData[] = [
     effect: 'vertical-rain',
     background:
       '/photo-book/creativo/back.webp',
-    images: makeImages('creativo', 12),
+    images: makeImages(
+      'creativo',
+      12
+    ),
   },
 ];
 
 /* =========================================================
    PLACEHOLDERS
+
+   Solo aparecen si una fotografía falla.
 ========================================================= */
 
 const gradients = [
@@ -178,7 +200,10 @@ function PhotoSurface({
   const [failed, setFailed] =
     useState(false);
 
-  if (USE_REAL_IMAGES && !failed) {
+  if (
+    USE_REAL_IMAGES &&
+    !failed
+  ) {
     return (
       <img
         src={src}
@@ -205,15 +230,17 @@ function PhotoSurface({
                 backgroundGradients.length
             ]
           : gradients[
-              index % gradients.length
+              index %
+                gradients.length
             ],
       }}
     >
-      {!background && label && (
-        <div className="absolute bottom-4 left-4 rounded-full bg-black/45 px-3 py-2 text-[9px] uppercase tracking-[0.18em] text-white backdrop-blur-md">
-          {label}
-        </div>
-      )}
+      {!background &&
+        label && (
+          <div className="absolute bottom-4 left-4 rounded-full bg-black/45 px-3 py-2 text-[9px] uppercase tracking-[0.18em] text-white backdrop-blur-md">
+            {label}
+          </div>
+        )}
     </div>
   );
 }
@@ -235,7 +262,9 @@ function BookNavigation() {
 
         <button
           type="button"
-          onClick={() => setOpen(true)}
+          onClick={() =>
+            setOpen(true)
+          }
           className="pointer-events-auto rounded-full border border-white/40 bg-black/10 px-4 py-2 text-[10px] uppercase tracking-[0.18em] backdrop-blur-md"
         >
           Index +
@@ -244,8 +273,12 @@ function BookNavigation() {
 
       {open && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
           className="fixed inset-0 z-[200] overflow-y-auto bg-[#080808]/95 px-[7vw] py-[10vh] text-white backdrop-blur-xl"
         >
           <button
@@ -260,23 +293,36 @@ function BookNavigation() {
 
           <div className="flex min-h-full flex-col justify-center">
             {sections.map(
-              (section, index) => (
+              (
+                section,
+                index
+              ) => (
                 <a
-                  key={section.id}
+                  key={
+                    section.id
+                  }
                   href={`#${section.id}`}
                   onClick={() =>
-                    setOpen(false)
+                    setOpen(
+                      false
+                    )
                   }
                   className={`group flex items-baseline gap-5 border-b border-white/10 py-3 uppercase transition-opacity hover:opacity-100 ${anton.className}`}
                 >
                   <span className="w-[34px] text-[13px] tracking-normal text-white/35">
                     {String(
-                      index + 1
-                    ).padStart(2, '0')}
+                      index +
+                        1
+                    ).padStart(
+                      2,
+                      '0'
+                    )}
                   </span>
 
                   <span className="text-[48px] leading-[0.9] text-white/80 transition-all duration-300 group-hover:translate-x-4 group-hover:text-[#FFC400] sm:text-[70px] md:text-[92px]">
-                    {section.title}
+                    {
+                      section.title
+                    }
                   </span>
                 </a>
               )
@@ -290,6 +336,14 @@ function BookNavigation() {
 
 /* =========================================================
    HERO
+
+   MISMO HERO.
+
+   Se elimina el texto gigante:
+   FOOD
+   DREAMERS
+
+   y entra el logo.
 ========================================================= */
 
 function Hero() {
@@ -297,7 +351,7 @@ function Hero() {
     <section className="relative flex h-screen items-center justify-center overflow-hidden bg-[#080808] text-white">
       <div className="absolute inset-0">
         <PhotoSurface
-          src="/photo-book/hero/hero.webp"
+          src="/our-space/hero/hero.webp"
           index={0}
           background
         />
@@ -325,15 +379,14 @@ function Hero() {
             1,
           ],
         }}
-        className="relative z-10 text-center"
+        className="relative z-10 flex w-full flex-col items-center justify-center px-[8vw] text-center"
       >
-        <h1
-          className={`text-[27vw] uppercase leading-[0.72] tracking-[-0.05em] sm:text-[19vw] ${anton.className}`}
-        >
-          FOOD
-          <br />
-          DREAMERS
-        </h1>
+        <img
+          src="/our-space/logos/food-dreamers.webp"
+          alt="Food Dreamers"
+          draggable={false}
+          className="h-auto w-full max-w-[850px] object-contain"
+        />
 
         <p className="mt-7 text-[10px] uppercase tracking-[0.3em] text-white/65">
           Photography Book
@@ -361,7 +414,9 @@ function SectionTitle({
   return (
     <motion.div
       style={{
-        opacity: opacity ?? 0.12,
+        opacity:
+          opacity ??
+          0.12,
       }}
       className="pointer-events-none absolute inset-0 z-[2] flex items-center overflow-hidden"
     >
@@ -378,7 +433,10 @@ function SectionTitle({
    EFFECT 1
    VERTICAL RAIN
 
+   SE CONSERVA EL EFECTO ORIGINAL.
+
    - movimiento vertical
+   - 3 columnas
    - composición irregular controlada
    - fotos grandes
    - pequeño overlap
@@ -391,9 +449,16 @@ function VerticalRainSection({
   section: PhotoBookSectionData;
 }) {
   const sectionRef =
-    useRef<HTMLElement | null>(
-      null
-    );
+    useRef<HTMLElement | null>(null);
+
+  const trackRef =
+    useRef<HTMLDivElement | null>(null);
+
+  const [verticalRange, setVerticalRange] =
+    useState({
+      start: 0,
+      end: 0,
+    });
 
   const { scrollYProgress } =
     useScroll({
@@ -404,12 +469,84 @@ function VerticalRainSection({
       ],
     });
 
-  const desktopRows = Math.ceil(
-    section.images.length / 3
-  );
+  const desktopRows =
+    Math.ceil(
+      section.images.length / 3
+    );
 
-  const travelDistance =
-    desktopRows * 72 + 120;
+  /* =======================================================
+     MEDIMOS LA ALTURA REAL DE LAS 3 COLUMNAS
+
+     Ya no calculamos una distancia aproximada.
+
+     INICIO:
+     fotos debajo de pantalla.
+
+     FINAL:
+     borde inferior del contenido coincide
+     con el borde inferior de la pantalla.
+  ======================================================= */
+
+  useEffect(() => {
+    const calculateRange = () => {
+      if (!trackRef.current) {
+        return;
+      }
+
+      const viewportHeight =
+        window.innerHeight;
+
+      const trackHeight =
+        trackRef.current.scrollHeight;
+
+      /*
+        El scale termina en 1.12,
+        por eso calculamos también
+        la altura visual final.
+      */
+
+      const finalVisualHeight =
+        trackHeight * 1.12;
+
+      setVerticalRange({
+        start:
+          viewportHeight * 1.05,
+
+        end:
+          viewportHeight -
+          finalVisualHeight,
+      });
+    };
+
+    calculateRange();
+
+    const resizeObserver =
+      new ResizeObserver(
+        calculateRange
+      );
+
+    if (trackRef.current) {
+      resizeObserver.observe(
+        trackRef.current
+      );
+    }
+
+    window.addEventListener(
+      'resize',
+      calculateRange
+    );
+
+    return () => {
+      resizeObserver.disconnect();
+
+      window.removeEventListener(
+        'resize',
+        calculateRange
+      );
+    };
+  }, [
+    section.images.length,
+  ]);
 
   /* MOVIMIENTO VERTICAL */
 
@@ -417,25 +554,33 @@ function VerticalRainSection({
     scrollYProgress,
     [0, 1],
     [
-      '105vh',
-      `-${travelDistance}vh`,
+      verticalRange.start,
+      verticalRange.end,
     ]
   );
 
-  /* NUEVO:
-     CRECIMIENTO PROGRESIVO */
+  /* CRECIMIENTO PROGRESIVO */
 
   const photoScale =
     useTransform(
       scrollYProgress,
       [0, 0.5, 1],
-      [1, 1.06, 1.12]
+      [
+        1,
+        1.06,
+        1.12,
+      ]
     );
 
   const titleOpacity =
     useTransform(
       scrollYProgress,
-      [0, 0.08, 0.8, 1],
+      [
+        0,
+        0.08,
+        0.8,
+        1,
+      ],
       [
         0.24,
         0.13,
@@ -444,9 +589,15 @@ function VerticalRainSection({
       ]
     );
 
+  /*
+    Conservamos la duración
+    que ya teníamos.
+  */
+
   const sectionHeight =
     240 +
-    section.images.length * 35;
+    section.images.length *
+      35;
 
   return (
     <section
@@ -463,9 +614,12 @@ function VerticalRainSection({
 
         <div className="absolute inset-0">
           <PhotoSurface
-            src={section.background}
+            src={
+              section.background
+            }
             index={
-              section.images.length
+              section.images
+                .length
             }
             background
           />
@@ -476,16 +630,22 @@ function VerticalRainSection({
         {/* TITLE */}
 
         <SectionTitle
-          title={section.title}
-          opacity={titleOpacity}
+          title={
+            section.title
+          }
+          opacity={
+            titleOpacity
+          }
         />
 
         {/* PHOTO TRACK */}
 
         <motion.div
+          ref={trackRef}
           style={{
             y,
-            scale: photoScale,
+            scale:
+              photoScale,
             transformOrigin:
               'center top',
           }}
@@ -546,10 +706,6 @@ function VerticalRainSection({
                       src,
                       index,
                     }) => {
-                      /*
-                        FOTOS MÁS GRANDES
-                      */
-
                       const widths =
                         [
                           '108%',
@@ -559,10 +715,6 @@ function VerticalRainSection({
                           '110%',
                           '98%',
                         ];
-
-                      /*
-                        DIFERENTES PROPORCIONES
-                      */
 
                       const ratios =
                         [
@@ -574,11 +726,6 @@ function VerticalRainSection({
                           '4 / 5',
                         ];
 
-                      /*
-                        DESORDEN
-                        CONTROLADO
-                      */
-
                       const alignments =
                         [
                           'flex-start',
@@ -589,32 +736,31 @@ function VerticalRainSection({
                           'flex-end',
                         ] as const;
 
-                      /*
-                        MENOS ESPACIO =
-                        PEQUEÑO OVERLAP
-                      */
+                      const gaps =
+                        [
+                          '4vh',
+                          '8vh',
+                          '5vh',
+                          '10vh',
+                          '6vh',
+                          '3vh',
+                        ];
 
-                      const gaps = [
-                        '4vh',
-                        '8vh',
-                        '5vh',
-                        '10vh',
-                        '6vh',
-                        '3vh',
-                      ];
-
-                      const zIndexes = [
-                        3,
-                        1,
-                        2,
-                        4,
-                        2,
-                        3,
-                      ];
+                      const zIndexes =
+                        [
+                          3,
+                          1,
+                          2,
+                          4,
+                          2,
+                          3,
+                        ];
 
                       return (
                         <div
-                          key={src}
+                          key={
+                            src
+                          }
                           className="relative flex w-full"
                           style={{
                             justifyContent:
@@ -694,12 +840,11 @@ function VerticalRainSection({
     </section>
   );
 }
-
 /* =========================================================
    EFFECT 2
    HORIZONTAL CAROUSEL
 
-   RESTAURADO
+   SE CONSERVA EL EFECTO ORIGINAL.
 ========================================================= */
 
 function HorizontalCarouselSection({
@@ -708,9 +853,16 @@ function HorizontalCarouselSection({
   section: PhotoBookSectionData;
 }) {
   const sectionRef =
-    useRef<HTMLElement | null>(
-      null
-    );
+    useRef<HTMLElement | null>(null);
+
+  const trackRef =
+    useRef<HTMLDivElement | null>(null);
+
+  const lastCardRef =
+    useRef<HTMLDivElement | null>(null);
+
+  const [endX, setEndX] =
+    useState(0);
 
   const { scrollYProgress } =
     useScroll({
@@ -722,52 +874,128 @@ function HorizontalCarouselSection({
     });
 
   /*
-    Distancia horizontal proporcional
-    al número de fotografías.
+    Calculamos el punto final REAL.
+
+    La última fotografía termina
+    centrada exactamente cuando
+    termina la sección.
   */
 
-  const estimatedTrackWidth =
-    section.images.length * 44;
+  useEffect(() => {
+    const calculateEndX = () => {
+      if (
+        !trackRef.current ||
+        !lastCardRef.current
+      ) {
+        return;
+      }
 
-  const movement = Math.max(
-    estimatedTrackWidth - 90,
-    80
-  );
+      const viewportWidth =
+        window.innerWidth;
+
+      /*
+        El track empieza en left-[6vw].
+      */
+
+      const trackLeft =
+        viewportWidth * 0.06;
+
+      const lastCard =
+        lastCardRef.current;
+
+      /*
+        Centro real de la última tarjeta
+        dentro del track.
+      */
+
+      const lastCardCenter =
+        lastCard.offsetLeft +
+        lastCard.offsetWidth / 2;
+
+      /*
+        Movimiento necesario para que
+        ese centro quede en 50vw.
+      */
+
+      const finalX =
+        viewportWidth / 2 -
+        trackLeft -
+        lastCardCenter;
+
+      setEndX(finalX);
+    };
+
+    calculateEndX();
+
+    const resizeObserver =
+      new ResizeObserver(
+        calculateEndX
+      );
+
+    if (trackRef.current) {
+      resizeObserver.observe(
+        trackRef.current
+      );
+    }
+
+    if (lastCardRef.current) {
+      resizeObserver.observe(
+        lastCardRef.current
+      );
+    }
+
+    window.addEventListener(
+      'resize',
+      calculateEndX
+    );
+
+    return () => {
+      resizeObserver.disconnect();
+
+      window.removeEventListener(
+        'resize',
+        calculateEndX
+      );
+    };
+  }, [
+    section.images.length,
+  ]);
 
   const x = useTransform(
     scrollYProgress,
     [0, 1],
     [
-      '0vw',
-      `-${movement}vw`,
+      0,
+      endX,
     ]
   );
 
   /*
-    El título también se mueve
-    muy ligeramente.
+    El título conserva exactamente
+    su movimiento anterior.
   */
 
   const titleX =
     useTransform(
       scrollYProgress,
       [0, 1],
-      ['0vw', '-12vw']
+      [
+        '0vw',
+        '-12vw',
+      ]
     );
 
   /*
-    Altura proporcional
-    al número de fotografías.
+    Conservamos duración.
   */
 
   const sectionHeight =
     180 +
-    section.images.length * 22;
+    section.images.length *
+      22;
 
   /*
-    Diferentes tamaños
-    para evitar apariencia
-    de carrusel genérico.
+    Tamaños originales.
   */
 
   const widths = [
@@ -803,7 +1031,9 @@ function HorizontalCarouselSection({
 
         <div className="absolute inset-0 opacity-[0.13]">
           <PhotoSurface
-            src={section.background}
+            src={
+              section.background
+            }
             index={1}
             background
           />
@@ -815,7 +1045,7 @@ function HorizontalCarouselSection({
           style={{
             x: titleX,
           }}
-         className={`pointer-events-none absolute left-[5vw] top-[8vh] z-20 whitespace-nowrap text-[13vw] uppercase leading-none tracking-[-0.045em] text-black md:text-[11vw] ${anton.className}`}
+          className={`pointer-events-none absolute left-[5vw] top-[8vh] z-20 whitespace-nowrap text-[13vw] uppercase leading-none tracking-[-0.045em] text-black md:text-[11vw] ${anton.className}`}
         >
           {section.title}
         </motion.h2>
@@ -823,54 +1053,77 @@ function HorizontalCarouselSection({
         {/* CAROUSEL */}
 
         <motion.div
-          style={{ x }}
+          ref={trackRef}
+          style={{
+            x,
+          }}
           className="absolute left-[6vw] top-[27vh] z-10 flex items-center gap-[2vw]"
         >
           {section.images.map(
-            (src, index) => (
-              <motion.div
-                key={src}
-                whileHover={{
-                  scale: 1.025,
-                }}
-                transition={{
-                  duration: 0.35,
-                }}
-                className="relative shrink-0 overflow-hidden rounded-[24px] bg-black shadow-[0_30px_75px_rgba(0,0,0,0.22)]"
-                style={{
-                  width: `clamp(250px, ${
-                    widths[
-                      index %
-                        widths.length
-                    ]
-                  }vw, 850px)`,
+            (
+              src,
+              index
+            ) => {
+              const isLast =
+                index ===
+                section.images.length -
+                  1;
 
-                  height: `${
-                    heights[
-                      index %
-                        heights.length
-                    ]
-                  }vh`,
-                }}
-              >
-                <PhotoSurface
-                  src={src}
-                  index={index}
-                  label={`${String(
-                    index + 1
-                  ).padStart(
-                    2,
-                    '0'
-                  )} / ${String(
-                    section.images
-                      .length
-                  ).padStart(
-                    2,
-                    '0'
-                  )}`}
-                />
-              </motion.div>
-            )
+              return (
+                <motion.div
+                  key={src}
+                  ref={
+                    isLast
+                      ? lastCardRef
+                      : undefined
+                  }
+                  whileHover={{
+                    scale:
+                      1.025,
+                  }}
+                  transition={{
+                    duration:
+                      0.35,
+                  }}
+                  className="relative shrink-0 overflow-hidden rounded-[24px] bg-black shadow-[0_30px_75px_rgba(0,0,0,0.22)]"
+                  style={{
+                    width: `clamp(250px, ${
+                      widths[
+                        index %
+                          widths.length
+                      ]
+                    }vw, 850px)`,
+
+                    height: `${
+                      heights[
+                        index %
+                          heights.length
+                      ]
+                    }vh`,
+                  }}
+                >
+                  <PhotoSurface
+                    src={src}
+                    index={
+                      index
+                    }
+                    label={`${String(
+                      index +
+                        1
+                    ).padStart(
+                      2,
+                      '0'
+                    )} / ${String(
+                      section.images
+                        .length
+                    ).padStart(
+                      2,
+                      '0'
+                    )}`}
+                  />
+                </motion.div>
+              );
+            }
           )}
         </motion.div>
 
@@ -884,297 +1137,9 @@ function HorizontalCarouselSection({
 }
 
 /* =========================================================
-   EFFECT 3
-   HORIZONTAL RAIN
-
-   - Movimiento únicamente horizontal
-   - Izquierda → derecha
-   - SOLO 2 líneas de fotografías
-   - Sin rotaciones
-   - Composición ordenada pero orgánica
-   - Crecimiento progresivo con scroll
-========================================================= */
-
-function HorizontalRainSection({
-  section,
-}: {
-  section: PhotoBookSectionData;
-}) {
-  const sectionRef =
-    useRef<HTMLElement | null>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
-
-  /* ================================================
-     SOLO 2 CARRILES
-  ================================================= */
-
-  const laneCount = 2;
-
-  const longestLane = Math.ceil(
-    section.images.length / laneCount
-  );
-
-  /* ================================================
-     MOVIMIENTO HORIZONTAL
-     IZQUIERDA → DERECHA
-  ================================================= */
-
-  const travelDistance =
-    longestLane * 48 + 120;
-
-  const x = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [
-      `-${travelDistance}vw`,
-      '105vw',
-    ]
-  );
-
-  /* ================================================
-     CRECIMIENTO PROGRESIVO
-  ================================================= */
-
-  const photoScale = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    [1, 1.06, 1.12]
-  );
-
-  /* ================================================
-     TITLE
-  ================================================= */
-
-  const titleOpacity = useTransform(
-    scrollYProgress,
-    [0, 0.08, 0.82, 1],
-    [0.24, 0.13, 0.08, 0]
-  );
-
-  const titleX = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ['6vw', '-10vw']
-  );
-
-  /* ================================================
-     DURACIÓN
-  ================================================= */
-
-  const sectionHeight =
-    240 + section.images.length * 28;
-
-  return (
-    <section
-      id={section.id}
-      ref={sectionRef}
-      className="relative bg-[#090909]"
-      style={{
-        height: `${sectionHeight}vh`,
-      }}
-    >
-      <div className="sticky top-0 h-screen overflow-hidden">
-
-        {/* BACKGROUND */}
-
-        <div className="absolute inset-0">
-          <PhotoSurface
-            src={section.background}
-            index={3}
-            background
-          />
-
-          <div className="absolute inset-0 bg-black/65" />
-        </div>
-
-        {/* BIG TITLE */}
-
-        <motion.div
-          style={{
-            opacity: titleOpacity,
-            x: titleX,
-          }}
-          className="pointer-events-none absolute inset-0 z-[2] flex items-center"
-        >
-          <h2
-            className={`whitespace-nowrap text-[26vw] uppercase leading-[0.7] tracking-[-0.055em] text-white ${anton.className}`}
-          >
-            {section.title}
-          </h2>
-        </motion.div>
-
-        {/* ================================================
-            PHOTO TRACK
-        ================================================= */}
-
-        <motion.div
-          style={{
-            x,
-            scale: photoScale,
-            transformOrigin: 'center center',
-          }}
-          className="absolute inset-0 z-10"
-        >
-          {[0, 1].map((lane) => {
-            /*
-              Repartición:
-
-              LÍNEA 1
-              01 / 03 / 05 / 07 / 09...
-
-              LÍNEA 2
-              02 / 04 / 06 / 08 / 10...
-            */
-
-            const laneImages =
-              section.images
-                .map((src, index) => ({
-                  src,
-                  index,
-                }))
-                .filter(
-                  ({ index }) =>
-                    index % laneCount === lane
-                );
-
-            /*
-              Más espacio vertical ahora
-              que solo tenemos 2 líneas.
-            */
-
-            const laneTop = [
-              '8vh',
-              '53vh',
-            ][lane];
-
-            /*
-              La segunda línea comienza
-              desplazada para evitar
-              columnas perfectas.
-            */
-
-            const laneOffset = [
-              '0vw',
-              '16vw',
-            ][lane];
-
-            return (
-              <div
-                key={lane}
-                className="absolute left-0 flex items-center gap-[5vw]"
-                style={{
-                  top: laneTop,
-                  paddingLeft: laneOffset,
-                }}
-              >
-                {laneImages.map(
-                  ({ src, index }) => {
-                    /*
-                      MANTENEMOS EL TAMAÑO
-                      QUE YA TENÍAMOS
-                    */
-
-                    const widths = [
-  '19vw',
-  '18vw',
-  '21vw',
-  '18vw',
-  '20vw',
-  '17.5vw',
-];
-
-                    const ratios = [
-                      '4 / 5',
-                      '3 / 4',
-                      '1 / 1',
-                      '4 / 5',
-                      '3 / 2',
-                      '4 / 5',
-                    ];
-
-                    const margins = [
-                      '0vw',
-                      '2vw',
-                      '5vw',
-                      '1vw',
-                      '4vw',
-                      '2vw',
-                    ];
-
-                    return (
-                      <div
-                        key={src}
-                        className="relative shrink-0"
-                        style={{
-                          marginRight:
-                            margins[
-                              index %
-                                margins.length
-                            ],
-                        }}
-                      >
-                        <div
-                          className="
-                            relative
-                            overflow-hidden
-                            rounded-[22px]
-                            border
-                            border-white/10
-                            bg-black
-                            shadow-[0_35px_90px_rgba(0,0,0,0.38)]
-                          "
-                          style={{
-                            width: `clamp(
-  150px,
-  ${
-    widths[
-      index %
-        widths.length
-    ]
-  },
-  300px
-)`,
-
-                            aspectRatio:
-                              ratios[
-                                index %
-                                  ratios.length
-                              ],
-                          }}
-                        >
-                          <PhotoSurface
-                            src={src}
-                            index={index}
-                            label={`PHOTO ${String(
-                              index + 1
-                            ).padStart(2, '0')}`}
-                          />
-                        </div>
-                      </div>
-                    );
-                  }
-                )}
-              </div>
-            );
-          })}
-        </motion.div>
-
-        {/* LABEL */}
-
-        <div className="absolute bottom-6 left-6 z-30 text-[9px] uppercase tracking-[0.2em] text-white/50">
-          {section.title} · Horizontal Rain
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* =========================================================
    SECTION SWITCH
+
+   SOLO 2 EFECTOS
 ========================================================= */
 
 function PhotoBookSection({
@@ -1182,25 +1147,24 @@ function PhotoBookSection({
 }: {
   section: PhotoBookSectionData;
 }) {
-  switch (section.effect) {
+  switch (
+    section.effect
+  ) {
     case 'vertical-rain':
       return (
         <VerticalRainSection
-          section={section}
+          section={
+            section
+          }
         />
       );
 
     case 'horizontal-carousel':
       return (
         <HorizontalCarouselSection
-          section={section}
-        />
-      );
-
-    case 'horizontal-rain':
-      return (
-        <HorizontalRainSection
-          section={section}
+          section={
+            section
+          }
         />
       );
 
@@ -1211,19 +1175,27 @@ function PhotoBookSection({
 
 /* =========================================================
    FINAL CTA
+
+   MISMO CIERRE.
+
+   Quitamos:
+   FOOD
+   CREATIVES.
+
+   y entra el logo.
 ========================================================= */
 
 function FinalCTA() {
   return (
     <section className="relative flex min-h-[85vh] items-center justify-center overflow-hidden bg-white px-6 py-20 text-center text-[#B02D27]">
-      <div>
-        <h2
-          className={`text-[25vw] uppercase leading-[0.73] tracking-[-0.055em] sm:text-[17vw] ${anton.className}`}
-        >
-          FOOD
-          <br />
-          CREATIVES.
-        </h2>
+      <div className="flex w-full flex-col items-center">
+
+        <img
+          src="/our-space/logos/food-creatives.webp"
+          alt="Food Creatives"
+          draggable={false}
+          className="h-auto w-full max-w-[850px] object-contain"
+        />
 
         <p
           className={`mt-12 text-[45px] uppercase leading-none sm:text-[70px] ${anton.className}`}
@@ -1232,6 +1204,7 @@ function FinalCTA() {
         </p>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-3 text-[13px] font-bold uppercase tracking-[0.08em] sm:flex-row sm:gap-8">
+
           <a
             href="tel:+525540991346"
             className="transition-opacity hover:opacity-55"
@@ -1245,6 +1218,14 @@ function FinalCTA() {
           >
             contacto@foodreamers.com
           </a>
+
+          <a
+            href="/"
+            className="transition-opacity hover:opacity-55"
+          >
+            WWW.FOODREAMERS.COM
+          </a>
+
         </div>
       </div>
     </section>
@@ -1265,8 +1246,12 @@ export default function PhotoBookPage() {
       {sections.map(
         (section) => (
           <PhotoBookSection
-            key={section.id}
-            section={section}
+            key={
+              section.id
+            }
+            section={
+              section
+            }
           />
         )
       )}

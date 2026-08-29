@@ -1,0 +1,536 @@
+[
+  {
+    "section": "bebidas",
+    "number": 1,
+    "source": "03_Lavanda irlandesa.jpg",
+    "output": "01.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 2,
+    "source": "04_TE HELADO DE DURAZNO.jpg",
+    "output": "02.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 3,
+    "source": "Agua-de-melón-Carnation.jpeg",
+    "output": "03.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 4,
+    "source": "Café-frío-con-helado.jpg",
+    "output": "04.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 5,
+    "source": "Frappé-de-granada-con-chamoy.jpg",
+    "output": "05.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 6,
+    "source": "MIX_ME2526.jpeg",
+    "output": "06.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 7,
+    "source": "MIX_ME5018 (2).jpg",
+    "output": "07.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 8,
+    "source": "MIX_ME5285.jpeg",
+    "output": "08.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 9,
+    "source": "MIX_ME5285.jpg",
+    "output": "09.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 10,
+    "source": "MIX_ME5519.jpeg",
+    "output": "10.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 11,
+    "source": "Smoothie de betabel y fresa - NATURES HEART.jpg",
+    "output": "11.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 12,
+    "source": "Spicy-Ice-Coffee.jpg",
+    "output": "12.webp"
+  },
+  {
+    "section": "bebidas",
+    "number": 13,
+    "source": "Té helado de frutos rojos - NATURES HEART.jpg",
+    "output": "13.webp"
+  },
+  {
+    "section": "salado",
+    "number": 1,
+    "source": "01 Arroz cremoso con pulpo a la parrilla - Arroz super extra.jpg",
+    "output": "01.webp"
+  },
+  {
+    "section": "salado",
+    "number": 2,
+    "source": "06_Lomo en salsa de ciruela y raándanos_COSTCO.jpg",
+    "output": "02.webp"
+  },
+  {
+    "section": "salado",
+    "number": 3,
+    "source": "ALIANZAS COSTCO Brochetas Chile camarón.jpg",
+    "output": "03.webp"
+  },
+  {
+    "section": "salado",
+    "number": 4,
+    "source": "Arroz marinero.jpg",
+    "output": "04.webp"
+  },
+  {
+    "section": "salado",
+    "number": 5,
+    "source": "Bernina5471 BAJA.jpeg",
+    "output": "05.webp"
+  },
+  {
+    "section": "salado",
+    "number": 6,
+    "source": "Bowl de Frijoles Peruanos con Vegetales y nabo rosa.jpg",
+    "output": "06.webp"
+  },
+  {
+    "section": "salado",
+    "number": 7,
+    "source": "Campofrio-Chorizo-Reserva-Paella-1-ALTA.jpeg",
+    "output": "07.webp"
+  },
+  {
+    "section": "salado",
+    "number": 8,
+    "source": "Campofrio-Jamón-Serrano-Crepas-1-ALTA.jpg",
+    "output": "08.webp"
+  },
+  {
+    "section": "salado",
+    "number": 9,
+    "source": "Carpaccio-Chorizo-02-MEDIA.jpeg",
+    "output": "09.webp"
+  },
+  {
+    "section": "salado",
+    "number": 10,
+    "source": "CARR_Q Panela_Ensalada Sandía.png",
+    "output": "10.webp"
+  },
+  {
+    "section": "salado",
+    "number": 11,
+    "source": "CARR_QR Verde_Pizza Sarten FINAL.jpg",
+    "output": "11.webp"
+  },
+  {
+    "section": "salado",
+    "number": 12,
+    "source": "Copia de PASTA 1.jpg",
+    "output": "12.webp"
+  },
+  {
+    "section": "salado",
+    "number": 13,
+    "source": "Ensalada de arroz crujiente con atún.jpg",
+    "output": "13.webp"
+  },
+  {
+    "section": "salado",
+    "number": 14,
+    "source": "Feed_Mesa de trabajo 1.png",
+    "output": "14.webp"
+  },
+  {
+    "section": "salado",
+    "number": 15,
+    "source": "Feed-02.png",
+    "output": "15.webp"
+  },
+  {
+    "section": "salado",
+    "number": 16,
+    "source": "feed-12.png",
+    "output": "16.webp"
+  },
+  {
+    "section": "salado",
+    "number": 17,
+    "source": "FOTO MESA MEXICANA Agua de jamaica, horchata, pico de gallo, guacamole, tortillas, totopos, limones, cilantro picado 1.jpg",
+    "output": "17.webp"
+  },
+  {
+    "section": "salado",
+    "number": 18,
+    "source": "FOTO MESA VERANO.jpg",
+    "output": "18.webp"
+  },
+  {
+    "section": "salado",
+    "number": 19,
+    "source": "Ramen sencillo con caldo de res.jpg",
+    "output": "19.webp"
+  },
+  {
+    "section": "salado",
+    "number": 20,
+    "source": "Rollitos-pechuga-esparragos (1).jpg",
+    "output": "20.webp"
+  },
+  {
+    "section": "salado",
+    "number": 21,
+    "source": "Salado 23.jpg",
+    "output": "21.webp"
+  },
+  {
+    "section": "salado",
+    "number": 22,
+    "source": "SANDWICHING - Morning Waffles de avena_2.jpg",
+    "output": "22.webp"
+  },
+  {
+    "section": "salado",
+    "number": 23,
+    "source": "Spaghetti pad thai.jpg",
+    "output": "23.webp"
+  },
+  {
+    "section": "salado",
+    "number": 24,
+    "source": "Untitled Session0722.jpeg",
+    "output": "24.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 1,
+    "source": "01_Carlota de fresa nusa_TIKTOK.jpg",
+    "output": "01.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 2,
+    "source": "02_Cheesecake pumpkin spice.jpg",
+    "output": "02.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 3,
+    "source": "Cheesecake de ponche_1.jpg",
+    "output": "03.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 4,
+    "source": "Copia de Pizca de canela0846.jpg",
+    "output": "04.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 5,
+    "source": "Dulce de leche bread pudding.jpg",
+    "output": "05.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 6,
+    "source": "Galletas de avena y crema de cacahuate - Svelty.jpg",
+    "output": "06.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 7,
+    "source": "Gomitas de pera_H.jpg",
+    "output": "07.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 8,
+    "source": "HELADO CREMOSO DE CHOCOLATE - SAVOY.jpg",
+    "output": "08.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 9,
+    "source": "Paletas de arroz crcemoso con matcha_Arroz Super extra_01.jpg",
+    "output": "09.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 10,
+    "source": "PM22-Cheese-cake-con-pera.jpg",
+    "output": "10.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 11,
+    "source": "Sandwich-helado-Kit-Kat.jpeg",
+    "output": "11.webp"
+  },
+  {
+    "section": "dulce",
+    "number": 12,
+    "source": "Sandwich-helado-Kit-Kat.jpg",
+    "output": "12.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 1,
+    "source": "01 cafetera 141.jpg",
+    "output": "01.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 2,
+    "source": "Albi Celeste - Squirt 4x5.jpg",
+    "output": "02.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 3,
+    "source": "Beef and broccoli with garlic white rice_02.jpg",
+    "output": "03.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 4,
+    "source": "CENA ROMANTICA.jpg",
+    "output": "04.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 5,
+    "source": "Cocina - Multimarca 9x16.jpg",
+    "output": "05.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 6,
+    "source": "CURSO DOMESTIKA3505.jpeg",
+    "output": "06.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 7,
+    "source": "Dip de Elote 16X9.jpg",
+    "output": "07.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 8,
+    "source": "Foto grupal_horizontal_m.jpg",
+    "output": "08.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 9,
+    "source": "FRAPPÉ - LICUADORA PULVERIX.jpg",
+    "output": "09.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 10,
+    "source": "HuevosSanjuan-web-4x5.jpg",
+    "output": "10.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 11,
+    "source": "Nestle.PabloMercado_1.jpg",
+    "output": "11.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 12,
+    "source": "Nestle.PabloMercado_2.jpg",
+    "output": "12.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 13,
+    "source": "Nestle.PabloMercado_3.jpg",
+    "output": "13.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 14,
+    "source": "Rotini vegetales verdes y limón_Vertical.jpg",
+    "output": "14.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 15,
+    "source": "SEEDS COCO Smoothie coco.jpg",
+    "output": "15.webp"
+  },
+  {
+    "section": "con-producto",
+    "number": 16,
+    "source": "Tiempo Extra - Clamato 4x5.jpg",
+    "output": "16.webp"
+  },
+  {
+    "section": "kids",
+    "number": 1,
+    "source": "05_Vampirito.jpg",
+    "output": "01.webp"
+  },
+  {
+    "section": "kids",
+    "number": 2,
+    "source": "06_Dino HotCake_NHW (1).jpg",
+    "output": "02.webp"
+  },
+  {
+    "section": "kids",
+    "number": 3,
+    "source": "BETTY-CROKER-Frosty-Cake.jpg",
+    "output": "03.webp"
+  },
+  {
+    "section": "kids",
+    "number": 4,
+    "source": "Club Waffle.jpg",
+    "output": "04.webp"
+  },
+  {
+    "section": "kids",
+    "number": 5,
+    "source": "NIÑOS_Funny-Buerguer.jpg",
+    "output": "05.webp"
+  },
+  {
+    "section": "temporalidades",
+    "number": 1,
+    "source": "03_Jelly ghost candyland_Costco.jpg",
+    "output": "01.webp"
+  },
+  {
+    "section": "temporalidades",
+    "number": 2,
+    "source": "05_Sandwich ataud_Costco.jpg",
+    "output": "02.webp"
+  },
+  {
+    "section": "temporalidades",
+    "number": 3,
+    "source": "21_TEMPORADA NAVIDEÑA -  MOCHA BLANCO CON CREMA DE MENTA.jpg",
+    "output": "03.webp"
+  },
+  {
+    "section": "temporalidades",
+    "number": 4,
+    "source": "Espagueti navideño con tocino y espinacas_1.jpg",
+    "output": "04.webp"
+  },
+  {
+    "section": "temporalidades",
+    "number": 5,
+    "source": "PASTA PRE HALLOWEEN MOVIE NIGHTS.jpg",
+    "output": "05.webp"
+  },
+  {
+    "section": "temporalidades",
+    "number": 6,
+    "source": "ROSCA NAVIDEÑA DE PIZZA.jpg",
+    "output": "06.webp"
+  },
+  {
+    "section": "temporalidades",
+    "number": 7,
+    "source": "SABRO22_Pollo Rostizado Griego_PE_ 4 BAJA.jpg",
+    "output": "07.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 1,
+    "source": "07.jpg",
+    "output": "01.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 2,
+    "source": "Bernina5655 BAJA.jpeg",
+    "output": "02.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 3,
+    "source": "Creativo.jpg",
+    "output": "03.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 4,
+    "source": "Empaque sobre montaña de elote_2.jpg",
+    "output": "04.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 5,
+    "source": "Food anxiety0094 1 1.JPG",
+    "output": "05.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 6,
+    "source": "Food anxiety0148 1.JPG",
+    "output": "06.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 7,
+    "source": "Food anxiety0204 1 1.JPG",
+    "output": "07.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 8,
+    "source": "Foto a marcos0018.jpg",
+    "output": "08.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 9,
+    "source": "HALLOWEEN_433.jpg",
+    "output": "09.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 10,
+    "source": "Producto_01 - Cacahuates.jpg",
+    "output": "10.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 11,
+    "source": "Producto_02 - Cacahuates.jpg",
+    "output": "11.webp"
+  },
+  {
+    "section": "creativo",
+    "number": 12,
+    "source": "Trufas de naranja_2.jpg",
+    "output": "12.webp"
+  }
+]
