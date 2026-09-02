@@ -11,6 +11,62 @@ const anton = Anton({
   subsets: ['latin'],
   weight: '400',
 });
+/* =========================================================
+   CLIENTS MARQUEE
+========================================================= */
+
+function ClientsMarquee() {
+  const clients = [
+    'NESTLÉ',
+    'COSTCO',
+    'NATURE’S HEART',
+    'CLAMATO',
+    'SQUIRT',
+    'CUISINART',
+    'HUEVO SAN JUAN',
+    'CARNATION',
+  ];
+
+  const repeatedClients = [
+    ...clients,
+    ...clients,
+  ];
+
+  return (
+    <section className="relative overflow-hidden border-y border-black/10 bg-white py-5 text-black">
+      <motion.div
+        animate={{
+          x: ['0%', '-50%'],
+        }}
+        transition={{
+          duration: 22,
+          repeat: Infinity,
+          ease: 'linear',
+        }}
+        className="flex w-max items-center"
+      >
+        {repeatedClients.map(
+          (client, index) => (
+            <div
+              key={`${client}-${index}`}
+              className="flex shrink-0 items-center"
+            >
+              <span
+                className={`whitespace-nowrap px-8 text-[26px] uppercase tracking-[-0.03em] md:px-12 md:text-[38px] ${anton.className}`}
+              >
+                {client}
+              </span>
+
+              <span className="text-[16px] opacity-30">
+                ✦
+              </span>
+            </div>
+          )
+        )}
+      </motion.div>
+    </section>
+  );
+}
 
 function TypeAnimation() {
   const words = ['REAL', 'FASTER', 'BETTER', 'CREATIVE', 'ORGANIC', 'REMOTE', 'EFFICIENT', 'EASY'];
@@ -1995,7 +2051,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     </div>
   </div>
 </section>
-
+<ClientsMarquee />
 {/* =====================================================
     OUR WORK STACK
 ===================================================== */}
