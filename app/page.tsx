@@ -12,58 +12,162 @@ const anton = Anton({
   weight: '400',
 });
 /* =========================================================
-   CLIENTS MARQUEE
+   CLIENTS — DOUBLE MARQUEE
 ========================================================= */
 
 function ClientsMarquee() {
-  const clients = [
-    'NESTLÉ',
-    'COSTCO',
-    'NATURE’S HEART',
-    'CLAMATO',
-    'SQUIRT',
-    'CUISINART',
-    'HUEVO SAN JUAN',
-    'CARNATION',
+  /*
+    LOGOS REALES:
+    public/LOGOS CLIENTES/37.png
+    ...
+    public/LOGOS CLIENTES/67.png
+  */
+
+  const clients = Array.from(
+    { length: 31 },
+    (_, index) => ({
+      logo: `/LOGOS CLIENTES/${index + 37}.png`,
+    })
+  );
+
+  /* =====================================================
+     DIVIDIMOS EN DOS FILAS
+  ===================================================== */
+
+  const middle = Math.ceil(
+    clients.length / 2
+  );
+
+  const topClients =
+    clients.slice(0, middle);
+
+  const bottomClients =
+    clients.slice(middle);
+
+  /* =====================================================
+     DUPLICAMOS PARA LOOP INFINITO
+  ===================================================== */
+
+  const topRepeated = [
+    ...topClients,
+    ...topClients,
   ];
 
-  const repeatedClients = [
-    ...clients,
-    ...clients,
+  const bottomRepeated = [
+    ...bottomClients,
+    ...bottomClients,
   ];
 
   return (
-    <section className="relative overflow-hidden border-y border-black/10 bg-white py-5 text-black">
-      <motion.div
-        animate={{
-          x: ['0%', '-50%'],
-        }}
-        transition={{
-          duration: 22,
-          repeat: Infinity,
-          ease: 'linear',
-        }}
-        className="flex w-max items-center"
-      >
-        {repeatedClients.map(
-          (client, index) => (
-            <div
-              key={`${client}-${index}`}
-              className="flex shrink-0 items-center"
-            >
-              <span
-                className={`whitespace-nowrap px-8 text-[26px] uppercase tracking-[-0.03em] md:px-12 md:text-[38px] ${anton.className}`}
-              >
-                {client}
-              </span>
+    <section className="relative overflow-hidden border-y border-black/10 bg-[#F2F2EE] py-8">
 
-              <span className="text-[16px] opacity-30">
-                ✦
-              </span>
-            </div>
-          )
-        )}
-      </motion.div>
+      {/* =====================================================
+          TOP ROW
+          IZQUIERDA → DERECHA
+      ===================================================== */}
+
+      <div className="overflow-hidden">
+        <motion.div
+          initial={{
+            x: '-50%',
+          }}
+          animate={{
+            x: '0%',
+          }}
+          transition={{
+            duration: 48,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+          className="flex w-max items-center"
+        >
+          {topRepeated.map(
+            (client, index) => (
+              <div
+                key={`top-${client.logo}-${index}`}
+                className="
+                  flex
+                  h-[68px]
+                  w-[120px]
+                  shrink-0
+                  items-center
+                  justify-center
+                  px-2
+                  md:h-[72px]
+                  md:w-[145px]
+                  md:px-3
+                "
+              >
+                <img
+                  src={client.logo}
+                  alt="Client logo"
+                  draggable={false}
+                  className="
+                    max-h-[92px]
+                    max-w-full
+                    select-none
+                    object-contain
+                    md:max-h-[64px]
+                  "
+                />
+              </div>
+            )
+          )}
+        </motion.div>
+      </div>
+
+      {/* =====================================================
+          BOTTOM ROW
+          DERECHA → IZQUIERDA
+      ===================================================== */}
+
+      <div className="mt-5 overflow-hidden md:mt-6">
+        <motion.div
+          animate={{
+            x: ['0%', '-50%'],
+          }}
+          transition={{
+            duration: 48,
+            repeat: Infinity,
+            ease: 'linear',
+          }}
+          className="flex w-max items-center"
+        >
+          {bottomRepeated.map(
+            (client, index) => (
+              <div
+                key={`bottom-${client.logo}-${index}`}
+                className="
+                  flex
+                  h-[58px]
+                  w-[120px]
+                  shrink-0
+                  items-center
+                  justify-center
+                  px-2
+                  md:h-[72px]
+                  md:w-[145px]
+                  md:px-3
+                "
+              >
+                <img
+                  src={client.logo}
+                  alt="Client logo"
+                  draggable={false}
+                  className="
+                    max-h-[42px]
+                    max-w-full
+                    select-none
+                    object-contain
+                    md:max-h-[54px]
+                  "
+                />
+              </div>
+            )
+          )}
+        </motion.div>
+      </div>
+
     </section>
   );
 }
@@ -991,37 +1095,103 @@ const sequenceProgress = useMotionValue(0);
 }, []);
 
   useEffect(() => {
-    const sections = [
-      { id: 'home', logo: '/logos/logo-yellow.svg' },
-      { id: 'services', logo: '/logos/logo-green.svg' },
-      { id: 'ai-lab', logo: '/logos/logo-purple.svg' },
-      { id: 'ecosystem', logo: '/logos/logo-red.svg' },
-      { id: 'sequence', logo: '/logos/logo-white.svg' },
-      { id: 'selected-work', logo: '/logos/logo-orange.svg' },
-    ];
+  const sections = [
+    {
+      id: 'home',
+      logo: '/logos/logo-yellow.svg',
+    },
+    {
+      id: 'services',
+      logo: '/logos/logo-green.svg',
+    },
+    {
+      id: 'storytelling-formats',
+      logo: '/logos/logo-white.svg',
+    },
+    {
+      id: 'selected-work',
+      logo: '/logos/logo-orange.svg',
+    },
+    {
+      id: 'ecosystem',
+      logo: '/logos/logo-yellow.svg',
+    },
+    {
+      id: 'sequence',
+      logo: '/logos/logo-white.svg',
+    },
+    {
+      id: 'social-media',
+      logo: '/logos/logo-orange.svg',
+    },
+    {
+      id: 'ai-lab',
+      logo: '/logos/logo-purple.svg',
+    },
+    {
+      id: 'footer',
+      logo: '/logos/logo-white.svg',
+    },
+  ];
 
-    const handleScroll = () => {
-      let currentSection = sections[0];
+  const handleScroll = () => {
+    let currentSection = sections[0];
 
-      for (const section of sections) {
-        const el = document.getElementById(section.id);
-        if (!el) continue;
+    for (const section of sections) {
+      const element =
+        document.getElementById(section.id);
 
-        const rect = el.getBoundingClientRect();
+      if (!element) continue;
 
-        if (rect.top <= 120) {
-          currentSection = section;
-        }
+      const rect =
+        element.getBoundingClientRect();
+
+      if (rect.top <= 120) {
+        currentSection = section;
       }
+    }
 
-      setCurrentLogo(currentSection.logo);
-    };
+    const isAtBottom =
+      window.innerHeight + window.scrollY >=
+      document.documentElement.scrollHeight - 5;
 
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
+    if (isAtBottom) {
+      currentSection =
+        sections[sections.length - 1];
+    }
 
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    setCurrentLogo((previous) =>
+      previous === currentSection.logo
+        ? previous
+        : currentSection.logo
+    );
+  };
+
+  window.addEventListener(
+    'scroll',
+    handleScroll,
+    { passive: true }
+  );
+
+  window.addEventListener(
+    'resize',
+    handleScroll
+  );
+
+  handleScroll();
+
+  return () => {
+    window.removeEventListener(
+      'scroll',
+      handleScroll
+    );
+
+    window.removeEventListener(
+      'resize',
+      handleScroll
+    );
+  };
+}, []);
 
   useEffect(() => {
   const canvas = sequenceCanvasRef.current;
@@ -2051,7 +2221,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     </div>
   </div>
 </section>
+
 <ClientsMarquee />
+
 {/* =====================================================
     OUR WORK STACK
 ===================================================== */}

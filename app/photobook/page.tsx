@@ -14,6 +14,7 @@ const anton = Anton({
   weight: '400',
 });
 
+
 /* =========================================================
    FOOD DREAMERS — PHOTO BOOK
 
@@ -30,7 +31,7 @@ const USE_REAL_IMAGES = true;
 
 type EffectType =
   | 'vertical-rain'
-  | 'horizontal-carousel';
+  
 
 type PhotoBookSectionData = {
   id: string;
@@ -65,7 +66,7 @@ function makeImages(
    BOOK CONFIGURATION
 
    1 → Vertical Rain
-   2 → Horizontal Carousel
+   
 
    ALTERNAMOS LOS DOS EFECTOS
 ========================================================= */
@@ -75,23 +76,21 @@ const sections: PhotoBookSectionData[] = [
     id: 'bebidas',
     title: 'BEBIDAS',
     effect: 'vertical-rain',
-    background:
-      '/photo-book/bebidas/back.webp',
+    background: '/photo-book-final/FONDOS/bebidas.webp',
     images: makeImages(
       'bebidas',
-      12
+      11
     ),
   },
 
   {
     id: 'salado',
     title: 'SALADO',
-    effect: 'horizontal-carousel',
-    background:
-      '/photo-book/salado/back.webp',
+    effect: 'vertical-rain',
+    background: '/photo-book-final/FONDOS/salado.jpeg',
     images: makeImages(
       'salado',
-      24
+      23
     ),
   },
 
@@ -99,8 +98,7 @@ const sections: PhotoBookSectionData[] = [
     id: 'dulce',
     title: 'DULCE',
     effect: 'vertical-rain',
-    background:
-      '/photo-book/dulce/back.webp',
+    background: '/photo-book-final/FONDOS/dulce.jpeg',
     images: makeImages(
       'dulce',
       11
@@ -110,12 +108,11 @@ const sections: PhotoBookSectionData[] = [
   {
     id: 'con-producto',
     title: 'CON PRODUCTO',
-    effect: 'horizontal-carousel',
-    background:
-      '/photo-book/con-producto/back.webp',
+    effect: 'vertical-rain',
+    background: '/photo-book-final/FONDOS/con producto.jpg',
     images: makeImages(
       'con-producto',
-      16
+      15
     ),
   },
 
@@ -123,8 +120,7 @@ const sections: PhotoBookSectionData[] = [
     id: 'kids',
     title: 'KIDS',
     effect: 'vertical-rain',
-    background:
-      '/photo-book/kids/back.webp',
+    background: '/photo-book-final/FONDOS/niños.jpg',
     images: makeImages(
       'kids',
       5
@@ -134,9 +130,8 @@ const sections: PhotoBookSectionData[] = [
   {
     id: 'temporalidades',
     title: 'TEMPORALIDADES',
-    effect: 'horizontal-carousel',
-    background:
-      '/photo-book/temporalidades/back.webp',
+    effect: 'vertical-rain',
+    background: '/photo-book-final/FONDOS/temporalidades.jpeg',
     images: makeImages(
       'temporalidades',
       7
@@ -147,11 +142,10 @@ const sections: PhotoBookSectionData[] = [
     id: 'creativo',
     title: 'CREATIVO',
     effect: 'vertical-rain',
-    background:
-      '/photo-book/creativo/back.webp',
+    background: '/photo-book-final/FONDOS/creativo.jpeg',
     images: makeImages(
       'creativo',
-      12
+      11
     ),
   },
 ];
@@ -414,17 +408,19 @@ function SectionTitle({
   return (
     <motion.div
       style={{
-        opacity:
-          opacity ??
-          0.12,
+        opacity: opacity ?? 1.75,
       }}
       className="pointer-events-none absolute inset-0 z-[2] flex items-center overflow-hidden"
     >
       <h2
-        className={`whitespace-nowrap text-[30vw] uppercase leading-[0.7] tracking-[-0.055em] text-white ${anton.className}`}
-      >
-        {title}
-      </h2>
+  className={`-translate-y-[8vh] whitespace-nowrap uppercase leading-[0.7] tracking-[-0.055em] text-white ${
+    title === 'TEMPORALIDADES'
+      ? 'text-[13vw]'
+      : 'text-[20vw]'
+  } ${anton.className}`}
+>
+  {title}
+</h2>
     </motion.div>
   );
 }
@@ -473,6 +469,62 @@ function VerticalRainSection({
     Math.ceil(
       section.images.length / 3
     );
+    const getLaneForIndex = (
+  index: number
+) => {
+  const total =
+    section.images.length;
+
+  const fullRows =
+    Math.floor(total / 3);
+
+  const remainder =
+    total % 3;
+
+  const lastRowStart =
+    fullRows * 3;
+
+  // FILAS COMPLETAS
+  if (index < lastRowStart) {
+    return index % 3;
+  }
+
+  // SI SOLO SOBRA 1 FOTO:
+  // LA CENTRAMOS
+  if (remainder === 1) {
+    return 1;
+  }
+
+  // SALADO:
+// la penúltima foto queda al centro
+// y la última permanece a la derecha
+if (
+  section.id === 'salado' &&
+  remainder === 2
+) {
+  return index === lastRowStart
+    ? 1
+    : 2;
+}
+
+// RESTO DE SECCIONES:
+// una a cada lado
+if (remainder === 2) {
+  return index === lastRowStart
+    ? 0
+    : 2;
+}
+
+// RESTO DE SECCIONES:
+// una a cada lado
+if (remainder === 2) {
+  return index === lastRowStart
+    ? 0
+    : 2;
+}
+
+  return index % 3;
+};
 
   /* =======================================================
      MEDIMOS LA ALTURA REAL DE LAS 3 COLUMNAS
@@ -572,22 +624,12 @@ function VerticalRainSection({
       ]
     );
 
-  const titleOpacity =
-    useTransform(
-      scrollYProgress,
-      [
-        0,
-        0.08,
-        0.8,
-        1,
-      ],
-      [
-        0.24,
-        0.13,
-        0.08,
-        0,
-      ]
-    );
+const titleOpacity =
+  useTransform(
+    scrollYProgress,
+    [0, 0.08, 0.8, 1],
+    [0.82, 0.72, 0.58, 0.32]
+  );
 
   /*
     Conservamos la duración
@@ -624,7 +666,7 @@ function VerticalRainSection({
             background
           />
 
-          <div className="absolute inset-0 bg-black/65" />
+          <div className="absolute inset-0 bg-black/45" />
         </div>
 
         {/* TITLE */}
@@ -676,14 +718,10 @@ function VerticalRainSection({
                       index,
                     })
                   )
-                  .filter(
-                    ({
-                      index,
-                    }) =>
-                      index %
-                        3 ===
-                      lane
-                  );
+                 .filter(
+  ({ index }) =>
+    getLaneForIndex(index) === lane
+);
 
               const laneTopOffset =
                 [
@@ -755,32 +793,39 @@ function VerticalRainSection({
                           2,
                           3,
                         ];
-
+const isSaladoLastLeft =
+  section.id === 'salado' &&
+  index === section.images.length - 2;
                       return (
                         <div
                           key={
                             src
                           }
                           className="relative flex w-full"
-                          style={{
-                            justifyContent:
-                              alignments[
-                                index %
-                                  alignments.length
-                              ],
+                         style={{
+  justifyContent:
+    alignments[
+      index %
+        alignments.length
+    ],
 
-                            marginBottom:
-                              gaps[
-                                index %
-                                  gaps.length
-                              ],
+  marginBottom:
+    gaps[
+      index %
+        gaps.length
+    ],
 
-                            zIndex:
-                              zIndexes[
-                                index %
-                                  zIndexes.length
-                              ],
-                          }}
+  zIndex:
+    zIndexes[
+      index %
+        zIndexes.length
+    ],
+
+  marginTop:
+    isSaladoLastLeft
+      ? '-2vh'
+      : undefined,
+}}
                         >
                           <div
                             className="
@@ -840,301 +885,7 @@ function VerticalRainSection({
     </section>
   );
 }
-/* =========================================================
-   EFFECT 2
-   HORIZONTAL CAROUSEL
 
-   SE CONSERVA EL EFECTO ORIGINAL.
-========================================================= */
-
-function HorizontalCarouselSection({
-  section,
-}: {
-  section: PhotoBookSectionData;
-}) {
-  const sectionRef =
-    useRef<HTMLElement | null>(null);
-
-  const trackRef =
-    useRef<HTMLDivElement | null>(null);
-
-  const lastCardRef =
-    useRef<HTMLDivElement | null>(null);
-
-  const [endX, setEndX] =
-    useState(0);
-
-  const { scrollYProgress } =
-    useScroll({
-      target: sectionRef,
-      offset: [
-        'start start',
-        'end end',
-      ],
-    });
-
-  /*
-    Calculamos el punto final REAL.
-
-    La última fotografía termina
-    centrada exactamente cuando
-    termina la sección.
-  */
-
-  useEffect(() => {
-    const calculateEndX = () => {
-      if (
-        !trackRef.current ||
-        !lastCardRef.current
-      ) {
-        return;
-      }
-
-      const viewportWidth =
-        window.innerWidth;
-
-      /*
-        El track empieza en left-[6vw].
-      */
-
-      const trackLeft =
-        viewportWidth * 0.06;
-
-      const lastCard =
-        lastCardRef.current;
-
-      /*
-        Centro real de la última tarjeta
-        dentro del track.
-      */
-
-      const lastCardCenter =
-        lastCard.offsetLeft +
-        lastCard.offsetWidth / 2;
-
-      /*
-        Movimiento necesario para que
-        ese centro quede en 50vw.
-      */
-
-      const finalX =
-        viewportWidth / 2 -
-        trackLeft -
-        lastCardCenter;
-
-      setEndX(finalX);
-    };
-
-    calculateEndX();
-
-    const resizeObserver =
-      new ResizeObserver(
-        calculateEndX
-      );
-
-    if (trackRef.current) {
-      resizeObserver.observe(
-        trackRef.current
-      );
-    }
-
-    if (lastCardRef.current) {
-      resizeObserver.observe(
-        lastCardRef.current
-      );
-    }
-
-    window.addEventListener(
-      'resize',
-      calculateEndX
-    );
-
-    return () => {
-      resizeObserver.disconnect();
-
-      window.removeEventListener(
-        'resize',
-        calculateEndX
-      );
-    };
-  }, [
-    section.images.length,
-  ]);
-
-  const x = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [
-      0,
-      endX,
-    ]
-  );
-
-  /*
-    El título conserva exactamente
-    su movimiento anterior.
-  */
-
-  const titleX =
-    useTransform(
-      scrollYProgress,
-      [0, 1],
-      [
-        '0vw',
-        '-12vw',
-      ]
-    );
-
-  /*
-    Conservamos duración.
-  */
-
-  const sectionHeight =
-    180 +
-    section.images.length *
-      22;
-
-  /*
-    Tamaños originales.
-  */
-
-  const widths = [
-    54,
-    36,
-    46,
-    31,
-    58,
-    40,
-  ];
-
-  const heights = [
-    70,
-    58,
-    76,
-    62,
-    68,
-    72,
-  ];
-
-  return (
-    <section
-      id={section.id}
-      ref={sectionRef}
-      className="relative bg-[#EEE8DD]"
-      style={{
-        height: `${sectionHeight}vh`,
-      }}
-    >
-      <div className="sticky top-0 h-screen overflow-hidden">
-
-        {/* BACKGROUND */}
-
-        <div className="absolute inset-0 opacity-[0.13]">
-          <PhotoSurface
-            src={
-              section.background
-            }
-            index={1}
-            background
-          />
-        </div>
-
-        {/* TITLE */}
-
-        <motion.h2
-          style={{
-            x: titleX,
-          }}
-          className={`pointer-events-none absolute left-[5vw] top-[8vh] z-20 whitespace-nowrap text-[13vw] uppercase leading-none tracking-[-0.045em] text-black md:text-[11vw] ${anton.className}`}
-        >
-          {section.title}
-        </motion.h2>
-
-        {/* CAROUSEL */}
-
-        <motion.div
-          ref={trackRef}
-          style={{
-            x,
-          }}
-          className="absolute left-[6vw] top-[27vh] z-10 flex items-center gap-[2vw]"
-        >
-          {section.images.map(
-            (
-              src,
-              index
-            ) => {
-              const isLast =
-                index ===
-                section.images.length -
-                  1;
-
-              return (
-                <motion.div
-                  key={src}
-                  ref={
-                    isLast
-                      ? lastCardRef
-                      : undefined
-                  }
-                  whileHover={{
-                    scale:
-                      1.025,
-                  }}
-                  transition={{
-                    duration:
-                      0.35,
-                  }}
-                  className="relative shrink-0 overflow-hidden rounded-[24px] bg-black shadow-[0_30px_75px_rgba(0,0,0,0.22)]"
-                  style={{
-                    width: `clamp(250px, ${
-                      widths[
-                        index %
-                          widths.length
-                      ]
-                    }vw, 850px)`,
-
-                    height: `${
-                      heights[
-                        index %
-                          heights.length
-                      ]
-                    }vh`,
-                  }}
-                >
-                  <PhotoSurface
-                    src={src}
-                    index={
-                      index
-                    }
-                    label={`${String(
-                      index +
-                        1
-                    ).padStart(
-                      2,
-                      '0'
-                    )} / ${String(
-                      section.images
-                        .length
-                    ).padStart(
-                      2,
-                      '0'
-                    )}`}
-                  />
-                </motion.div>
-              );
-            }
-          )}
-        </motion.div>
-
-        <div className="absolute bottom-6 left-6 z-30 text-[9px] uppercase tracking-[0.2em] text-black/45">
-          {section.title} ·
-          Horizontal Carousel
-        </div>
-      </div>
-    </section>
-  );
-}
 
 /* =========================================================
    SECTION SWITCH
@@ -1159,14 +910,7 @@ function PhotoBookSection({
         />
       );
 
-    case 'horizontal-carousel':
-      return (
-        <HorizontalCarouselSection
-          section={
-            section
-          }
-        />
-      );
+   
 
     default:
       return null;
