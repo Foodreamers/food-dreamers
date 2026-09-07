@@ -206,14 +206,23 @@ function TypeAnimation() {
 }, [text, deleting, wordIndex]);
   return (
     <div className="flex items-baseline gap-6 whitespace-nowrap">
-      <h2 className="text-[90px] font-regular text-white" style={{ fontFamily: 'Anton, sans-serif' }}>
-        We make it
-      </h2>
+      <h2
+  className="text-[90px] font-regular uppercase text-white"
+  style={{ fontFamily: 'Anton, sans-serif' }}
+>
+  We make it
+</h2>
 
-      <div className="text-[90px] font-black text-[#00471A]" style={{ fontFamily: 'Anton, sans-serif' }}>
-        {text}
-        <span className="animate-pulse">|</span>
-      </div>
+
+      <div
+  className="text-[90px] font-black text-[#00471A]"
+  style={{ fontFamily: 'Anton, sans-serif' }}
+>
+  {text}
+  <span className="inline-block animate-pulse scale-x-[0.15] text-[#39B54A]">
+  |
+</span>
+</div>
     </div>
   );
 }
