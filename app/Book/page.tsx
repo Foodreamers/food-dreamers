@@ -74,7 +74,7 @@ const workItems: WorkItem[] = [
 
   {
     type: 'video',
-    src: '/videos web/principal/reel_platos.mp4',
+    src: '/videos web/principal/Demo Reel.mp4',
     title: 'Food Reel',
     category: 'Featured Reel',
     aspect: 'horizontal',

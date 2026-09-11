@@ -15,6 +15,7 @@ const anton = Anton({
 
 type VideoItem = {
   title: string;
+  src?: string;
   vertical?: boolean;
 };
 
@@ -33,12 +34,15 @@ type VideoSection = {
 const essentials: VideoItem[] = [
   {
     title: 'Studio Tour',
+    src: '/videos web/principal/estudio_tour.mp4',
   },
   {
     title: 'Showreel',
+    src: '/videos web/principal/Demo Reel.mp4',
   },
   {
     title: 'Best Moments',
+    src: '/videos web/principal/best_moments.mp4',
   },
 ];
 
@@ -54,10 +58,21 @@ const sections: VideoSection[] = [
     description:
       'Big ideas. Beautiful food. Stories made for the big screen.',
     videos: [
-      { title: 'Video 01' },
-      { title: 'Video 02' },
-      { title: 'Video 03' },
-      { title: 'Video 04' },
+      {
+        title: 'HBO',
+        src: '/videos web/horizontal/HBO.mp4',
+      },
+      {
+        title: 'Walmart Carolina',
+        src: '/videos web/horizontal/walmart_carolina.mp4',
+      },
+      {
+        title: 'Duncan Hines',
+        src: '/videos web/horizontal/duncan_hines.mp4',
+      },
+      {
+        title: 'Del Monte',
+      },
     ],
   },
 
@@ -68,10 +83,36 @@ const sections: VideoSection[] = [
     description:
       'Short-form content designed to stop thumbs and trigger cravings.',
     videos: [
-      { title: 'Video 01', vertical: true },
-      { title: 'Video 02', vertical: true },
-      { title: 'Video 03', vertical: true },
-      { title: 'Video 04', vertical: true },
+      {
+        title: 'Margarita de Piña',
+        src: '/videos web/vertical/margarita de piña.mp4',
+        vertical: true,
+      },
+      {
+        title: 'Momento Improvisado',
+        src: '/videos web/vertical/momento improvisado.mp4',
+        vertical: true,
+      },
+      {
+        title: 'Pollo y Arroz',
+        src: '/videos web/vertical/pollo y arroz.mp4',
+        vertical: true,
+      },
+      {
+        title: 'Nespresso',
+        src: '/videos web/middle ring/nespresso.mp4',
+        vertical: true,
+      },
+      {
+        title: 'Tequila Cask',
+        src: '/videos web/vertical/tequila cask.mp4',
+        vertical: true,
+      },
+      {
+        title: 'Quaker',
+        src: '/videos web/middle ring/quaker.mp4',
+        vertical: true,
+      },
     ],
   },
 
@@ -82,9 +123,18 @@ const sections: VideoSection[] = [
     description:
       'Human, spontaneous and social-first content built to feel real.',
     videos: [
-      { title: 'Video 01' },
-      { title: 'Video 02' },
-      { title: 'Video 03' },
+      {
+        title: 'Toque Gourmet',
+        src: '/videos web/vertical/toque gourmet.mp4',
+      },
+      {
+        title: 'Té Chai ASMR',
+        src: '/videos web/middle ring/te_chai_asmr.mp4',
+      },
+      {
+        title: 'Afilar con Piedra',
+        src: '/videos web/vertical/afilar con piedra.mp4',
+      },
     ],
   },
 
@@ -95,9 +145,10 @@ const sections: VideoSection[] = [
     description:
       'More time for stories, recipes, people and everything behind the food.',
     videos: [
-      { title: 'Video 01' },
-      { title: 'Video 02' },
-      { title: 'Video 03' },
+      {
+        title: 'Testimonial',
+        src: '/videos web/horizontal/Testimonial con subs.mp4',
+      },
     ],
   },
 
@@ -108,9 +159,22 @@ const sections: VideoSection[] = [
     description:
       'Retail-driven content made to turn attention into action.',
     videos: [
-      { title: 'Video 01' },
-      { title: 'Video 02' },
-      { title: 'Video 03' },
+      {
+        title: 'Mahatma AI',
+        src: '/videos web/horizontal/mahatma_ia.mp4',
+      },
+      {
+        title: 'McCormick',
+        src: '/videos web/horizontal/mckormick.mp4',
+      },
+      {
+        title: 'Campbells',
+        src: '/videos web/middle ring/campbells.mp4',
+      },
+      {
+        title: 'Vino',
+        src: '/videos web/horizontal/vino.mp4',
+      },
     ],
   },
 
@@ -121,9 +185,22 @@ const sections: VideoSection[] = [
     description:
       'Product-first films made to make every detail look irresistible.',
     videos: [
-      { title: 'Video 01' },
-      { title: 'Video 02' },
-      { title: 'Video 03' },
+      {
+        title: 'Frappe Mazapan',
+        src: '/videos web/horizontal/frappe_mazapan.mp4',
+      },
+      {
+        title: 'Bernina',
+        src: '/videos web/horizontal/bernina.mp4',
+      },
+      {
+        title: 'Tablas y Tapas',
+        src: '/videos web/vertical/tablas y tapas.mp4',
+      },
+      {
+        title: 'Isadora',
+        src: '/videos web/horizontal/isadora.mp4',
+      },
     ],
   },
 
@@ -134,16 +211,20 @@ const sections: VideoSection[] = [
     description:
       'New tools. New possibilities. Same obsession with making food look incredible.',
     videos: [
-      { title: 'Video 01' },
-      { title: 'Video 02' },
-      { title: 'Video 03' },
-      { title: 'Video 04' },
+      {
+        title: 'Mahatma AI',
+        src: '/videos web/horizontal/mahatma_ia.mp4',
+      },
+      {
+        title: 'Turmix AI',
+        src: '/videos web/horizontal/turmix_ia.mp4',
+      },
     ],
   },
 ];
 
 /* =========================================================
-   VIDEO PLACEHOLDER
+   VIDEO PLAYER / PLACEHOLDER
 ========================================================= */
 
 function VideoPlayer({
@@ -153,6 +234,21 @@ function VideoPlayer({
   video: VideoItem;
   className?: string;
 }) {
+  if (video.src) {
+    return (
+      <video
+        src={video.src}
+        autoPlay
+        muted
+        loop
+        playsInline
+        controls
+        preload="metadata"
+        className={`h-full w-full object-cover ${className}`}
+      />
+    );
+  }
+
   return (
     <div
       className={`flex h-full w-full items-center justify-center border border-white/10 bg-[#111] ${className}`}
@@ -259,9 +355,20 @@ function Navigation() {
 function Hero() {
   return (
     <section className="relative flex min-h-screen items-end overflow-hidden bg-black px-[5vw] pb-[8vh] text-white">
-      <div className="absolute inset-0 bg-[#111]" />
+      <div className="absolute inset-0">
+        <video
+          src="/videos web/principal/Demo Reel.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          className="h-full w-full object-cover"
+        />
 
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/30" />
+        <div className="absolute inset-0 bg-black/35" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/30" />
+      </div>
 
       <div className="relative z-10 w-full">
         <div className="mb-5 text-[9px] uppercase tracking-[0.28em] text-white/55">
@@ -269,16 +376,12 @@ function Hero() {
         </div>
 
         <h1
-          className={`${anton.className} whitespace-nowrap text-[20vw] uppercase leading-[0.72] tracking-[-0.055em] md:text-[15vw]`}
+          className={`${anton.className} whitespace-nowrap text-[20vw] uppercase leading-[0.72] tracking-[-0.01em] md:text-[15vw]`}
         >
           Video Book
         </h1>
 
-        <div className="mt-8 flex flex-col gap-4 text-[10px] uppercase tracking-[0.18em] text-white/60 md:flex-row md:items-center md:justify-between">
-          <span>
-            Food films for a brighter appetite
-          </span>
-
+        <div className="mt-8 flex justify-end text-[10px] uppercase tracking-[0.18em] text-white/60">
           <span>
             Scroll to explore ↓
           </span>
@@ -305,7 +408,7 @@ function Essentials() {
           </div>
 
           <h2
-            className={`${anton.className} text-[16vw] uppercase leading-[0.75] tracking-[-0.05em] md:text-[9vw]`}
+            className={`${anton.className} text-[16vw] uppercase leading-[0.75] tracking-[-0.01em] md:text-[9vw]`}
           >
             The Essentials
           </h2>
@@ -347,47 +450,59 @@ function Essentials() {
 }
 
 /* =========================================================
-   CATEGORY
+   SOCIAL MEDIA
+   6 VERTICAL VIDEOS
+   NO FEATURED VIDEO
 ========================================================= */
 
-function CategorySection({
+function SocialMediaVideos({
+  section,
+}: {
+  section: VideoSection;
+}) {
+  return (
+    <div className="mx-auto grid w-full max-w-[1400px] grid-cols-2 gap-x-5 gap-y-8 md:grid-cols-3">
+      {section.videos.map((video, videoIndex) => (
+        <article
+          key={`${section.id}-${videoIndex}`}
+        >
+          <div className="mx-auto aspect-[9/16] w-full overflow-hidden rounded-[20px] bg-[#111]">
+            <VideoPlayer video={video} />
+          </div>
+
+          <div className="mt-3 flex items-center justify-between gap-4">
+            <h3
+              className={`${anton.className} text-[22px] uppercase leading-none`}
+            >
+              {video.title}
+            </h3>
+
+            <span className="shrink-0 text-[8px] tracking-[0.2em] text-white/25">
+              {String(videoIndex + 1).padStart(2, '0')}
+            </span>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+/* =========================================================
+   STANDARD CATEGORY
+========================================================= */
+
+function StandardCategoryVideos({
   section,
 }: {
   section: VideoSection;
 }) {
   const firstVideo = section.videos[0];
-  const remainingVideos = section.videos.slice(1);
+  const remainingVideos =
+    section.videos.slice(1);
 
   return (
-    <section
-      id={section.id}
-      className="relative overflow-hidden border-t border-white/10 bg-black px-[5vw] py-[14vh] text-white"
-    >
-      {/* =====================================================
-          TITLE
-      ===================================================== */}
-
-      <div className="mb-[8vh] grid gap-8 md:grid-cols-[1fr_1fr] md:items-end">
-        <div>
-          <div className="mb-3 text-[9px] tracking-[0.25em] text-white/35">
-            {section.number}
-          </div>
-
-          <h2
-            className={`${anton.className} whitespace-nowrap text-[18vw] uppercase leading-[0.72] tracking-[-0.055em] md:text-[10vw]`}
-          >
-            {section.title}
-          </h2>
-        </div>
-
-        <p className="max-w-[440px] text-[11px] uppercase leading-[1.8] tracking-[0.12em] text-white/45 md:justify-self-end">
-          {section.description}
-        </p>
-      </div>
-
-      {/* =====================================================
-          MAIN VIDEO — ALWAYS CENTERED
-      ===================================================== */}
+    <>
+      {/* MAIN VIDEO */}
 
       <div className="mx-auto w-full max-w-[1100px]">
         <div className="aspect-video overflow-hidden rounded-[26px] bg-[#111]">
@@ -407,15 +522,15 @@ function CategorySection({
         </div>
       </div>
 
-      {/* =====================================================
-          SECONDARY VIDEOS
-      ===================================================== */}
+      {/* SECONDARY VIDEOS */}
 
       {remainingVideos.length > 0 && (
         <div className="mx-auto mt-[7vh] grid w-full max-w-[1400px] gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           {remainingVideos.map(
             (video, videoIndex) => (
-              <article key={`${section.id}-${videoIndex}`}>
+              <article
+                key={`${section.id}-${videoIndex}`}
+              >
                 <div
                   className={
                     video.vertical
@@ -441,6 +556,62 @@ function CategorySection({
             )
           )}
         </div>
+      )}
+    </>
+  );
+}
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+function CategorySection({
+  section,
+}: {
+  section: VideoSection;
+}) {
+  const isSocialMedia =
+    section.id === 'social-media';
+
+  return (
+    <section
+      id={section.id}
+      className="relative overflow-hidden border-t border-white/10 bg-black px-[5vw] py-[14vh] text-white"
+    >
+      {/* =====================================================
+          TITLE
+      ===================================================== */}
+
+      <div className="mb-[8vh] grid gap-8 md:grid-cols-[1fr_1fr] md:items-end">
+        <div>
+          <div className="mb-3 text-[9px] tracking-[0.25em] text-white/35">
+            {section.number}
+          </div>
+
+          <h2
+            className={`${anton.className} whitespace-nowrap text-[18vw] uppercase leading-[0.72] tracking-[0.01em] md:text-[10vw]`}
+          >
+            {section.title}
+          </h2>
+        </div>
+
+        <p className="max-w-[440px] text-[11px] uppercase leading-[1.8] tracking-[0.12em] text-white/45 md:justify-self-end">
+          {section.description}
+        </p>
+      </div>
+
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
+      {isSocialMedia ? (
+        <SocialMediaVideos
+          section={section}
+        />
+      ) : (
+        <StandardCategoryVideos
+          section={section}
+        />
       )}
     </section>
   );
