@@ -72,6 +72,7 @@ const sections: VideoSection[] = [
       },
       {
         title: 'Del Monte',
+        src: '/video-book/FX-Del_Monte_9.mp4',
       },
     ],
   },
@@ -134,6 +135,10 @@ const sections: VideoSection[] = [
       {
         title: 'Afilar con Piedra',
         src: '/videos web/vertical/afilar con piedra.mp4',
+      },
+      {
+        title: 'Real O Fake Herbal Essences',
+        src: '/video-book/Real O Fake Herbal Essences.mp4',
       },
     ],
   },
@@ -372,7 +377,7 @@ function Hero() {
 
       <div className="relative z-10 w-full">
         <div className="mb-5 text-[9px] uppercase tracking-[0.28em] text-white/55">
-          Food Dreamers presents
+          Food Dreamers presents 2026
         </div>
 
         <h1
