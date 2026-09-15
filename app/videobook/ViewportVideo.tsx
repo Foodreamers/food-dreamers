@@ -112,7 +112,7 @@ export default function ViewportVideo({
   return (
     <div className="relative h-full w-full">
       {player}
-      <div className="absolute right-[5vw] top-24 z-20 text-right">
+      <div className="absolute left-1/2 top-1/2 z-20 -translate-x-1/2 -translate-y-1/2 text-center">
         <button
           type="button"
           onClick={enterFullscreen}

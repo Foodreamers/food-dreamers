@@ -360,8 +360,6 @@ function Hero() {
           fullscreenButton
           className="h-full w-full object-cover"
         />
-
-
       </div>
 
       <div className="relative z-10 w-full">
