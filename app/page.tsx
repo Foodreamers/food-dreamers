@@ -877,16 +877,16 @@ function OurWorkCard({
             className="text-[15px] uppercase tracking-[0.32em] text-white/40"
             style={{ fontFamily: 'Anton, sans-serif' }}
           >
-            SELECTED WORK
+            SELECTED PROJECTS
           </p>
 
           <h2
-            className="mt-5 text-[92px] uppercase leading-[0.9] tracking-[-0.04em] text-white"
+            className="mt-5 text-[clamp(44px,6vw,92px)] uppercase leading-[0.9] tracking-[-0.04em] text-white"
             style={{ fontFamily: 'Anton, sans-serif' }}
           >
             EXPLORE
             <br />
-            OUR WORK
+            THE COLLECTION
           </h2>
 
           <a
@@ -894,7 +894,7 @@ function OurWorkCard({
             className="relative z-20 mt-9 rounded-[16px] bg-white px-10 py-4 text-[22px] uppercase text-black transition duration-300 hover:scale-105"
             style={{ fontFamily: 'Anton, sans-serif' }}
           >
-            View Our Work
+            Take a Look
           </a>
         </div>
       </motion.div>
@@ -988,16 +988,16 @@ function OurWorkStack() {
                     className="relative z-10 text-[11px] uppercase tracking-[0.28em] text-white/40"
                     style={{ fontFamily: 'Anton, sans-serif' }}
                   >
-                    SELECTED WORK
+                    SELECTED PROJECTS
                   </p>
 
                   <h2
-                    className="relative z-10 mt-4 text-[48px] uppercase leading-[0.92] text-white"
+                    className="relative z-10 mt-4 text-[clamp(28px,8vw,42px)] uppercase leading-[0.92] text-white"
                     style={{ fontFamily: 'Anton, sans-serif' }}
                   >
                     EXPLORE
                     <br />
-                    OUR WORK
+                    THE COLLECTION
                   </h2>
                 </a>
               );

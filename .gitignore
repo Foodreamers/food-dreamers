@@ -40,3 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 video-backup/
+
+# Video Book source/backups
+public/video-book/Helena´s Hummus de pimiento.mov
+public/video-book/Pantalla 2 R3.mp4
+public/video-book/menu-shopper-anterior.mp4

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Anton } from 'next/font/google';
 import ViewportVideo from './ViewportVideo';
@@ -34,12 +35,12 @@ type VideoSection = {
 
 const essentials: VideoItem[] = [
   {
-    title: 'Studio Tour',
-    src: '/videos web/principal/estudio_tour.mp4',
+    title: 'Demo Reel',
+    src: '/videos web/principal/Demo Reel.mp4',
   },
   {
-    title: 'Showreel',
-    src: '/videos web/principal/Demo Reel.mp4',
+    title: 'Studio Tour',
+    src: '/videos web/principal/estudio_tour.mp4',
   },
   {
     title: 'Best Moments',
@@ -60,12 +61,12 @@ const sections: VideoSection[] = [
       'Big ideas. Beautiful food. Stories made for the big screen.',
     videos: [
       {
-        title: 'HBO',
+        title: 'HBO × José Cuervo',
         src: '/videos web/horizontal/HBO.mp4',
       },
       {
-        title: 'Walmart Carolina',
-        src: '/videos web/horizontal/walmart_carolina.mp4',
+        title: 'Cereales',
+        src: '/videos web/horizontal/cereales.mp4',
       },
       {
         title: 'Duncan Hines',
@@ -85,36 +86,16 @@ const sections: VideoSection[] = [
     description:
       'Short-form content designed to stop thumbs and trigger cravings.',
     videos: [
+      { title: 'Nestlé — Licuachela', src: '/video-book/nestle-licuachela.mp4', vertical: true },
+      { title: 'Zucosos', src: '/video-book/zucosos.mp4', vertical: true },
+      { title: 'Peñafiel — CLAMATO', src: '/video-book/penafiel-mundial.mp4', vertical: true },
+      { title: 'Campbells', src: '/videos web/vertical/pollo y arroz.mp4', vertical: true },
       {
-        title: 'Margarita de Piña',
-        src: '/videos web/vertical/margarita de piña.mp4',
+        title: 'Nature´s Heart - Té Chai ASMR',
+        src: '/videos web/middle ring/te_chai_asmr.mp4',
         vertical: true,
       },
-      {
-        title: 'Momento Improvisado',
-        src: '/videos web/vertical/momento improvisado.mp4',
-        vertical: true,
-      },
-      {
-        title: 'Pollo y Arroz',
-        src: '/videos web/vertical/pollo y arroz.mp4',
-        vertical: true,
-      },
-      {
-        title: 'Nespresso',
-        src: '/videos web/middle ring/nespresso.mp4',
-        vertical: true,
-      },
-      {
-        title: 'Tequila Cask',
-        src: '/videos web/vertical/tequila cask.mp4',
-        vertical: true,
-      },
-      {
-        title: 'Quaker',
-        src: '/videos web/middle ring/quaker.mp4',
-        vertical: true,
-      },
+      { title: 'Toak - Tequila Cask', src: '/videos web/vertical/tequila cask.mp4', vertical: true },
     ],
   },
 
@@ -126,21 +107,25 @@ const sections: VideoSection[] = [
       'Human, spontaneous and social-first content built to feel real.',
     videos: [
       {
-        title: 'Toque Gourmet',
-        src: '/videos web/vertical/toque gourmet.mp4',
+        title: 'Margarita de Piña',
+        src: '/videos web/vertical/margarita de piña.mp4',
+        vertical: true,
       },
-      {
-        title: 'Té Chai ASMR',
-        src: '/videos web/middle ring/te_chai_asmr.mp4',
-      },
+      { title: 'Nespresso', src: '/videos web/middle ring/nespresso.mp4', vertical: true },
+      
+      { title: 'Lala — Sofía Niño de Rivera', src: '/video-book/lala-sofia.mp4', vertical: true },
       {
         title: 'Afilar con Piedra',
         src: '/videos web/vertical/afilar con piedra.mp4',
+        vertical: true,
       },
       {
-        title: 'Real O Fake Herbal Essences',
+        title: 'Herbal Essences — Real or Fake',
         src: '/video-book/Real O Fake Herbal Essences.mp4',
+        vertical: true,
       },
+      { title: 'SAM´S CLUB - Margarita de Sandía', src: '/video-book/margarita-sandia.mp4', vertical: true },
+      
     ],
   },
 
@@ -151,16 +136,18 @@ const sections: VideoSection[] = [
     description:
       'More time for stories, recipes, people and everything behind the food.',
     videos: [
+      { title: 'Matronas — Tráiler', src: '/video-book/matronas-trailer.mp4' },
+
       {
-        title: 'Hotcakes',
+        title: 'Hotcakes - Nathaly Marcus',
         src: '/video-book/10 Hotcakes.mp4',
       },
       {
-        title: 'Testimonial',
-        src: '/videos web/horizontal/Testimonial con subs.mp4',
+        title: 'Nestlé — Intro',
+        src: '/video-book/nestle-intro.mp4',
       },
       {
-        title: 'Video 05',
+        title: 'Capsula Navideña',
         src: '/video-book/Video 05.mp4',
       },
     ],
@@ -174,20 +161,20 @@ const sections: VideoSection[] = [
       'Retail-driven content made to turn attention into action.',
     videos: [
       {
-        title: 'Mahatma AI',
-        src: '/videos web/horizontal/mahatma_ia.mp4',
-      },
+  title: 'MAHATMA',
+  src: '/video-book/02 Diwali.mp4',
+},
       {
         title: 'McCormick',
         src: '/videos web/horizontal/mckormick.mp4',
       },
+     {
+  title: "Helena's - Hummus de Pimiento",
+  src: '/video-book/helenas-hummus.mp4',
+},
       {
-        title: 'Campbells',
-        src: '/videos web/middle ring/campbells.mp4',
-      },
-      {
-        title: 'Vino',
-        src: '/videos web/horizontal/vino.mp4',
+        title: 'Menú - Isadora',
+        src: '/video-book/menu-shopper.mp4',
       },
     ],
   },
@@ -208,7 +195,7 @@ const sections: VideoSection[] = [
         src: '/videos web/horizontal/bernina.mp4',
       },
       {
-        title: 'Tablas y Tapas',
+        title: 'Tablas y Tapas - Tangamanga',
         src: '/videos web/vertical/tablas y tapas.mp4',
       },
       {
@@ -221,7 +208,7 @@ const sections: VideoSection[] = [
   {
     id: 'ai',
     number: '07',
-    title: 'AI',
+    title: 'AI TASTE LAB',
     description:
       'New tools. New possibilities. Same obsession with making food look incredible.',
     videos: [
@@ -230,13 +217,14 @@ const sections: VideoSection[] = [
         src: '/videos web/principal/ai-reel.mp4',
       },
       {
-        title: 'Mahatma AI',
-        src: '/videos web/horizontal/mahatma_ia2.mp4',
+        title: 'CAROLINA',
+        src: '/video-book/Carolina 16.9.mp4',
       },
       {
-        title: 'Turmix AI',
+        title: 'Turmix',
         src: '/videos web/horizontal/turmix_ia.mp4',
       },
+      { title: 'Prego — HOGWARTS lEGACY', src: '/video-book/prego-harry-potter.mp4' },
     ],
   },
 ];
@@ -268,10 +256,6 @@ function VideoPlayer({
       className={`flex h-full w-full items-center justify-center border border-white/10 bg-[#111] ${className}`}
     >
       <div className="flex flex-col items-center gap-4">
-        <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/30 text-[18px] text-white/70">
-          ▶
-        </div>
-
         <span className="text-[9px] uppercase tracking-[0.22em] text-white/35">
           {video.title}
         </span>
@@ -290,12 +274,12 @@ function Navigation() {
   return (
     <>
       <nav className="fixed left-0 top-0 z-[100] flex w-full items-center justify-between px-5 py-5 text-white mix-blend-difference md:px-8 md:py-7">
-        <a
+        <Link
           href="/"
           className="text-[11px] font-black uppercase tracking-[0.14em]"
         >
           Food Dreamers
-        </a>
+        </Link>
 
         <button
           type="button"
@@ -373,20 +357,16 @@ function Hero() {
         <ViewportVideo
           src="/videos web/principal/Demo Reel.mp4"
           label="Food Dreamers Demo Reel"
+          fullscreenButton
           className="h-full w-full object-cover"
         />
 
-        <div className="absolute inset-0 bg-black/35" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-black/30" />
+
       </div>
 
       <div className="relative z-10 w-full">
-        <div className="mb-5 text-[9px] uppercase tracking-[0.28em] text-white/55">
-          Food Dreamers presents 2026
-        </div>
-
         <h1
-          className={`${anton.className} whitespace-nowrap text-[20vw] uppercase leading-[0.72] tracking-[-0.01em] md:text-[15vw]`}
+          className={`${anton.className} whitespace-nowrap text-[20vw] uppercase leading-[0.72] tracking-[-0.01em] md:text-[10vw]`}
         >
           Video Book
         </h1>
@@ -424,7 +404,7 @@ function Essentials() {
           </h2>
         </div>
 
-        <div className="hidden max-w-[260px] text-right text-[10px] uppercase leading-[1.6] tracking-[0.15em] text-white/40 md:block">
+        <div className="hidden max-w-[260px] text-right text-[16px] uppercase leading-[1.6] tracking-[0.15em] text-white/40 md:block">
           Three films.
           <br />
           Three ways to know us.
@@ -432,7 +412,7 @@ function Essentials() {
       </div>
 
       <div className="grid gap-5 md:grid-cols-3">
-        {essentials.map((video, index) => (
+        {essentials.map((video) => (
           <article
             key={video.title}
             className="group"
@@ -448,9 +428,7 @@ function Essentials() {
                 {video.title}
               </h3>
 
-              <span className="text-[9px] tracking-[0.2em] text-white/35">
-                {String(index + 1).padStart(2, '0')}
-              </span>
+
             </div>
           </article>
         ))}
@@ -460,12 +438,12 @@ function Essentials() {
 }
 
 /* =========================================================
-   SOCIAL MEDIA
+   SOCIAL MEDIA / UGC
    6 VERTICAL VIDEOS
    NO FEATURED VIDEO
 ========================================================= */
 
-function SocialMediaVideos({
+function VerticalCategoryVideos({
   section,
 }: {
   section: VideoSection;
@@ -580,8 +558,8 @@ function CategorySection({
 }: {
   section: VideoSection;
 }) {
-  const isSocialMedia =
-    section.id === 'social-media';
+  const isVerticalGrid =
+    section.id === 'social-media' || section.id === 'ugc';
 
   return (
     <section
@@ -592,20 +570,20 @@ function CategorySection({
           TITLE
       ===================================================== */}
 
-      <div className="mb-[8vh] grid gap-8 md:grid-cols-[1fr_1fr] md:items-end">
+      <div className="mb-[8vh] grid gap-8 md:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] md:items-end">
         <div>
           <div className="mb-3 text-[9px] tracking-[0.25em] text-white/35">
             {section.number}
           </div>
 
           <h2
-            className={`${anton.className} whitespace-nowrap text-[18vw] uppercase leading-[0.72] tracking-[0.01em] md:text-[10vw]`}
+            className={`${anton.className} whitespace-nowrap text-[15vw] uppercase leading-[0.85] tracking-[0.015em] md:text-[8vw]`}
           >
             {section.title}
           </h2>
         </div>
 
-        <p className="max-w-[440px] text-[11px] uppercase leading-[1.8] tracking-[0.12em] text-white/45 md:justify-self-end">
+        <p className="max-w-[440px] text-[14px] md:text-[16px] uppercase leading-[1.8] tracking-[0.12em] text-white/45 md:justify-self-end">
           {section.description}
         </p>
       </div>
@@ -614,8 +592,8 @@ function CategorySection({
           CONTENT
       ===================================================== */}
 
-      {isSocialMedia ? (
-        <SocialMediaVideos
+      {isVerticalGrid ? (
+        <VerticalCategoryVideos
           section={section}
         />
       ) : (
@@ -663,12 +641,12 @@ function FinalCTA() {
             contacto@foodreamers.com
           </a>
 
-          <a
+          <Link
             href="/"
             className="transition-opacity hover:opacity-50"
           >
             WWW.FOODREAMERS.COM
-          </a>
+          </Link>
         </div>
       </div>
     </section>
