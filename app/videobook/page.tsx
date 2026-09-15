@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Anton } from 'next/font/google';
+import ViewportVideo from './ViewportVideo';
 
 const anton = Anton({
   subsets: ['latin'],
@@ -151,8 +152,16 @@ const sections: VideoSection[] = [
       'More time for stories, recipes, people and everything behind the food.',
     videos: [
       {
+        title: 'Hotcakes',
+        src: '/video-book/10 Hotcakes.mp4',
+      },
+      {
         title: 'Testimonial',
         src: '/videos web/horizontal/Testimonial con subs.mp4',
+      },
+      {
+        title: 'Video 05',
+        src: '/video-book/Video 05.mp4',
       },
     ],
   },
@@ -217,8 +226,12 @@ const sections: VideoSection[] = [
       'New tools. New possibilities. Same obsession with making food look incredible.',
     videos: [
       {
+        title: 'AI Reel',
+        src: '/videos web/principal/ai-reel.mp4',
+      },
+      {
         title: 'Mahatma AI',
-        src: '/videos web/horizontal/mahatma_ia.mp4',
+        src: '/videos web/horizontal/mahatma_ia2.mp4',
       },
       {
         title: 'Turmix AI',
@@ -241,14 +254,10 @@ function VideoPlayer({
 }) {
   if (video.src) {
     return (
-      <video
+      <ViewportVideo
         src={video.src}
-        autoPlay
-        muted
-        loop
-        playsInline
+        label={video.title}
         controls
-        preload="metadata"
         className={`h-full w-full object-cover ${className}`}
       />
     );
@@ -361,13 +370,9 @@ function Hero() {
   return (
     <section className="relative flex min-h-screen items-end overflow-hidden bg-black px-[5vw] pb-[8vh] text-white">
       <div className="absolute inset-0">
-        <video
+        <ViewportVideo
           src="/videos web/principal/Demo Reel.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
+          label="Food Dreamers Demo Reel"
           className="h-full w-full object-cover"
         />
 
