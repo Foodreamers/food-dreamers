@@ -1175,7 +1175,7 @@ export default function BookPage() {
 
   {/* BACKGROUND VIDEO */}
   <video
-    src="/videos web/principal/reel_platos.mp4"
+    src="/videos web/principal/Demo Reel.mp4"
     autoPlay
     muted
     loop
