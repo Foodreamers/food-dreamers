@@ -75,14 +75,14 @@ const workItems: WorkItem[] = [
   {
     type: 'video',
     src: '/videos web/principal/Demo Reel.mp4',
-    title: 'Food Reel',
+    title: 'DEMO Reel',
     category: 'Featured Reel',
     aspect: 'horizontal',
   },
 
   {
     type: 'video',
-    src: '/videos web/principal/best_moments.mp4',
+    src: '/videos web/principal/Best moments Final.mp4',
     title: 'Best Moments',
     category: 'Featured Reel',
     aspect: 'horizontal',

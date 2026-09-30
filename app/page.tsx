@@ -723,7 +723,7 @@ const storytellingFormats = [
   {
     title: 'SHOPPER',
     duration: '30–90 sec',
-    video: '/timeline/campaign.mp4',
+    video: '/video-book/Basmati Jasmine 16.9 New.mp4',
   },
   {
     title: 'Campaign',
@@ -743,7 +743,7 @@ const storytellingFormats = [
   {
     title: 'Documentary',
     duration: 'Long Form',
-    video: '/timeline/documentary.mp4',
+    video: '/video-book/matronas-trailer.mp4',
   },
 ];
 function ShareTypewriter() {
@@ -1717,7 +1717,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 <BouncingHeroIcon
   onClick={() =>
     setActiveSocialVideo(
-      '/videos web/principal/reel_platos.mp4'
+      '/videos web/principal/Demo Reel.mp4'
     )
   }
 />
@@ -1835,7 +1835,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
       >
         <video
           ref={videoRef}
-          src="/demo.mp4"
+          src="/videos web/principal/Best moments Final.mp4"
           autoPlay
           muted={isMuted}
           loop
@@ -2615,7 +2615,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     <button
       type="button"
       onClick={() =>
-        setActiveSocialVideo('/videos/creative-hub.mp4')
+        setActiveSocialVideo('/videos web/principal/estudio_tour.mp4')
       }
       className="pointer-events-auto absolute bottom-[12%] left-1/2 -translate-x-1/2 rounded-[18px] bg-white px-10 py-4 text-[28px] uppercase text-black shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-transform duration-300 hover:scale-105"
       style={{ fontFamily: 'Anton, sans-serif' }}
