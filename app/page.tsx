@@ -2,8 +2,17 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { Anton } from 'next/font/google';
-import { animate, motion, useInView, useMotionValue, useScroll, useTransform } from 'framer-motion';
+import {
+  animate,
+  motion,
+  type MotionValue,
+  useInView,
+  useMotionValue,
+  useScroll,
+  useTransform,
+} from 'framer-motion';
 import MobileMenu from './components/MobileMenu';
+import { SOCIAL_LINKS } from './components/socialLinks';
 
 
 
@@ -11,6 +20,27 @@ const anton = Anton({
   subsets: ['latin'],
   weight: '400',
 });
+
+const TYPE_ANIMATION_WORDS = [
+  'REAL',
+  'FASTER',
+  'BETTER',
+  'CREATIVE',
+  'ORGANIC',
+  'REMOTE',
+  'EFFICIENT',
+  'EASY',
+] as const;
+
+const SHARE_TYPEWRITER_WORDS = [
+  'SHARE',
+  'CONNECT',
+  'INSPIRE',
+  'ENTERTAIN',
+  'EDUCATE',
+  'MOVE',
+  'REMEMBER',
+] as const;
 /* =========================================================
    CLIENTS — DOUBLE MARQUEE
 ========================================================= */
@@ -173,14 +203,13 @@ function ClientsMarquee() {
 }
 
 function TypeAnimation() {
-  const words = ['REAL', 'FASTER', 'BETTER', 'CREATIVE', 'ORGANIC', 'REMOTE', 'EFFICIENT', 'EASY'];
   const [text, setText] = useState('');
   const [wordIndex, setWordIndex] = useState(0);
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-  const currentWord = words[wordIndex];
-  let timer: ReturnType<typeof setTimeout>;
+  const currentWord = TYPE_ANIMATION_WORDS[wordIndex];
+  let timer: ReturnType<typeof setTimeout> | undefined;
 
   if (!deleting && text !== currentWord) {
     timer = setTimeout(() => {
@@ -198,11 +227,15 @@ function TypeAnimation() {
     }, 40);
   } 
   else if (deleting && text.length === 0) {
-    setDeleting(false);
-    setWordIndex((prev) => (prev + 1) % words.length);
+    timer = setTimeout(() => {
+      setDeleting(false);
+      setWordIndex((prev) => (prev + 1) % TYPE_ANIMATION_WORDS.length);
+    }, 250);
   }
 
-  return () => clearTimeout(timer);
+  return () => {
+    if (timer) clearTimeout(timer);
+  };
 }, [text, deleting, wordIndex]);
   return (
     <div className="flex items-baseline gap-6 whitespace-nowrap">
@@ -230,8 +263,22 @@ function TypeAnimation() {
 function InstagramIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-      <rect x="4" y="4" width="16" height="16" rx="5" stroke="currentColor" strokeWidth="2" />
-      <circle cx="12" cy="12" r="4" stroke="currentColor" strokeWidth="2" />
+      <rect
+        x="4"
+        y="4"
+        width="16"
+        height="16"
+        rx="5"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <circle
+        cx="12"
+        cy="12"
+        r="4"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
       <circle cx="17" cy="7" r="1.2" fill="currentColor" />
     </svg>
   );
@@ -240,7 +287,7 @@ function InstagramIcon() {
 function FacebookIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-      <path d="M14 8h2V4h-3c-3 0-5 2-5 5v3H6v4h2v4h4v-4h3l1-4h-4V9c0-.6.4-1 1-1h1z" />
+      <path d="M6.5 8.5H3.5V18H6.5V8.5ZM5 3.8C4 3.8 3.2 4.6 3.2 5.6C3.2 6.6 4 7.4 5 7.4C6 7.4 6.8 6.6 6.8 5.6C6.8 4.6 6 3.8 5 3.8ZM11.5 8.5H8.6V18H11.6V13.3C11.6 12 11.8 10.8 13.4 10.8C15 10.8 15 12.3 15 13.4V18H18V12.8C18 10.2 17.4 8.2 14.4 8.2C13 8.2 12 9 11.5 9.8V8.5Z" />
     </svg>
   );
 }
@@ -248,7 +295,7 @@ function FacebookIcon() {
 function TikTokIcon() {
   return (
     <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
-      <path d="M15 4c.4 2.5 1.8 4 4 4.3v3.4c-1.5 0-2.8-.4-4-1.2V16a5 5 0 1 1-5-5c.4 0 .7 0 1 .1v3.6a2 2 0 1 0 2 1.9V4h2z" />
+      <path d="M3 5h7c3 0 4.7 1.3 4.7 3.6 0 1.5-.7 2.5-2 3.1 1.8.5 2.7 1.8 2.7 3.7C15.4 18.2 13.2 20 10 20H3V5Zm3 6h3.5c1.3 0 2.1-.6 2.1-1.7 0-1.2-.8-1.7-2.1-1.7H6V11Zm0 6.4h3.8c1.6 0 2.5-.7 2.5-2 0-1.4-.9-2.1-2.5-2.1H6v4.1ZM17 7h4v1.5h-4V7Zm5 7.8h-5.8c.1 1.8.9 2.7 2.4 2.7 1 0 1.8-.5 2.1-1.2h1.9c-.6 2-2 3-4.1 3-2.8 0-4.5-1.9-4.5-4.7 0-2.7 1.8-4.7 4.5-4.7 3 0 4.4 2.5 4.2 4.9H22Zm-5.8-1.6h3.7c-.2-1.3-.8-2-1.8-2-1.2 0-1.8.7-1.9 2Z" />
     </svg>
   );
 }
@@ -397,11 +444,12 @@ const iconRef = useRef<HTMLButtonElement | null>(null);
 useEffect(() => {
     let x = 120;
     let y = 160;
+    let animationFrameId = 0;
 
     let vx = 2.2;
     let vy = 1.8;
 
-    const animate = () => {
+    const tick = () => {
       const container = containerRef.current;
       const icon = iconRef.current;
 
@@ -440,10 +488,14 @@ if (y >= bounds.height - iconSize - bottomLimit) {
 
       icon.style.transform = `translate(${x}px, ${y}px)`;
 
-      requestAnimationFrame(animate);
+      animationFrameId = requestAnimationFrame(tick);
     };
 
-    animate();
+    animationFrameId = requestAnimationFrame(tick);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
   }, []);
 
   return (
@@ -626,6 +678,8 @@ function AIRevealLens() {
 }
 function BurgerBeforeAfter() {
   const [isMobile, setIsMobile] = useState(false);
+  const [slider, setSlider] = useState(50);
+  const isDragging = useRef(false);
 
 useEffect(() => {
   const checkMobile = () => {
@@ -640,7 +694,6 @@ useEffect(() => {
     window.removeEventListener('resize', checkMobile);
   };
 }, []);
-  const [slider, setSlider] = useState(50);
 
   const updateSlider = (clientX: number, element: HTMLDivElement) => {
     const rect = element.getBoundingClientRect();
@@ -652,12 +705,53 @@ useEffect(() => {
 
   return (
     <div
-  className="relative aspect-square w-full max-w-[560px] select-none overflow-hidden"
+      role="slider"
+      tabIndex={0}
+      aria-label="Compare the real and AI burger"
+      aria-orientation="horizontal"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(slider)}
+      aria-valuetext={`${Math.round(slider)}% real, ${Math.round(100 - slider)}% AI`}
+      className="relative aspect-square w-full max-w-[560px] touch-none select-none overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-[#C084FC] focus-visible:ring-offset-4 focus-visible:ring-offset-[#07010D]"
       onPointerMove={(e) => {
+        if (!isDragging.current) return;
         updateSlider(e.clientX, e.currentTarget);
       }}
       onPointerDown={(e) => {
+        isDragging.current = true;
+        e.currentTarget.setPointerCapture(e.pointerId);
         updateSlider(e.clientX, e.currentTarget);
+      }}
+      onPointerUp={(e) => {
+        isDragging.current = false;
+
+        if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+          e.currentTarget.releasePointerCapture(e.pointerId);
+        }
+      }}
+      onPointerCancel={() => {
+        isDragging.current = false;
+      }}
+      onLostPointerCapture={() => {
+        isDragging.current = false;
+      }}
+      onKeyDown={(e) => {
+        const step = e.shiftKey ? 10 : 2;
+
+        if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          setSlider((current) => Math.max(0, current - step));
+        } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          setSlider((current) => Math.min(100, current + step));
+        } else if (e.key === 'Home') {
+          e.preventDefault();
+          setSlider(0);
+        } else if (e.key === 'End') {
+          e.preventDefault();
+          setSlider(100);
+        }
       }}
     >
       {/* REAL LEFT SIDE */}
@@ -690,13 +784,13 @@ useEffect(() => {
       />
 
       {/* HANDLE */}
-      <button
-        type="button"
-        className="absolute top-1/2 z-30 flex h-[54px] w-[54px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#C084FC]/60 bg-black/70 text-[#E9D5FF] shadow-[0_0_35px_rgba(192,132,252,0.55)] backdrop-blur-md"
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/2 z-30 flex h-[54px] w-[54px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-[#C084FC]/60 bg-black/70 text-[#E9D5FF] shadow-[0_0_35px_rgba(192,132,252,0.55)] backdrop-blur-md"
         style={{ left: `${slider}%` }}
       >
         ↔
-      </button>
+      </div>
 
       {/* LABELS */}
       <div className="pointer-events-none absolute left-4 top-4 z-30 rounded-full border border-white/15 bg-black/40 px-4 py-2 text-[12px] uppercase tracking-[0.2em] text-white/80 backdrop-blur-md">
@@ -747,22 +841,12 @@ const storytellingFormats = [
   },
 ];
 function ShareTypewriter() {
-  const words = [
-    'SHARE',
-    'CONNECT',
-    'INSPIRE',
-    'ENTERTAIN',
-    'EDUCATE',
-    'MOVE',
-    'REMEMBER',
-  ];
-
   const [wordIndex, setWordIndex] = useState(0);
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
 
   useEffect(() => {
-    const currentWord = words[wordIndex];
+    const currentWord = SHARE_TYPEWRITER_WORDS[wordIndex];
 
     let delay = isDeleting ? 55 : 85;
 
@@ -786,7 +870,9 @@ function ShareTypewriter() {
       // TERMINÓ DE BORRAR
       if (isDeleting && displayText === '') {
         setIsDeleting(false);
-        setWordIndex((current) => (current + 1) % words.length);
+        setWordIndex(
+          (current) => (current + 1) % SHARE_TYPEWRITER_WORDS.length
+        );
         return;
       }
 
@@ -840,7 +926,7 @@ function OurWorkCard({
   };
   i: number;
   total: number;
-  scrollYProgress: any;
+  scrollYProgress: MotionValue<number>;
 }) {
   const start = i / total;
   const end = (i + 1) / total;
@@ -968,7 +1054,7 @@ function OurWorkStack() {
   ];
 
   return (
-    <>
+    <div id="selected-work" className="bg-[#050505]">
       {/* =====================================================
           MOBILE
       ===================================================== */}
@@ -1043,15 +1129,15 @@ function OurWorkStack() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 export default function Home() {
   
   const [isMuted, setIsMuted] = useState(true);
+  const [isMainVideoPlaying, setIsMainVideoPlaying] = useState(false);
   const [currentLogo, setCurrentLogo] = useState('/logos/logo-yellow.svg');
   const [activeSocialVideo, setActiveSocialVideo] = useState<string | null>(null);
-  const [sequenceActive, setSequenceActive] = useState(false);
  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
  const [isMobile, setIsMobile] = useState(false);
  const [activeFormat, setActiveFormat] = useState<number | null>(null);
@@ -1060,6 +1146,9 @@ export default function Home() {
 
   const aiLabRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const videoModalRef = useRef<HTMLDivElement | null>(null);
+  const videoModalCloseRef = useRef<HTMLButtonElement | null>(null);
+  const previouslyFocusedElementRef = useRef<HTMLElement | null>(null);
   const sequenceCanvasRef = useRef<HTMLCanvasElement | null>(null);
   const heroRef = useRef<HTMLElement | null>(null);
   const dragVelocity = useRef(0);
@@ -1068,9 +1157,6 @@ export default function Home() {
   const autoplayFrame = useRef<number | null>(null);
   const ecosystemRef = useRef<HTMLElement | null>(null);
   const hasPlayedEcosystemIntro = useRef(false);
-const sequenceProgress = useMotionValue(0);
-
-
   const cardsX = useMotionValue(0);
   const frameCount = 120;
 
@@ -1083,6 +1169,112 @@ const sequenceProgress = useMotionValue(0);
     once: true,
     amount: 0.12,
   });
+
+  async function toggleMainVideoPlayback() {
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      try {
+        await video.play();
+      } catch {
+        setIsMainVideoPlaying(false);
+      }
+    } else {
+      video.pause();
+    }
+  }
+
+  async function openMainVideoFullscreen() {
+    const video = videoRef.current;
+    if (!video) return;
+
+    const safariVideo = video as HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+    };
+
+    try {
+      if (video.requestFullscreen) {
+        await video.requestFullscreen();
+      } else if (safariVideo.webkitEnterFullscreen) {
+        safariVideo.webkitEnterFullscreen();
+      } else {
+        setActiveSocialVideo(video.currentSrc || video.src);
+      }
+    } catch {
+      setActiveSocialVideo(video.currentSrc || video.src);
+    }
+  }
+
+  useEffect(() => {
+    if (!activeSocialVideo) return;
+
+    const dialog = videoModalRef.current;
+    const previousBodyOverflow = document.body.style.overflow;
+
+    previouslyFocusedElementRef.current =
+      document.activeElement instanceof HTMLElement
+        ? document.activeElement
+        : null;
+
+    document.body.style.overflow = 'hidden';
+
+    const focusTimer = window.setTimeout(() => {
+      videoModalCloseRef.current?.focus();
+    }, 0);
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setActiveSocialVideo(null);
+        return;
+      }
+
+      if (event.key !== 'Tab' || !dialog) return;
+
+      const focusableElements = Array.from(
+        dialog.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), video[controls], [tabindex]:not([tabindex="-1"])'
+        )
+      );
+
+      if (focusableElements.length === 0) {
+        event.preventDefault();
+        dialog.focus();
+        return;
+      }
+
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+      const activeElement = document.activeElement;
+
+      if (
+        event.shiftKey &&
+        (activeElement === firstElement || !dialog.contains(activeElement))
+      ) {
+        event.preventDefault();
+        lastElement.focus();
+      } else if (
+        !event.shiftKey &&
+        (activeElement === lastElement || !dialog.contains(activeElement))
+      ) {
+        event.preventDefault();
+        firstElement.focus();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.clearTimeout(focusTimer);
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousBodyOverflow;
+
+      const previousElement = previouslyFocusedElementRef.current;
+      if (previousElement?.isConnected) previousElement.focus();
+    };
+  }, [activeSocialVideo]);
+
   useEffect(() => {
   const mediaQuery = window.matchMedia('(max-width: 767px)');
 
@@ -1384,7 +1576,7 @@ return () => {
         cancelAnimationFrame(autoplayFrame.current);
       }
     };
-  }, []);
+  }, [cardsX]);
 
   function wrapAngle(value: number) {
     const range = 288;
@@ -1408,7 +1600,7 @@ return () => {
         lastInteractionTime.current = Date.now();
       },
     });
-  }, [ecosystemInView]);
+  }, [cardsX, ecosystemInView]);
 
   function EcosystemCard({
     item,
@@ -1421,7 +1613,7 @@ return () => {
       image: string;
     };
     i: number;
-    cardsX: any;
+    cardsX: MotionValue<number>;
   }) {
     const baseAngle = (i - 5) * 8;
 
@@ -1517,7 +1709,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
       <motion.a
         whileHover={{ y: -2 }}
-        href="work"
+        href="/work"
         className="text-base tracking-wide transition-colors hover:text-[#FFE3AC] xl:text-lg"
       >
         SERVICES
@@ -1551,7 +1743,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
     {/* DESKTOP SOCIAL ICONS */}
     <div className="hidden items-center gap-4 text-white md:flex xl:gap-5">
       <motion.a
-        href="#"
+        href={SOCIAL_LINKS.instagram}
+        target="_blank"
+        rel="noopener noreferrer"
         whileHover={{ scale: 1.15, y: -2 }}
         aria-label="Instagram"
         className="transition-colors hover:text-[#FFE3AC]"
@@ -1560,18 +1754,22 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
       </motion.a>
 
       <motion.a
-        href="#"
+        href={SOCIAL_LINKS.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
         whileHover={{ scale: 1.15, y: -2 }}
-        aria-label="Facebook"
+        aria-label="LinkedIn"
         className="transition-colors hover:text-[#FFE3AC]"
       >
         <FacebookIcon />
       </motion.a>
 
       <motion.a
-        href="#"
+        href={SOCIAL_LINKS.behance}
+        target="_blank"
+        rel="noopener noreferrer"
         whileHover={{ scale: 1.15, y: -2 }}
-        aria-label="TikTok"
+        aria-label="Behance"
         className="transition-colors hover:text-[#FFE3AC]"
       >
         <TikTokIcon />
@@ -1840,6 +2038,8 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
           muted={isMuted}
           loop
           playsInline
+          onPlay={() => setIsMainVideoPlaying(true)}
+          onPause={() => setIsMainVideoPlaying(false)}
           controlsList="nodownload noremoteplayback"
           disablePictureInPicture
           className="relative z-0 h-full w-full object-cover"
@@ -1848,6 +2048,15 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         {/* CONTROLS */}
         <div className="pointer-events-auto absolute inset-0 z-[80] bg-gradient-to-b from-black/45 via-transparent to-transparent opacity-100 transition-opacity duration-300 lg:opacity-0 lg:group-hover:opacity-100">
           <div className="absolute right-4 top-4 flex items-center gap-3 lg:right-5 lg:top-5">
+            <button
+              type="button"
+              onClick={() => void toggleMainVideoPlayback()}
+              className="flex h-11 w-11 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:bg-black/50"
+              aria-label={isMainVideoPlaying ? 'Pause video' : 'Play video'}
+            >
+              {isMainVideoPlaying ? '❚❚' : '▶'}
+            </button>
+
             <button
               type="button"
               onClick={() => setIsMuted((prev) => !prev)}
@@ -1859,7 +2068,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
             <button
               type="button"
-              onClick={() => videoRef.current?.requestFullscreen()}
+              onClick={() => void openMainVideoFullscreen()}
               className="flex h-11 w-11 items-center justify-center rounded-full bg-black/35 text-white backdrop-blur-md transition hover:bg-black/50"
               aria-label="Fullscreen video"
             >
@@ -2344,7 +2553,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         duration: 0.6,
         ease: 'easeOut',
       }}
-      className="absolute left-1/2 top-[60%] z-10 hidden -translate-x-1/2 cursor-grab select-none active:cursor-grabbing lg:block"
+      className="absolute left-1/2 top-[60%] z-10 hidden touch-none -translate-x-1/2 cursor-grab select-none active:cursor-grabbing lg:block"
       onPointerDown={(e) => {
         e.preventDefault();
 
@@ -2355,7 +2564,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         e.currentTarget.setPointerCapture(e.pointerId);
       }}
       onPointerMove={(e) => {
-        if (e.buttons !== 1) return;
+        if (!isDraggingCards.current) return;
 
         const movement = e.movementX * 0.18;
 
@@ -2368,7 +2577,9 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
 
         cardsX.set(next);
       }}
-      onPointerUp={() => {
+      onPointerUp={(e) => {
+        if (!isDraggingCards.current) return;
+
         const current = cardsX.get();
 
         lastInteractionTime.current = Date.now();
@@ -2385,10 +2596,22 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
           }
         );
 
-        setTimeout(() => {
-          isDraggingCards.current = false;
-          lastInteractionTime.current = Date.now();
-        }, 900);
+        isDraggingCards.current = false;
+        lastInteractionTime.current = Date.now();
+
+        if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+          e.currentTarget.releasePointerCapture(e.pointerId);
+        }
+      }}
+      onPointerCancel={() => {
+        isDraggingCards.current = false;
+        dragVelocity.current = 0;
+        lastInteractionTime.current = Date.now();
+      }}
+      onLostPointerCapture={() => {
+        isDraggingCards.current = false;
+        dragVelocity.current = 0;
+        lastInteractionTime.current = Date.now();
       }}
     >
       {infiniteEcosystemItems.map((item, i) => (
@@ -2521,7 +2744,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         type="button"
         onClick={() =>
           setActiveSocialVideo(
-            '/videos/creative-hub.mp4'
+            '/videos web/principal/estudio_tour.mp4'
           )
         }
         initial={{
@@ -2547,7 +2770,7 @@ className="group relative z-20 h-full w-full select-none overflow-hidden rounded
         className="relative z-[80] mx-auto mt-14 flex w-fit items-center justify-center rounded-[18px] bg-white px-8 py-4 text-[24px] uppercase text-black shadow-[0_12px_40px_rgba(0,0,0,0.35)]"
         style={{ fontFamily: 'Anton, sans-serif' }}
       >
-        Welcome to our Space
+        Studio Tour
       </motion.button>
     </div>
   </div>
@@ -3271,7 +3494,7 @@ CONTENT
 
   </div>
 </section>
-<footer className="relative overflow-hidden bg-[#140824] px-5 pb-8 pt-16 text-white sm:px-8 lg:px-[6vw] lg:pb-10 lg:pt-20">
+<footer id="footer" className="relative overflow-hidden bg-[#140824] px-5 pb-8 pt-16 text-white sm:px-8 lg:px-[6vw] lg:pb-10 lg:pt-20">
   {/* BACKGROUND */}
   <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(168,85,247,0.16),transparent_30%),radial-gradient(circle_at_80%_90%,rgba(163,255,90,0.08),transparent_30%)]" />
 
@@ -3318,24 +3541,30 @@ CONTENT
 
             <div className="flex flex-col gap-3 text-white/75">
               <a
-                href="#"
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-fit transition-colors hover:text-white"
               >
                 Instagram
               </a>
 
               <a
-                href="#"
+                href={SOCIAL_LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-fit transition-colors hover:text-white"
               >
-                TikTok
+                LinkedIn
               </a>
 
               <a
-                href="#"
+                href={SOCIAL_LINKS.behance}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-fit transition-colors hover:text-white"
               >
-                YouTube
+                Behance
               </a>
             </div>
           </div>
@@ -3361,31 +3590,29 @@ CONTENT
       {/* BOTTOM */}
       <div className="flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-7 text-[12px] uppercase leading-relaxed text-white/40 sm:text-[14px] lg:flex-row lg:items-center lg:gap-6 lg:pt-8">
         <p>© 2026 Food Dreamers. All Rights Reserved.</p>
-
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <a
-            href="#"
-            className="transition-colors hover:text-white/70"
-          >
-            Privacy Policy
-          </a>
-
-          <a
-            href="#"
-            className="transition-colors hover:text-white/70"
-          >
-            Terms
-          </a>
-        </div>
       </div>
     </div>
   </div>
 </footer>
 {activeSocialVideo && (
-  <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/85 px-6 backdrop-blur-md">
+  <div
+    ref={videoModalRef}
+    role="dialog"
+    aria-modal="true"
+    aria-label="Video player"
+    tabIndex={-1}
+    onClick={(event) => {
+      if (event.target === event.currentTarget) {
+        setActiveSocialVideo(null);
+      }
+    }}
+    className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/85 px-6 backdrop-blur-md"
+  >
     <button
+      ref={videoModalCloseRef}
       type="button"
       onClick={() => setActiveSocialVideo(null)}
+      aria-label="Close video player"
       className="absolute right-8 top-8 z-[1001] rounded-full bg-white/15 px-5 py-3 text-[18px] text-white backdrop-blur-md hover:bg-white/25"
     >
       CLOSE
@@ -3398,6 +3625,7 @@ CONTENT
       disablePictureInPicture
       autoPlay
       playsInline
+      aria-label="Expanded video"
       className="max-h-[82vh] max-w-[90vw] rounded-[22px] shadow-[0_30px_90px_rgba(0,0,0,0.55)]"
     />
   </div>

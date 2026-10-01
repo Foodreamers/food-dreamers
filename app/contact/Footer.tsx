@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Anton } from 'next/font/google';
+import { SOCIAL_LINKS } from '../components/socialLinks';
 
 export default function Footer() {
   return (
@@ -52,24 +52,30 @@ export default function Footer() {
 
             <div className="flex flex-col gap-3 text-white/75">
               <a
-                href="#"
+                href={SOCIAL_LINKS.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-fit transition-colors hover:text-white"
               >
                 Instagram
               </a>
 
               <a
-                href="#"
+                href={SOCIAL_LINKS.linkedin}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-fit transition-colors hover:text-white"
               >
-                TikTok
+                LinkedIn
               </a>
 
               <a
-                href="#"
+                href={SOCIAL_LINKS.behance}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-fit transition-colors hover:text-white"
               >
-                YouTube
+                Behance
               </a>
             </div>
           </div>
@@ -95,22 +101,6 @@ export default function Footer() {
       {/* BOTTOM */}
       <div className="flex flex-col items-start justify-between gap-5 border-t border-white/10 pt-7 text-[12px] uppercase leading-relaxed text-white/40 sm:text-[14px] lg:flex-row lg:items-center lg:gap-6 lg:pt-8">
         <p>© 2026 Food Dreamers. All Rights Reserved.</p>
-
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
-          <a
-            href="#"
-            className="transition-colors hover:text-white/70"
-          >
-            Privacy Policy
-          </a>
-
-          <a
-            href="#"
-            className="transition-colors hover:text-white/70"
-          >
-            Terms
-          </a>
-        </div>
       </div>
     </div>
   </div>

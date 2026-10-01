@@ -3,11 +3,14 @@
 import { useEffect, useRef, useState } from 'react';
 import {
   motion,
+  type MotionValue,
   useScroll,
   useTransform,
 } from 'framer-motion';
 import { Anton } from 'next/font/google';
+import Link from 'next/link';
 import MobileMenu from '../components/MobileMenu';
+import { SOCIAL_LINKS } from '../components/socialLinks';
 
 const anton = Anton({
   subsets: ['latin'],
@@ -25,7 +28,7 @@ function InstagramIcon() {
 function FacebookIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M14 8h3V4h-3c-3.3 0-5 2-5 5v3H6v4h3v6h4v-6h3.2l.8-4h-4V9c0-.7.3-1 1-1Z" />
+      <path d="M6.5 8.5H3.5V18H6.5V8.5ZM5 3.8C4 3.8 3.2 4.6 3.2 5.6C3.2 6.6 4 7.4 5 7.4C6 7.4 6.8 6.6 6.8 5.6C6.8 4.6 6 3.8 5 3.8ZM11.5 8.5H8.6V18H11.6V13.3C11.6 12 11.8 10.8 13.4 10.8C15 10.8 15 12.3 15 13.4V18H18V12.8C18 10.2 17.4 8.2 14.4 8.2C13 8.2 12 9 11.5 9.8V8.5Z" />
     </svg>
   );
 }
@@ -33,7 +36,7 @@ function FacebookIcon() {
 function TikTokIcon() {
   return (
     <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M16 3c.4 2.5 1.8 4 4 4.4V11c-1.7-.1-3.1-.6-4.3-1.5v6.4c0 3.4-2.4 5.8-5.8 5.8A5.6 5.6 0 0 1 4 16.1c0-3.4 2.6-5.8 6.1-5.8.4 0 .8 0 1.2.1v3.7a3 3 0 0 0-1.2-.2 2.1 2.1 0 1 0 2.1 2.1V3h3.8Z" />
+      <path d="M3 5h7c3 0 4.7 1.3 4.7 3.6 0 1.5-.7 2.5-2 3.1 1.8.5 2.7 1.8 2.7 3.7C15.4 18.2 13.2 20 10 20H3V5Zm3 6h3.5c1.3 0 2.1-.6 2.1-1.7 0-1.2-.8-1.7-2.1-1.7H6V11Zm0 6.4h3.8c1.6 0 2.5-.7 2.5-2 0-1.4-.9-2.1-2.5-2.1H6v4.1ZM17 7h4v1.5h-4V7Zm5 7.8h-5.8c.1 1.8.9 2.7 2.4 2.7 1 0 1.8-.5 2.1-1.2h1.9c-.6 2-2 3-4.1 3-2.8 0-4.5-1.9-4.5-4.7 0-2.7 1.8-4.7 4.5-4.7 3 0 4.4 2.5 4.2 4.9H22Zm-5.8-1.6h3.7c-.2-1.3-.8-2-1.8-2-1.2 0-1.8.7-1.9 2Z" />
     </svg>
   );
 }
@@ -51,7 +54,7 @@ function ManifestoPhrase({
   text: React.ReactNode;
   index: number;
   total: number;
-  progress: any;
+  progress: MotionValue<number>;
 }) {
   const start = index / total;
   const middle = (index + 0.5) / total;
@@ -360,31 +363,40 @@ export default function AboutPage() {
               <div className="ml-8 flex items-center gap-5 text-white">
 
                 <motion.a
-                  href="#"
+                  href={SOCIAL_LINKS.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{
                     scale: 1.15,
                     y: -2,
                   }}
+                  aria-label="Instagram"
                 >
                   <InstagramIcon />
                 </motion.a>
 
                 <motion.a
-                  href="#"
+                  href={SOCIAL_LINKS.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{
                     scale: 1.15,
                     y: -2,
                   }}
+                  aria-label="LinkedIn"
                 >
                   <FacebookIcon />
                 </motion.a>
 
                 <motion.a
-                  href="#"
+                  href={SOCIAL_LINKS.behance}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   whileHover={{
                     scale: 1.15,
                     y: -2,
                   }}
+                  aria-label="Behance"
                 >
                   <TikTokIcon />
                 </motion.a>
@@ -552,7 +564,7 @@ export default function AboutPage() {
         <header className="fixed left-0 top-0 z-[999] w-full border-b border-white/10 bg-black/20 backdrop-blur-3xl">
           <div className="flex h-20 items-center justify-between px-4">
 
-            <a
+            <Link
               href="/"
               className="flex items-center"
             >
@@ -562,7 +574,7 @@ export default function AboutPage() {
                 draggable={false}
                 className="h-[72px] w-auto select-none"
               />
-            </a>
+            </Link>
 
             {isMobile && (
               <button

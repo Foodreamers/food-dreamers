@@ -9,6 +9,7 @@ import {
 } from 'framer-motion';
 
 import { Anton } from 'next/font/google';
+import Link from 'next/link';
 
 const anton = Anton({
   subsets: ['latin'],
@@ -225,12 +226,12 @@ function SpaceNavigation() {
   return (
     <>
       <div className="pointer-events-none fixed left-0 top-0 z-[100] flex w-full items-center justify-between p-5 text-white mix-blend-difference md:p-7">
-        <a
+        <Link
           href="/"
           className="pointer-events-auto text-[12px] font-black tracking-[0.1em]"
         >
           FOOD DREAMERS
-        </a>
+        </Link>
 
         <button
           type="button"
@@ -661,12 +662,12 @@ function FinalCTA() {
             contacto@foodreamers.com
           </a>
 
-          <a
+          <Link
             href="/"
             className="transition-opacity hover:opacity-50"
           >
             WWW.FOODREAMERS.COM
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 function escapeHtml(value: string) {
   return value
     .replaceAll('&', '&amp;')
@@ -13,12 +11,16 @@ function escapeHtml(value: string) {
 
 export async function POST(request: Request) {
   try {
-    if (!process.env.RESEND_API_KEY) {
+    const resendApiKey = process.env.RESEND_API_KEY;
+
+    if (!resendApiKey) {
       return Response.json(
         { error: 'Resend is not configured.' },
         { status: 500 }
       );
     }
+
+    const resend = new Resend(resendApiKey);
 
     const body = await request.json();
 

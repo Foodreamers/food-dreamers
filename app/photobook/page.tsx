@@ -8,6 +8,7 @@ import {
   useTransform,
 } from 'framer-motion';
 import { Anton } from 'next/font/google';
+import Link from 'next/link';
 
 const anton = Anton({
   subsets: ['latin'],
@@ -963,12 +964,12 @@ function FinalCTA() {
             contacto@foodreamers.com
           </a>
 
-          <a
+          <Link
             href="/"
             className="transition-opacity hover:opacity-55"
           >
             WWW.FOODREAMERS.COM
-          </a>
+          </Link>
 
         </div>
       </div>
